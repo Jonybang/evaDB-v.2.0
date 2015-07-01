@@ -7,7 +7,9 @@ class ApplicationController < ActionController::Base
   include ActionController::ImplicitRender
   respond_to :json, :html
   protect_from_forgery with: :exception
+
   inherit_resources
+  actions :all
 
   helper_method :current_user
 

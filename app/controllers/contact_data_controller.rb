@@ -1,4 +1,4 @@
-class ContactDataController < InheritedResources::Base
+class ContactDataController < ApplicationController
 
   private
 

@@ -50,7 +50,7 @@ group :development, :test do
   gem 'spring'
 end
 
-gem 'inherited_resources'
+gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'master'
 
 gem 'oj'
 gem 'rabl'

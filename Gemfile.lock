@@ -1,4 +1,15 @@
 GIT
+  remote: git://github.com/josevalim/inherited_resources.git
+  revision: d43bd6d1adfd90e0d73ec9e6191a3c9eb612c375
+  branch: master
+  specs:
+    inherited_resources (1.6.0)
+      actionpack (>= 3.2, < 5)
+      has_scope (~> 0.6.0.rc)
+      railties (>= 3.2, < 5)
+      responders
+
+GIT
   remote: git://github.com/mongoid/moped.git
   revision: 803bbcd2e631361f73dcc2b11cf2320804eaa73f
   specs:
@@ -104,11 +115,6 @@ GEM
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     i18n (0.7.0)
-    inherited_resources (1.6.0)
-      actionpack (>= 3.2, < 5)
-      has_scope (~> 0.6.0.rc)
-      railties (>= 3.2, < 5)
-      responders
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -239,7 +245,7 @@ DEPENDENCIES
   byebug
   cancan
   coffee-rails (~> 4.1.0)
-  inherited_resources
+  inherited_resources!
   jquery-rails
   mongoid (~> 4.0.0)
   moped!

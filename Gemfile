@@ -6,7 +6,7 @@ gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
 gem #'sqlite3'
 
-gem "mongoid", "~> 4.0.0"
+gem 'mongoid', '~> 4.0.0'
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'sass-rails', '~> 5.0'
@@ -48,19 +48,19 @@ end
 
 gem 'simple_enum', '~> 2.0.0' , require: 'simple_enum/mongoid'
 
-gem "moped", github: "mongoid/moped"
-gem "inherited_resources"
+gem 'moped', github: 'mongoid/moped'
+gem 'inherited_resources'
 
-gem "oj"
-gem "rabl"
-gem "slim-rails"
+gem 'oj'
+gem 'rabl'
+gem 'slim-rails'
 
-gem "simple_form"
+gem 'simple_form'
 
-gem "select2-rails"
+gem 'select2-rails'
 
-gem "rails_admin", github: 'pencilcheck/rails_admin', branch: 'master'
+gem 'rails_admin', github: 'pencilcheck/rails_admin', branch: 'master'
 
-gem "cancan"
+gem 'cancan'
 
-gem "bcrypt-ruby", :require => "bcrypt"
+gem 'bcrypt-ruby', :require => 'bcrypt'

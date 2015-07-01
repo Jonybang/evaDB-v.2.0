@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    logger = Logger.new(STDOUT)
+    logger = ::Logger.new(STDOUT)
     logger.debug "==================================Check if session empty============================"
     if (!session || !session[:user_id])
       logger.debug "==================================Session EMPTY============================"

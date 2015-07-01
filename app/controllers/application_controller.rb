@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   #inherit_resources
-  actions :all
+  #actions :all
 
   helper_method :current_user
 

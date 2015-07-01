@@ -7,6 +7,10 @@ gem 'rails', '4.2.1'
 #gem 'sqlite3'
 
 gem 'mongoid', '~> 4.0.0'
+gem 'moped', github: 'mongoid/moped'
+gem 'simple_enum', '~> 2.0.0' , require: 'simple_enum/mongoid'
+
+
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'sass-rails', '~> 5.0'
@@ -22,7 +26,7 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+#gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -46,9 +50,6 @@ group :development, :test do
   gem 'spring'
 end
 
-gem 'simple_enum', '~> 2.0.0' , require: 'simple_enum/mongoid'
-
-gem 'moped', github: 'mongoid/moped'
 gem 'inherited_resources'
 
 gem 'oj'
@@ -64,3 +65,7 @@ gem 'rails_admin', github: 'pencilcheck/rails_admin', branch: 'master'
 gem 'cancan'
 
 gem 'bcrypt-ruby', :require => 'bcrypt'
+
+# gem to enable all heroku platform features
+# See https://devcenter.heroku.com/articles/rails-integration-gems for more information.
+gem 'rails_12factor'

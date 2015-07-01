@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < InheritedResources::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   include ActionController::MimeResponds
@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   respond_to :json, :html
   protect_from_forgery with: :exception
 
-  inherit_resources
+  #inherit_resources
   actions :all
 
   helper_method :current_user

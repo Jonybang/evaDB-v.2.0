@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require angular.min
 //= require jquery_ujs
 //= require jquery.validate.min
 //= require jquery_nested_form
@@ -20,6 +21,7 @@
 //= require bootstrap-formhelpers.min
 //= require bootstrap-formhelpers-phone
 //= require turbolinks
+
 //= //require manager
 
 $(document).on("ready page:load", function(){

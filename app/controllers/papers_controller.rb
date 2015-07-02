@@ -1,4 +1,4 @@
-class PapersController < ApplicationController
+class PapersController < InheritsController
 
   private
 

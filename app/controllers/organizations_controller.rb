@@ -1,4 +1,4 @@
-class OrganizationsController < ApplicationController
+class OrganizationsController < InheritsController
   private
 
     def organization_params

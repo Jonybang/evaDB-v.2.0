@@ -1,4 +1,4 @@
-class RoomsController < ApplicationController
+class RoomsController < InheritsController
 
   private
 

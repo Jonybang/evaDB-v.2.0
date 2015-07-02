@@ -1,4 +1,4 @@
-class SubunitsController < ApplicationController
+class SubunitsController < InheritsController
 
   private
 

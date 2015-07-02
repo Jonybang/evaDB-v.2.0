@@ -1,4 +1,4 @@
-class ProjectDirectionsController < ApplicationController
+class ProjectDirectionsController < InheritsController
 
   private
 

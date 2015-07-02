@@ -8,9 +8,6 @@ class ApplicationController < ActionController::Base
   respond_to :json, :html
   protect_from_forgery with: :exception
 
-  inherit_resources
-  actions :all
-
   helper_method :current_user
 
   private

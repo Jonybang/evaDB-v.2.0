@@ -1,4 +1,4 @@
-class SpecialtiesController < ApplicationController
+class SpecialtiesController < InheritsController
 
   private
 

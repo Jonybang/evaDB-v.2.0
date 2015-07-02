@@ -1,4 +1,4 @@
-class EventDocumentsController < ApplicationController
+class EventDocumentsController < InheritsController
 
   private
 

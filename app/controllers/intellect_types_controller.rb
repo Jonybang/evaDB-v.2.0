@@ -1,4 +1,4 @@
-class IntellectTypesController < ApplicationController
+class IntellectTypesController < InheritsController
 
   private
 

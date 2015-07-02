@@ -1,4 +1,4 @@
-class WorkpostsController < ApplicationController
+class WorkpostsController < InheritsController
 
   private
 

@@ -1,4 +1,4 @@
-class ThesesController < ApplicationController
+class ThesesController < InheritsController
 
   private
 

@@ -1,4 +1,4 @@
-class RanksController < ApplicationController
+class RanksController < InheritsController
 
   private
 

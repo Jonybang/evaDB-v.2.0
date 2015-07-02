@@ -1,4 +1,4 @@
-class EquipsController < ApplicationController
+class EquipsController < InheritsController
 
   private
 

@@ -1,4 +1,4 @@
-class IntellectPropertiesController < ApplicationController
+class IntellectPropertiesController < InheritsController
 
   private
 

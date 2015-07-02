@@ -1,4 +1,4 @@
-class SocnetLinksController < ApplicationController
+class SocnetLinksController < InheritsController
 
   private
 

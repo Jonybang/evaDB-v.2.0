@@ -1,4 +1,4 @@
-class PartnersController < ApplicationController
+class PartnersController < InheritsController
 
   private
 

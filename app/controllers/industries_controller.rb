@@ -1,4 +1,4 @@
-class IndustriesController < ApplicationController
+class IndustriesController < InheritsController
 
   private
 

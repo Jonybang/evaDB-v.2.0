@@ -1,4 +1,4 @@
-class FacultiesController < ApplicationController
+class FacultiesController < InheritsController
 
   private
 

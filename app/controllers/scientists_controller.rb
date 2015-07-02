@@ -1,4 +1,4 @@
-class ScientistsController < ApplicationController
+class ScientistsController < InheritsController
 
   private
 

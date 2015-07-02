@@ -1,4 +1,4 @@
-class ProjectResourcesController < ApplicationController
+class ProjectResourcesController < InheritsController
 
   private
 

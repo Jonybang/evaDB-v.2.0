@@ -1,4 +1,4 @@
-class ResourceTypesController < ApplicationController
+class ResourceTypesController < InheritsController
 
   private
 

@@ -1,4 +1,4 @@
-class ContactDataController < ApplicationController
+class ContactDataController < InheritsController
 
   private
 

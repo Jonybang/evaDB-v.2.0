@@ -1,4 +1,4 @@
-class CurrenciesController < ApplicationController
+class CurrenciesController < InheritsController
 
   private
 

@@ -1,4 +1,4 @@
-class FinanceSourcesController < ApplicationController
+class FinanceSourcesController < InheritsController
 
   private
 

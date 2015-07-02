@@ -1,4 +1,4 @@
-class ProjectStatusesController < ApplicationController
+class ProjectStatusesController < InheritsController
 
   private
 

@@ -1,4 +1,4 @@
-class DegreesController < ApplicationController
+class DegreesController < InheritsController
 
   private
 

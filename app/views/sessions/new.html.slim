@@ -1,18 +1,23 @@
-h1
-  | Авторизация
-= form_tag sessions_path do
-  .form-group.col-md-12
-    .col-md-4.col-lg-3.text-right
-      = label_tag :email
-    .col-md-6.col-lg-7
-      = text_field_tag :email, nil, :class => 'form-control'
+- if current_user
+  h1
+    | Вы вошли в систему под email:
+    = current_user.email
+-else
+  h1
+    | Авторизация
+  = form_tag sessions_path do
+    .form-group.col-md-12
+      .col-md-4.col-lg-3.text-right
+        = label_tag :email
+      .col-md-6.col-lg-7
+        = text_field_tag :email, nil, :class => 'form-control'
 
-  .form-group.col-md-12
-    .col-md-4.col-lg-3.text-right
-      = label_tag :password
-    .col-md-6.col-lg-7
-      = password_field_tag :password, nil, :class => 'form-control'
+    .form-group.col-md-12
+      .col-md-4.col-lg-3.text-right
+        = label_tag :password
+      .col-md-6.col-lg-7
+        = password_field_tag :password, nil, :class => 'form-control'
 
-  .form-group.col-md-12
-    .col-md-6.col-lg-7.col-md-offset-4.col-md-offset-3
-      = submit_tag 'Войти', :class => 'btn btn-primary'
+    .form-group.col-md-12
+      .col-md-6.col-lg-7.col-md-offset-4.col-md-offset-3
+        = submit_tag 'Войти', :class => 'btn btn-primary'

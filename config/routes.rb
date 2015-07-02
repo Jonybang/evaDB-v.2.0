@@ -1,17 +1,15 @@
 Rails.application.routes.draw do
 
-  resources :resource_types
+  root :to => 'application#index'
 
   get 'logout' => 'sessions#destroy', :as => 'log_out'
   get 'login' => 'sessions#new', :as => 'log_in'
   get 'register' => 'users#new', :as => 'sign_up'
-  root :to => 'users#new'
 
   resources :users
   resources :sessions
 
   resources :project_resources
-
   resources :resource_types
 
   get '/manager/' => 'manager#index'

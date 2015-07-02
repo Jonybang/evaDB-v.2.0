@@ -9,15 +9,22 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user
+  #before_action :current_user
+
+
+  def index
+    unless @current_user
+      redirect_to '/login/'
+    end
+  end
 
   private
 
   def current_user
-    logger = ::Logger.new(STDOUT)
     if (!session || !session[:user_id])
       return
     end
-    user_id = session[:user_id]["$oid"] || session[:user_id]
+    user_id = session[:user_id]['$oid'] || session[:user_id]
     @current_user ||= User.find_by(id: user_id) if user_id
   end
 end

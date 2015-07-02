@@ -2,20 +2,20 @@ Rails.application.routes.draw do
 
   resources :resource_types
 
-  get "logout" => "sessions#destroy", :as => "log_out"
-  get "login" => "sessions#new", :as => "log_in"
-  get "register" => "users#new", :as => "sign_up"
-  root :to => "users#new"
+  get 'logout' => 'sessions#destroy', :as => 'log_out'
+  get 'login' => 'sessions#new', :as => 'log_in'
+  get 'register' => 'users#new', :as => 'sign_up'
+  root :to => 'users#new'
   resources :users
   resources :sessions
 
   resources :project_resources
 
-  resources :resources
+  resources :resource_types
 
   get '/manager/' => 'manager#index'
   get 'manager/projects'
-  get 'manager/cabinet', :as => "cabinet"
+  get 'manager/cabinet', :as => 'cabinet'
 
   resources :partners
 
@@ -85,9 +85,9 @@ Rails.application.routes.draw do
 
   resources :links
   # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  # See how all your routes lay out with 'rake routes'.
 
-  # You can have the root of your site routed with "root"
+  # You can have the root of your site routed with 'root'
   # root 'welcome#index'
 
   # Example of regular route:

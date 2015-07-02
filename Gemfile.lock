@@ -243,7 +243,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby
-  bootstrap-sass (~> 3.3.3)
+  bootstrap-sass (~> 3.3.5)
   byebug
   cancan
   coffee-rails (~> 4.1.0)
@@ -257,7 +257,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails_12factor
   rails_admin!
-  sass-rails (~> 5.0)
+  sass-rails (>= 3.2)
   sdoc (~> 0.4.0)
   select2-rails
   simple_enum (~> 2.0.0)

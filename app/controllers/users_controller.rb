@@ -5,10 +5,11 @@ class UsersController < InheritsController
 
   def create
     @user = User.new(user_params)
+    @user.contact = Contact.new({email:@user.email})
     if @user.save
-      redirect_to root_url, :notice => "Signed up!"
+      redirect_to root_url, :notice => 'Signed up!'
     else
-      render "new"
+      render 'new'
     end
   end
   private

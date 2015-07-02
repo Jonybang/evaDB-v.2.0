@@ -14,12 +14,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
     logger = ::Logger.new(STDOUT)
-    logger.debug "==================================Check if session empty============================"
     if (!session || !session[:user_id])
-      logger.debug "==================================Session EMPTY============================"
       return
     end
-    logger.debug "==================================Session not empty============================"
     user_id = session[:user_id]["$oid"] || session[:user_id]
     @current_user ||= User.find_by(id: user_id) if user_id
   end

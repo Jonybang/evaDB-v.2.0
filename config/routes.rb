@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'register' => 'users#new', :as => 'sign_up'
 
   get 'user_id' => 'application#user_id'
+  get 'current_contact' => 'application#current_contact', :defaults => {format: :json}
 
   resources :users
   resources :sessions

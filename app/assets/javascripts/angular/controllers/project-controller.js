@@ -7,9 +7,9 @@ var app = angular.module('app');
 
 app.controller('ProjectIndexController', ['$scope', 'Project', 'User', function($scope, Project, User) {
     //Grab all forums from the server
-    User.get_id().then(function(result){
-        $scope.user_id = result;
-        $scope.items = Project.query({chief_id:result});
+    User.get_contact().then(function(result){
+        $scope.contact = result;
+        $scope.items = Project.query({chief_id:result.id});
     });
 
     //Destroy method for deleting a forum
@@ -23,10 +23,14 @@ app.controller('ProjectIndexController', ['$scope', 'Project', 'User', function(
     }
 }]);
 
-app.controller('ProjectCreateController', ['$scope', '$location', 'Project', function($scope, $location, Project) {
+app.controller('ProjectCreateController', ['$scope', '$location', 'Project', 'User', function($scope, $location, Project, User) {
     //The save method which is called when the user wants to submit their data
+    User.get_contact().then(function(result){
+        $scope.contact = result;
+    });
     $scope.save = function() {
 
+        $scope.project.chief_id = $scope.contact.id;
         //Create the forum object to send to the back-end
         var project = new Project($scope.project);
 

@@ -9,6 +9,12 @@ angular.module('app')
                     .then(function(response) {
                         return service.user_id = response.data;
                     });
+            },
+            get_contact: function() {
+                return $http.get('/current_contact')
+                    .then(function(response) {
+                        return service.contact = response.data;
+                    });
             }
         };
         return service;

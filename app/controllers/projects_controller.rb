@@ -1,11 +1,13 @@
 class ProjectsController < InheritsController
   before_filter :load_contact
   def index
-    if @contact
-      @projects = @contact.projects.all
-    else
-      @projects = Project.all
-    end
+    #@collection = Project.where(params[:project])
+    @collection = Project.where(:chief_id => params[:chief_id])
+    # if @contact
+    #   @projects = @contact.projects.all
+    # else
+    #   @projects = Project.all
+    # end
     #index!
   end
 

@@ -5,9 +5,12 @@
 
 var app = angular.module('app');
 
-app.controller('ProjectIndexController', ['$scope', 'Project', function($scope, Project) {
+app.controller('ProjectIndexController', ['$scope', 'Project', 'User', function($scope, Project, User) {
     //Grab all forums from the server
-    $scope.items = Project.query();
+    User.get_id().then(function(result){
+        $scope.user_id = result;
+        $scope.items = Project.query({chief_id:result});
+    });
 
     //Destroy method for deleting a forum
     $scope.destroy = function(index) {

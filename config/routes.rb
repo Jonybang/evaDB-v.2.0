@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new', :as => 'log_in'
   get 'register' => 'users#new', :as => 'sign_up'
 
+  get 'user_id' => 'application#user_id'
+
   resources :users
   resources :sessions
 

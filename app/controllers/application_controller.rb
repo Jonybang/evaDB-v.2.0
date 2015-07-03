@@ -20,6 +20,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def user_id
+    render plain: @current_user._id
+  end
   private
 
   def current_user

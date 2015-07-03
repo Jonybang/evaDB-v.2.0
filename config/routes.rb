@@ -28,8 +28,12 @@ Rails.application.routes.draw do
 
   resources :finance_sources
 
-  resources :projects do
-    resources :project_tasks
+  resources :projects, :defaults => {format: :json} do
+    resources :project_tasks, :defaults => {format: :json}
+  end
+
+  resources :contacts do
+    resources :projects
   end
 
   resources :project_statuses
@@ -75,8 +79,6 @@ Rails.application.routes.draw do
   resources :workposts
 
   resources :skills
-
-  resources :contacts
 
   resources :organizations
 

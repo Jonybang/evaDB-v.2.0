@@ -13,7 +13,14 @@ require 'simple_enum/mongoid'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+# Bundler.require(*Rails.groups)
+
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
+end
 
 module EvaDBV20
   class Application < Rails::Application
@@ -31,5 +38,28 @@ module EvaDBV20
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     #config.active_record.raise_in_transactional_callbacks = true
+    config.assets.initialize_on_precompile = true
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+
+    # Version of your assets, change this if you want to expire all your assets
+    #config.assets.version = '1.0'
+
+    # config/application.rb
+    #config.assets.paths << Rails.root.join('app', 'assets', 'angular')
+
+  end
+end
+
+module BSON
+  class ObjectId
+    def as_json(options = {})
+      to_s
+    end
+
+    def to_bson_key(encoded = ''.force_encoding(BINARY))
+      to_s.to_bson_key(encoded)
+    end
   end
 end

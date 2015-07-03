@@ -1,0 +1,36 @@
+<h2>Project: {{project.name}}</h2>
+<hr/>
+
+<div ng-controller="ProjectTasksController">
+
+    <!-- This will only show when there's no items to let the user know there's purposefully nothing there.. -->
+    <div ng-show="project_tasks.$resolved && project_tasks.length == 0">
+        <h4>There's nothing here...</h4>
+        <p>Be the first to comment on this Forum below!</p>
+    </div>
+
+    <!-- Iterate over the comments -->
+    <div class="media" ng-repeat="task in project_tasks">
+        <div class="media">
+            <div class="media-body">
+                <h4 class="media-heading">
+                    {{task.name}}
+                    <div class="pull-right" style="font-size: 12px;">
+                        {{task.created_at}}
+                    </div>
+                </h4>
+                {{task.body}}
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <!-- This is the form to create a comment -->
+    <form ng-submit="save()">
+        <input type="text" ng-model="name" style="width: 100%;" placeholder="Name"/>
+        <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Name</strong> {{error}}</div>
+
+        <button type="submit" class="btn btn-primary btn-large">Add project task</button>
+    </form>
+</div>

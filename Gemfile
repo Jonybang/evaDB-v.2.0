@@ -15,6 +15,7 @@ gem 'simple_enum', '~> 2.0.0' , require: 'simple_enum/mongoid'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'sass-rails', '>= 3.2'
 gem 'quiet_assets', group: :development
+#gem 'js_assets'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

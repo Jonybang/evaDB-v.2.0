@@ -5,11 +5,13 @@ class ApplicationController < ActionController::Base
   include ActionController::Helpers
   include ActionController::Cookies
   include ActionController::ImplicitRender
-  respond_to :json, :html
+  respond_to :html
+
+
   protect_from_forgery with: :exception
 
   helper_method :current_user
-  #before_action :current_user
+  before_action :current_user
 
 
   def index

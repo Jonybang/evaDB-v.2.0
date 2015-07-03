@@ -7,7 +7,7 @@ class ProjectTask
   field :begin_date, type: Date
   field :end_date, type: Date
 
-  field :tehnical_task, type: String
+  field :description, type: String
 
   belongs_to :project
   belongs_to :project_status

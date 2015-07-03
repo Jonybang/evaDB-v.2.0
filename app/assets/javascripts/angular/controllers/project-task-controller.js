@@ -12,7 +12,9 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams
     //Define a 'save' method which will be called from the view.
     $scope.save = function() {
         //Create the comment object to be sent to the server
-        var obj = new ProjectTask({name: $scope.name, project_id: $routeParams.id});
+        var obj = new ProjectTask({name: $scope.name, description: $scope.description,
+                                    begin_date: $scope.begin_date, end_date: $scope.end_date,
+                                    project_id: $routeParams.id});
 
         //Attempt a save to the back-end
         obj.$save(function(response) {
@@ -22,7 +24,7 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams
             $scope.project_tasks.unshift(response);
 
             //Empty the name & body
-            $scope.name = "";
+            $scope.name = $scope.begin_date = $scope.end_date = $scope.description = "";
 
         }, function(response) {
 

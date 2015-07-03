@@ -1,4 +1,4 @@
-<h2>Projects</h2>
+<h2>Мои проекты</h2>
 
 <div class="row">
 
@@ -7,9 +7,9 @@
         <!-- This will only show when there's no items to let the user know there's purposefully nothing there.. -->
         <div ng-show="items.$resolved && items.length == 0">
             <hr/>
-            <h4>There's nothing here...</h4>
+            <h4>Здесь пока ничего нет...</h4>
 
-            <p>Use the 'New' button to create a new forum project!</p>
+            <p>Попробуйте создать новый проект</p>
         </div>
 
         <!-- A nice table that will contain a list of Forums -->
@@ -19,7 +19,11 @@
                 <td width="100%"><a href="#/project/{{item.id}}">{{item.name}}</a></td>
 
                 <!-- When the user clicks this button it will call the 'destory()' method within the controller -->
-                <td><a ng-click="destroy($index)" href=""><i class="icon-trash"></i></a></td>
+                <td>
+                    <button ng-click="destroy($index)" type="button" class="btn btn-danger btn-sm" aria-label="Destroy">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </td>
             </tr>
         </table>
 
@@ -33,12 +37,11 @@
 
         <div class="well">
             <p>
-                Welcome to the simple-forum project. This an application designed primarily in AngularJS for a front-end
-                and
-                Ruby on Rails as a back-end.
+                Добро пожаловать в прототип будующего приложения системы управления инновационными проектами.
+                Прототип создан на Ruby on Rails и AngularJS.
             </p>
             <p>
-                Please feel free to leave a comment. Try to keep it civil and clean. Thanks!
+               Попробуйте создать проект и задачи к нему чтобы протестировать протип веб приложения.
             </p>
         </div>
 

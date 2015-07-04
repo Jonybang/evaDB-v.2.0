@@ -12,82 +12,80 @@ Rails.application.routes.draw do
   resources :users
   resources :sessions
 
-  resources :project_resources
-  resources :resource_types
+  # get '/manager/' => 'manager#index'
+  # get 'manager/projects'
+  # get 'manager/cabinet', :as => 'cabinet'
 
-  get '/manager/' => 'manager#index'
-  get 'manager/projects'
-  get 'manager/cabinet', :as => 'cabinet'
+  scope '/api' do
 
-  resources :partners
+    resources :project_resources
+    resources :resource_types
+    resources :partners
 
-  resources :event_documents
+    resources :event_documents
 
-  resources :events
+    resources :events
 
-  resources :finance_programs
+    resources :finance_programs
 
-  resources :currencies
+    resources :currencies
 
-  resources :finance_sources
+    resources :finance_sources
 
-  resources :projects, :defaults => {format: :json} do
-    resources :project_tasks, :defaults => {format: :json}
+    resources :projects, :defaults => {format: :json} do
+      resources :project_tasks, :defaults => {format: :json}
+    end
+
+    resources :project_statuses
+
+    resources :project_directions
+
+    resources :equip_statuses
+
+    resources :intellect_types
+
+    resources :intellect_properties
+
+    resources :socnet_links
+
+    resources :socnets
+
+    resources :theses
+
+    resources :papers
+
+    resources :degrees
+
+    resources :ranks
+
+    resources :scientists
+
+    resources :rooms
+
+    resources :subunits
+
+    resources :equips
+
+    resources :specialties
+
+    resources :faculties
+
+    resources :universities
+
+    resources :students
+
+    resources :industries
+
+    resources :workposts
+
+    resources :skills
+
+    resources :organizations
+
+    resources :contact_data
+
+    resources :links
   end
-
-  resources :contacts do
-    resources :projects
-  end
-
-  resources :project_statuses
-
-  resources :project_directions
-
-  resources :equip_statuses
-
-  resources :intellect_types
-
-  resources :intellect_properties
-
-  resources :socnet_links
-
-  resources :socnets
-
-  resources :theses
-
-  resources :papers
-
-  resources :degrees
-
-  resources :ranks
-
-  resources :scientists
-
-  resources :rooms
-
-  resources :subunits
-
-  resources :equips
-
-  resources :specialties
-
-  resources :faculties
-
-  resources :universities
-
-  resources :students
-
-  resources :industries
-
-  resources :workposts
-
-  resources :skills
-
-  resources :organizations
-
-  resources :contact_data
-
-  resources :links
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with 'rake routes'.
 
@@ -144,4 +142,6 @@ Rails.application.routes.draw do
   #   end
   mount RailsAdmin::Engine => '/adminpanel', :as => 'rails_admin'
   #root :to => redirect('/adminpanel')
+
+  get '*path' => 'application#index'
 end

@@ -23,4 +23,3 @@ class ProjectsController < InheritsController
       end
     end
 end
-

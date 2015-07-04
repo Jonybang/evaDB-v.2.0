@@ -14,7 +14,7 @@ angular.module('app', ['ngResource', 'ngRoute', 'app.loading'])
             $routeProvider
                     .when('/',          {controller: 'ProjectIndexController',    templateUrl: '<%= asset_path('angular/templates/index.html') %>'})
                     .when('/project/new', {controller: 'ProjectCreateController',   templateUrl: '<%= asset_path('angular/templates/new.html') %>'})
-                    .when('/project/:id', {controller: 'ProjectShowController',     templateUrl: '<%= asset_path('angular/templates/show.html') %>'})
+                    //.when('/project/:id', {controller: 'ProjectShowController',     templateUrl: '<%= asset_path('angular/templates/show.html') %>'})
                     .otherwise({redirectTo: '/'});
-            //$locationProvider.html5Mode(true);
+            $locationProvider.html5Mode(true);
         }]);

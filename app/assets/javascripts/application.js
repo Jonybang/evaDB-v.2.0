@@ -23,7 +23,7 @@
 //= require bootstrap
 //= require bootstrap-formhelpers.min
 //= require bootstrap-formhelpers-phone
-//= require turbolinks
+// require turbolinks
 //= require angular/app.js.erb
 //= require_tree ./angular
 

@@ -16,7 +16,7 @@
         <table class="table table-hover">
             <!-- This will create a row for every item within our items object (both of these refer to the forums -->
             <tr ng-repeat="item in items">
-                <td width="100%"><a href="#/project/{{item.id}}">{{item.name}}</a></td>
+                <td width="100%"><a href="project/{{item.id}}">{{item.name}}</a></td>
 
                 <!-- When the user clicks this button it will call the 'destory()' method within the controller -->
                 <td>
@@ -31,7 +31,7 @@
 
     <div class="span3">
 
-        <a href="#/project/new" class="btn btn-primary btn-block btn-large">Добавить проект</a>
+        <a href="project/new" class="btn btn-primary btn-block btn-large">Добавить проект</a>
         
         <br />
 

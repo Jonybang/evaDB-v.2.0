@@ -2,7 +2,7 @@
  * Created by jonybang on 04.07.15.
  */
 angular.module('app')
-    .factory('User', function($http, $q) {
+    .factory('User', ['$http', function($http) {
         var service = {
             get_id: function() {
                 return $http.get('/user_id')
@@ -18,4 +18,4 @@ angular.module('app')
             }
         };
         return service;
-    });
+}]);

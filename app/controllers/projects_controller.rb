@@ -1,7 +1,7 @@
 class ProjectsController < InheritsController
   before_filter :load_contact
   def index
-    #@collection = Project.where(params[:project])
+    #@collection = Project.where(params)
     @collection = Project.where(:chief_id => params[:chief_id])
     # if @contact
     #   @projects = @contact.projects.all

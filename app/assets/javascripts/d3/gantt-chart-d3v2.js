@@ -146,7 +146,7 @@ d3.gantt = function() {
             .attr("rx", 5)
             .attr("ry", 5)
             .attr("fill", function(d){
-                if(taskStatus[d.status] == null){ return "bar";}
+                if(taskStatus[d.status] == null){ return "grey";}
                 return taskStatus[d.status];
             });
     }

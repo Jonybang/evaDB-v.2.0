@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       resources :project_tasks, :defaults => {format: :json}
     end
 
-    resources :project_statuses
+    resources :project_statuses, :defaults => {format: :json}
 
     resources :project_directions
 

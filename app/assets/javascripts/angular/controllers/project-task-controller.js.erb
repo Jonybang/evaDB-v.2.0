@@ -10,9 +10,23 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', '$ro
     var project_id = $routeParams.id;
     $scope.project_tasks = ProjectTask.query({project_id: project_id})
 
-    $scope.project_tasks.$promise.then(function(){
-        Gantt.init($scope.project_tasks);
-    });
+    if($scope.project_tasks.$promise)
+        $scope.project_tasks.$promise.then(function(){
+            Gantt.init($scope.project_tasks);
+        });
+
+    $scope.destroy = function(task) {
+        ProjectTask.remove({id: task.id, project_id: project_id}, function() {
+            //If successful, remove it from our collection
+            $scope.project_tasks.some(function(obj, index){
+                if(obj.id == task.id){
+                    $scope.project_tasks.splice(index, 1);
+                }
+                return obj.id == task.id;
+            });
+            Gantt.redraw($scope.project_tasks);
+        });
+    };
 
     $scope.edit = function (task){
         var task_id;
@@ -39,36 +53,41 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', '$ro
             if(result.isNew)
                 $scope.project_tasks.unshift(result);
             else {
-                $scope.project_tasks.filter(function(obj, index){
-                    var accordance = obj.id == task_id;
-                    if(accordance){
+                $scope.project_tasks.some(function(obj, index){
+                    if(obj.id == task_id){
                         angular.extend($scope.project_tasks[index], result);
                     }
                     return obj.id == task_id;
                 })
             }
+            Gantt.redraw($scope.project_tasks);
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });
     }
 }]);
 
-app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', '$routeParams', '$modalInstance', 'inputs', function($scope, ProjectTask, $routeParams, $modalInstance, inputs) {
-    //TODO: Заставить работать редактирование существующей задачи
+app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', 'ProjectStatus', '$routeParams', '$modalInstance', 'inputs', function($scope, ProjectTask, ProjectStatus, $routeParams, $modalInstance, inputs) {
     $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id}) : {};
 
     $scope.task.project_id = inputs.project_id;
 
-    if($scope.task.$promise){
+    if($scope.task.$promise)
         $scope.task.$promise.then(function(){
             $scope.task.begin_date = $scope.task.begin_date ? new Date($scope.task.begin_date) : '';
             $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
-        })
-    }
+            $scope.task.project_status_id = $scope.task.project_status.id;
+        });
+
+    $scope.statuses = ProjectStatus.query();
 
     $scope.save = function() {
         //TODO: Сделать валидацию
         var obj, isNew = $scope.task.id ? false : true;
+        $scope.task.project_status = $scope.statuses.filter(function(obj){
+            return obj.id == $scope.task.project_status_id;
+        })[0];
+
         if(isNew)
             obj = new ProjectTask($scope.task);
         else

@@ -3,9 +3,11 @@
  */
 angular.module('app')
     .factory('Gantt', ['$http', function($http) {
-        var tasks = [];
-        var taskStatus = {};
-        var taskNames = [];
+        var data = {
+            tasks: [],
+            taskStatuses: {},
+            taskNames: []
+        };
 
         var gantt = {};
 
@@ -16,12 +18,18 @@ angular.module('app')
         };
 
         var funcs = {
+            resetData: function(){
+                data = {
+                    tasks: [],
+                    taskStatuses: {},
+                    taskNames: []
+                };
+            },
             getEndDate: function(){
                 var lastEndDate = Date.now();
-                if (tasks.length > 0) {
-                    lastEndDate = tasks[tasks.length - 1].endDate;
+                if (data.tasks.length > 0) {
+                    lastEndDate = data.tasks[data.tasks.length - 1].endDate;
                 }
-
                 return lastEndDate;
             },
             changeTimeDomain : function (timeDomainString) {
@@ -64,16 +72,12 @@ angular.module('app')
                 }
                 gantt.timeDomain([ d3.time[level].offset(this.getEndDate(), number), this.getEndDate() ]);
                 gantt.tickFormat(format);
-                gantt.redraw(tasks);
-            }
-        };
+                gantt.redraw(data.tasks);
+            },
+            convertTasks: function(tasks) {
+                this.resetData();
 
-        var service = {
-            init: function (initTasks, element){
-                //    var tasks = [
-                //        {"startDate":new Date("Sun Dec 09 01:36:45 EST 2012"),"endDate":new Date("Sun Dec 09 02:36:45 EST 2012"),"taskName":"E Job","status":"RUNNING"}];
-
-                initTasks.sort(function(a,b){
+                tasks.sort(function(a, b){
                     if(a.begin_date < b.begin_date)
                         return -1;
                     else if(a.begin_date > b.begin_date)
@@ -82,7 +86,7 @@ angular.module('app')
                         return 0;
                 });
 
-                tasks = initTasks.map(function(item){
+                data.tasks = tasks.map(function(item){
                     var task ={
                         "startDate":new Date(item.begin_date),
                         "endDate":new Date(item.end_date),
@@ -93,22 +97,19 @@ angular.module('app')
                     function searchTaskName(task_name){
                         return task_name == item.name;
                     }
-                    if(!taskNames.some(searchTaskName)){
-                        taskNames.push(item.name);
+                    if(!data.taskNames.some(searchTaskName)){
+                        data.taskNames.push(item.name);
                     }
-                    if(!taskStatus[item.project_status.name]){
-                        taskStatus[item.project_status.name] = item.project_status.color;
+                    if(!data.taskStatuses[item.project_status.name]){
+                        data.taskStatuses[item.project_status.name] = item.project_status.color;
                     }
                     return task;
                 });
-                //    var taskStatus = {
-                //        "SUCCEEDED" : "bar",
-                //        "FAILED" : "bar-failed",
-                //        "RUNNING" : "bar-running",
-                //        "KILLED" : "bar-killed"
-                //    };
-                //
-                //    var taskNames = [ "D Job", "P Job", "E Job", "A Job", "N Job" ];
+            }
+        };
+
+        var service = {
+            init: function (initTasks){
 
 //                tasks.sort(function(a, b) {
 //                    return a.endDate - b.endDate;
@@ -118,20 +119,21 @@ angular.module('app')
 //                    return a.startDate - b.startDate;
 //                });
 //                var minDate = tasks[0].startDate;
+                funcs.convertTasks(initTasks);
 
                 gantt = d3.gantt()
                     .containerId(options.containerId)
-                    .taskTypes(taskNames)
-                    .taskStatus(taskStatus)
+                    .taskTypes(data.taskNames)
+                    .taskStatus(data.taskStatuses)
                     .tickFormat(options.format)
-                    .height(taskNames.length * 100)
+                    .height(data.taskNames.length * 100)
                     .width(document.getElementById(options.containerId).offsetWidth - 120);
 
 
                 gantt.timeDomainMode("fit");
 //    changeTimeDomain(timeDomainString);
 
-                gantt();
+                gantt(data.tasks);
 
                 funcs.changeTimeDomain(options.timeDomainString);
 
@@ -141,9 +143,9 @@ angular.module('app')
                 var lastEndDate = funcs.getEndDate();
                 var taskStatusKeys = Object.keys(taskStatus);
                 var taskStatusName = taskStatusKeys[Math.floor(Math.random() * taskStatusKeys.length)];
-                var taskName = taskNames[Math.floor(Math.random() * taskNames.length)];
+                var taskName = data.taskNames[Math.floor(Math.random() * data.taskNames.length)];
 
-                tasks.push({
+                data.tasks.push({
                     "startDate" : d3.time.day.offset(lastEndDate, Math.ceil(1 * Math.random())),
                     "endDate" : d3.time.day.offset(lastEndDate, (Math.ceil(Math.random() * 5)) + 1),
                     "taskName" : taskName,
@@ -151,13 +153,33 @@ angular.module('app')
                 });
 
                 funcs.changeTimeDomain(options.timeDomainString);
-                gantt.redraw(tasks);
+                gantt.redraw(data.tasks);
             },
             removeTask:function (id) {
-                tasks.pop();
+                data.tasks.pop();
                 funcs.changeTimeDomain(options.timeDomainString);
-                gantt.redraw(tasks);
+                gantt.redraw(data.tasks);
+            },
+            redraw: function(tasks){
+                funcs.convertTasks(tasks);
+                gantt
+                    .taskTypes(data.taskNames)
+                    .taskStatus(data.taskStatuses)
+                    .redraw(data.tasks);
             }
         };
         return service;
     }]);
+
+//    var tasks = [
+//        {"startDate":new Date("Sun Dec 09 01:36:45 EST 2012"),"endDate":new Date("Sun Dec 09 02:36:45 EST 2012"),"taskName":"E Job","status":"RUNNING"}];
+
+
+//    var taskStatus = {
+//        "SUCCEEDED" : "bar",
+//        "FAILED" : "bar-failed",
+//        "RUNNING" : "bar-running",
+//        "KILLED" : "bar-killed"
+//    };
+//
+//    var taskNames = [ "D Job", "P Job", "E Job", "A Job", "N Job" ];

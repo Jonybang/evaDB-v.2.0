@@ -25,6 +25,9 @@
 //= require bootstrap-formhelpers.min
 //= require bootstrap-formhelpers-phone
 // require turbolinks
+//= require d3.min
+//= require d3/text-wrap
+//= require d3/gantt-chart-d3v2
 //= require angular/app.js.erb
 //= require_tree ./angular
 

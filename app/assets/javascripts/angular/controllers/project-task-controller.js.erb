@@ -5,10 +5,14 @@
 
 var app = angular.module('app');
 
-app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams', '$modal', function($scope, ProjectTask, $routeParams, $modal) {
+app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', '$routeParams', '$modal', function($scope, ProjectTask, Gantt, $routeParams, $modal) {
     //Grab all the comments from the server
     var project_id = $routeParams.id;
-    $scope.project_tasks = ProjectTask.query({project_id: project_id});
+    $scope.project_tasks = ProjectTask.query({project_id: project_id})
+
+    $scope.project_tasks.$promise.then(function(){
+        Gantt.init($scope.project_tasks);
+    });
 
     $scope.edit = function (task){
         var task_id;

@@ -39,6 +39,12 @@ a.navbar-brand{
 .nav-container{
   padding: 0 15px;
 }
+#svg-gantt {
+  font-size: 10px;
+  .chart {
+    margin-left: -40px;
+  }
+}
 .gantt-chart .task text{
   font-size: 10px;
 }

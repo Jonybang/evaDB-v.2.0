@@ -82,6 +82,11 @@ app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', 'ProjectSt
     $scope.statuses = ProjectStatus.query();
 
     $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+
+        if (!$scope.taskForm.$valid) {
+            return;
+        }
         //TODO: Сделать валидацию
         var obj, isNew = $scope.task.id ? false : true;
         $scope.task.project_status = $scope.statuses.filter(function(obj){

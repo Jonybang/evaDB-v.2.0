@@ -24,6 +24,7 @@
 //= require bootstrap
 //= require bootstrap-formhelpers.min
 //= require bootstrap-formhelpers-phone
+//= require showErrors.min
 // require turbolinks
 //= require d3.min
 //= require d3/text-wrap

@@ -15,6 +15,7 @@
 //= require angular.min
 //= require angular-resource.min
 //= require angular-route.min
+//= require ui-bootstrap-tpls-0.13.0.min
 //= require jquery_ujs
 //= require jquery.validate.min
 //= require jquery_nested_form

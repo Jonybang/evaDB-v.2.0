@@ -9,7 +9,7 @@
 
  Our module will be called 'app'.
  */
-angular.module('app', ['ngResource', 'ngRoute', 'app.loading', 'angularModalService'])
+angular.module('app', ['ngResource', 'ngRoute', 'app.loading', 'ui.bootstrap'])
         .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
             $routeProvider
                     .when('/',          {controller: 'ProjectIndexController',    templateUrl: '<%= asset_path('angular/templates/index.html') %>'})

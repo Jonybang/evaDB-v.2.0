@@ -10,10 +10,10 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams
     var project_id = $routeParams.id;
     $scope.project_tasks = ProjectTask.query({project_id: project_id});
 
-    $scope.edit = function (index){
+    $scope.edit = function (task){
         var task_id;
-        if(index || index === 0)
-            task_id = $scope.project_tasks[index].id;
+        if(task)
+            task_id = task.id;
 
         var modalInstance = $modal.open({
             animation: true,
@@ -32,11 +32,18 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams
 
         modalInstance.result.then(function (result) {
             //$scope.selected = selectedItem;
+            //TODO: вынести в сервис
             if(result.isNew)
                 $scope.project_tasks.unshift(result);
-            else
-                angular.extend($scope.project_tasks[index], result);
-
+            else {
+                $scope.project_tasks.filter(function(obj, index){
+                    var accordance = obj.id == task_id;
+                    if(accordance){
+                        angular.extend($scope.project_tasks[index], result);
+                    }
+                    return obj.id == task_id;
+                })
+            }
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });
@@ -48,6 +55,14 @@ app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', '$routePar
     //TODO: Заставить работать редактирование существующей задачи
     $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id}) : {};
 
+    $scope.task.project_id = inputs.project_id;
+
+    if($scope.task.$promise){
+        $scope.task.$promise.then(function(){
+            $scope.task.begin_date = $scope.task.begin_date ? new Date($scope.task.begin_date) : '';
+            $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
+        })
+    }
     //Define a 'save' method which will be called from the view.
     $scope.save = function() {
         //Create the comment object to be sent to the server
@@ -60,13 +75,14 @@ app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', '$routePar
             obj = ProjectTask.update({ id: inputs.task_id, project_id: inputs.project_id }, $scope.task);
 
         function success (result){
+            var task = result.resource ? result.resource : result;
             //TODO: ответ приходит с _id, а нужно сделать чтобы приходил с id
-            if(result._id)
-                result.id = result._id;
-            
-            result.isNew = isNew;
+            if(task._id)
+                task.id = task._id;
 
-            $modalInstance.close(result);
+            task.isNew = isNew;
+
+            $modalInstance.close(task);
         }
         function error (info){
             $scope.errors = info.data.errors;

@@ -11,8 +11,8 @@ angular.module('app')
 
         var options = {
             containerId: 'svg-gantt',
-            timeDomainString : '2month',
-            format: "%H:%M"
+            timeDomainString : '6month',
+            format: "%d %b"
         };
 
         var funcs = {
@@ -73,19 +73,28 @@ angular.module('app')
                 //    var tasks = [
                 //        {"startDate":new Date("Sun Dec 09 01:36:45 EST 2012"),"endDate":new Date("Sun Dec 09 02:36:45 EST 2012"),"taskName":"E Job","status":"RUNNING"}];
 
+                initTasks.sort(function(a,b){
+                    if(a.begin_date < b.begin_date)
+                        return -1;
+                    else if(a.begin_date > b.begin_date)
+                        return 1;
+                    else
+                        return 0;
+                });
+
                 tasks = initTasks.map(function(item){
                     var task ={
                         "startDate":new Date(item.begin_date),
                         "endDate":new Date(item.end_date),
-                        "taskName": item.contact.name,
+                        "taskName": item.name,
                         "status": item.project_status.name,
                         "title": item.name
                     };
                     function searchTaskName(task_name){
-                        return task_name == item.contact.name;
+                        return task_name == item.name;
                     }
                     if(!taskNames.some(searchTaskName)){
-                        taskNames.push(item.contact.name);
+                        taskNames.push(item.name);
                     }
                     if(!taskStatus[item.project_status.name]){
                         taskStatus[item.project_status.name] = item.project_status.color;
@@ -101,14 +110,14 @@ angular.module('app')
                 //
                 //    var taskNames = [ "D Job", "P Job", "E Job", "A Job", "N Job" ];
 
-                tasks.sort(function(a, b) {
-                    return a.endDate - b.endDate;
-                });
-                var maxDate = tasks[tasks.length - 1].endDate;
-                tasks.sort(function(a, b) {
-                    return a.startDate - b.startDate;
-                });
-                var minDate = tasks[0].startDate;
+//                tasks.sort(function(a, b) {
+//                    return a.endDate - b.endDate;
+//                });
+//                var maxDate = tasks[tasks.length - 1].endDate;
+//                tasks.sort(function(a, b) {
+//                    return a.startDate - b.startDate;
+//                });
+//                var minDate = tasks[0].startDate;
 
                 gantt = d3.gantt()
                     .containerId(options.containerId)
@@ -119,12 +128,12 @@ angular.module('app')
                     .width(document.getElementById(options.containerId).offsetWidth - 120);
 
 
-                gantt.timeDomainMode("fixed");
+                gantt.timeDomainMode("fit");
 //    changeTimeDomain(timeDomainString);
 
                 gantt();
 
-                funcs.changeTimeDomain("2month");
+                funcs.changeTimeDomain(options.timeDomainString);
 
             },
             addTask: function (task) {

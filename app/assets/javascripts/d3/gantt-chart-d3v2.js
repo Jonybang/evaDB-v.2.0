@@ -49,14 +49,27 @@ d3.gantt = function() {
                 timeDomainEnd = d3.time.hour.offset(new Date(), +3);
                 return;
             }
-            tasks.sort(function(a, b) {
-                return a.endDate - b.endDate;
+            var tasksToSort = [];
+            angular.copy(tasks, tasksToSort);
+            function compareDates(a, b, field){
+                var firstDate, secondDate;
+                if(Object.prototype.toString.call(a[field]) === '[object Date]'){
+                    firstDate = a[field].getTime();
+                    secondDate = b[field].getTime();
+                } else {
+                    firstDate = a[field];
+                    secondDate = b[field];
+                }
+                return firstDate - secondDate;
+            }
+            tasksToSort.sort(function(a, b) {
+                return compareDates(a, b, 'endDate');
             });
-            timeDomainEnd = tasks[tasks.length - 1].endDate;
-            tasks.sort(function(a, b) {
-                return a.startDate - b.startDate;
+            timeDomainEnd = tasksToSort[tasksToSort.length - 1].endDate;
+            tasksToSort.sort(function(a, b) {
+                return compareDates(a, b, 'startDate');
             });
-            timeDomainStart = tasks[0].startDate;
+            timeDomainStart = tasksToSort[0].startDate;
         }
     };
 
@@ -88,7 +101,6 @@ d3.gantt = function() {
             .orient("left")
             .ticks(8, "%");
     };
-    initAxis();
 
     function gantt(tasks) {
         initTimeDomain(tasks);

@@ -12,9 +12,9 @@
 angular.module('app', ['ngResource', 'ngRoute', 'app.loading', 'ui.bootstrap'])
         .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
             $routeProvider
-                    .when('/',          {controller: 'ProjectIndexController',    templateUrl: '<%= asset_path('angular/templates/index.html') %>'})
-                    .when('/project/new', {controller: 'ProjectCreateController',   templateUrl: '<%= asset_path('angular/templates/new.html') %>'})
-                    .when('/project/:id', {controller: 'ProjectShowController',     templateUrl: '<%= asset_path('angular/templates/show.html') %>'})
+                    .when('/',          {controller: 'ProjectIndexController',    templateUrl: '<%= asset_path('angular/templates/project/index.html') %>'})
+                    .when('/project/new', {controller: 'ProjectCreateController',   templateUrl: '<%= asset_path('angular/templates/project/new.html') %>'})
+                    .when('/project/:id', {controller: 'ProjectShowController',     templateUrl: '<%= asset_path('angular/templates/project/show.html') %>'})
                     .otherwise({redirectTo: '/'});
             $locationProvider.html5Mode(true);
         }]);

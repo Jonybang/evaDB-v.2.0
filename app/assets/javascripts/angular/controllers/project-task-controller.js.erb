@@ -17,7 +17,7 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams
 
         var modalInstance = $modal.open({
             animation: true,
-            templateUrl: '<%= asset_path('angular/templates/modals/project-task-form.html') %>',
+            templateUrl: '<%= asset_path('angular/templates/project/modals/project-task-form.html') %>',
             controller: 'ProjectTaskFormController',
             //size: size,
             resolve: {
@@ -31,7 +31,6 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams
         });
 
         modalInstance.result.then(function (result) {
-            //$scope.selected = selectedItem;
             //TODO: вынести в сервис
             if(result.isNew)
                 $scope.project_tasks.unshift(result);
@@ -51,7 +50,6 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', '$routeParams
 }]);
 
 app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', '$routeParams', '$modalInstance', 'inputs', function($scope, ProjectTask, $routeParams, $modalInstance, inputs) {
-    //Grab all the comments from the server
     //TODO: Заставить работать редактирование существующей задачи
     $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id}) : {};
 
@@ -63,12 +61,10 @@ app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', '$routePar
             $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
         })
     }
-    //Define a 'save' method which will be called from the view.
+
     $scope.save = function() {
-        //Create the comment object to be sent to the server
         //TODO: Сделать валидацию
-        var isNew = $scope.task.id ? false : true;
-        var obj;
+        var obj, isNew = $scope.task.id ? false : true;
         if(isNew)
             obj = new ProjectTask($scope.task);
         else
@@ -87,7 +83,6 @@ app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', '$routePar
         function error (info){
             $scope.errors = info.data.errors;
         }
-        //Attempt a save to the back-end
         if(isNew)
             obj.$save(success, error);
         else

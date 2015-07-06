@@ -23,7 +23,7 @@ html ng-app="app"
                 | Главная
             -if current_user
               li
-                =link_to 'Админка', rails_admin_path
+                =link_to 'Админка', rails_admin_path, target: "_blank"
             /li.last.dropdown
             /  a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" href="#" role="button"
             /    | Связаться с нами

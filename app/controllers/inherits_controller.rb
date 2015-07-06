@@ -8,9 +8,11 @@ class InheritsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    create! do
-      redirect_to :action => :show
-    end
+    create! { @resource }
+    # create! do
+    #   get_resource
+    #   redirect_to @resource
+    # end
   end
   protected
     def get_collection

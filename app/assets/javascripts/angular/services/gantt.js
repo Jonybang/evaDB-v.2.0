@@ -9,7 +9,7 @@ angular.module('app')
             taskNames: []
         };
 
-        var gantt = {};
+        var gantt;
 
         var options = {
             containerId: 'svg-gantt',
@@ -161,11 +161,15 @@ angular.module('app')
                 gantt.redraw(data.tasks);
             },
             redraw: function(tasks){
-                funcs.convertTasks(tasks);
-                gantt
-                    .taskTypes(data.taskNames)
-                    .taskStatus(data.taskStatuses)
-                    .redraw(data.tasks);
+                if(gantt){
+                    funcs.convertTasks(tasks);
+                    gantt
+                        .taskTypes(data.taskNames)
+                        .taskStatus(data.taskStatuses)
+                        .redraw(data.tasks);
+                } else {
+                    this.init(tasks);
+                }
             }
         };
         return service;

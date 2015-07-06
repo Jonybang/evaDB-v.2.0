@@ -12,7 +12,8 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', '$ro
 
     if($scope.project_tasks.$promise)
         $scope.project_tasks.$promise.then(function(){
-            Gantt.init($scope.project_tasks);
+            if($scope.project_tasks.length)
+                Gantt.init($scope.project_tasks);
         });
 
     $scope.destroy = function(task) {

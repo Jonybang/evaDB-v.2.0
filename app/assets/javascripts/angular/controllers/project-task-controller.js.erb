@@ -5,31 +5,30 @@
 
 var app = angular.module('app');
 
-app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', '$routeParams', '$modal', function($scope, ProjectTask, Gantt, $routeParams, $modal) {
-    //Grab all the comments from the server
+app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', 'Helpers', '$routeParams', '$modal', function($scope, ProjectTask, Gantt, Helpers, $routeParams, $modal) {
     var project_id = $routeParams.id;
-    $scope.project_tasks = ProjectTask.query({project_id: project_id})
+    $scope.project_tasks = ProjectTask.query({project_id: project_id});
 
-    if($scope.project_tasks.$promise)
-        $scope.project_tasks.$promise.then(function(){
-            if($scope.project_tasks.length)
-                Gantt.init($scope.project_tasks);
-        });
+    $scope.project_tasks.$promise.then(function(){
+        if($scope.project_tasks.length)
+            Gantt.init($scope.project_tasks);
+    });
 
     $scope.destroy = function(task) {
         ProjectTask.remove({id: task.id, project_id: project_id}, function() {
-            //If successful, remove it from our collection
-            $scope.project_tasks.some(function(obj, index){
-                if(obj.id == task.id){
-                    $scope.project_tasks.splice(index, 1);
-                }
-                return obj.id == task.id;
-            });
+            Helpers.removeById($scope.project_tasks, task.id);
+
             Gantt.redraw($scope.project_tasks);
         });
     };
 
-    $scope.edit = function (task){
+    $scope.newOrEdit = function (task, parent_task_id){
+        //Добавляет или редактирует задачу или подзадачу
+        //Если задача передана(task) - то редактируем её
+        //Если нет - то создаем новую задачу в текущем проекте
+        //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
+        //то задача добавляется подзадачей в родительскую
+
         var task_id;
         if(task)
             task_id = task.id;
@@ -43,38 +42,50 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', '$ro
                 inputs: function(){
                     return {
                         project_id: project_id,
-                        task_id: task_id
+                        task_id: task_id,
+                        parent_task_id: parent_task_id
                     };
                 }
             }
         });
 
         modalInstance.result.then(function (result) {
-            //TODO: вынести в сервис
-            if(result.isNew)
-                $scope.project_tasks.unshift(result);
-            else {
-                $scope.project_tasks.some(function(obj, index){
-                    if(obj.id == task_id){
-                        angular.extend($scope.project_tasks[index], result);
-                    }
-                    return obj.id == task_id;
-                })
+            //Если это задача не является подзадачей
+            if(!parent_task_id){
+                //добавляем её в проект
+                Helpers.addOrReplace($scope.project_tasks, result, task_id);
             }
+            else{
+                //иначе, добавляем её в родительскую задачу
+                Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
+            }
+
             Gantt.redraw($scope.project_tasks);
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });
+    };
+    $scope.getSubTasks = function (parent_task){
+        parent_task.child_tasks = ProjectTask.query({project_id: project_id, parent_task_id: parent_task.id });
     }
 }]);
 
 app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', 'ProjectStatus', '$routeParams', '$modalInstance', 'inputs', function($scope, ProjectTask, ProjectStatus, $routeParams, $modalInstance, inputs) {
-    $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id}) : {};
+    //Если это задача не является подзадачей
+    if(!inputs.parent_task_id){
+        //Ищем её по id проекта
+        $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id}) : {};
+    } else {
+        //Иначе ищем её по id родительской задачи
+        $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id, parent_task_id: inputs.parent_task_id}) : {};
+        $scope.task.parent_task_id = inputs.parent_task_id;
+    }
 
     $scope.task.project_id = inputs.project_id;
 
     if($scope.task.$promise)
         $scope.task.$promise.then(function(){
+            //TODO: вынести в сервис
             $scope.task.begin_date = $scope.task.begin_date ? new Date($scope.task.begin_date) : '';
             $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
             $scope.task.project_status_id = $scope.task.project_status.id;
@@ -84,11 +95,10 @@ app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', 'ProjectSt
 
     $scope.save = function() {
         $scope.$broadcast('show-errors-check-validity');
-
         if (!$scope.taskForm.$valid) {
             return;
         }
-        //TODO: Сделать валидацию
+
         var obj, isNew = $scope.task.id ? false : true;
         $scope.task.project_status = $scope.statuses.filter(function(obj){
             return obj.id == $scope.task.project_status_id;
@@ -101,11 +111,6 @@ app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', 'ProjectSt
 
         function success (result){
             var task = result.resource ? result.resource : result;
-            //TODO: ответ приходит с _id, а нужно сделать чтобы приходил с id
-            if(task._id)
-                task.id = task._id;
-
-            task.isNew = isNew;
 
             $modalInstance.close(task);
         }

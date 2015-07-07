@@ -13,25 +13,29 @@
 // require app_assets
 // require polyfiller
 //= require modernizr.min
+
 //= require jquery
+//= require jquery_ujs
+//= require select2
+//= require select2_locale_ru
+//= require jquery.validate.min
+//= require jquery_nested_form
+
 //= require angular.min
 //= require angular-date-picker-polyfill.min
+//= require showErrors.min
 //= require angular-resource.min
 //= require angular-route.min
 //= require ui-bootstrap-tpls-0.13.0.min
-//= require jquery_ujs
-//= require jquery.validate.min
-//= require jquery_nested_form
-//= require select2
-//= require select2_locale_ru
+
 //= require bootstrap
 //= require bootstrap-formhelpers.min
 //= require bootstrap-formhelpers-phone
-//= require showErrors.min
-// require turbolinks
+
 //= require d3.min
 //= require d3/text-wrap
 //= require d3/gantt-chart-d3v2
+
 //= require angular/app.js.erb
 //= require_tree ./angular
 

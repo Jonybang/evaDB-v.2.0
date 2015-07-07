@@ -56,3 +56,8 @@ a.navbar-brand{
 .no-margin {
   margin: 0;
 }
+.axis path,.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}

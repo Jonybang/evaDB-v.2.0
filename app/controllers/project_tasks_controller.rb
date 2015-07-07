@@ -9,7 +9,12 @@ class ProjectTasksController < InheritsController
   private
     def get_collection
       load_parent
-      @collection = @parent.project_tasks.all
+      if params[:parent_task_id].nil? || params[:parent_task_id].empty?
+        @collection = @parent.main_tasks
+      else
+        @collection = ProjectTask.find(params[:parent_task_id]).child_tasks
+      end
+
     end
     def project_task_params
       params.require(:project_task).permit!

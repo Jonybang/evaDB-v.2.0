@@ -11,6 +11,7 @@
 // about supported directives.
 //
 // require app_assets
+//= require polyfiller
 //= require jquery
 //= require angular.min
 //= require angular-resource.min
@@ -34,6 +35,7 @@
 
 // require manager
 
+webshim.polyfill('es5 mediaelement forms forms-ext');
 //$(document).on("ready page:load", function(){
 //    $('.eva-select').select2();
 //    $("form").validate();

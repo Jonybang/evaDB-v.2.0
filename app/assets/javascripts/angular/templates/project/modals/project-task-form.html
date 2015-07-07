@@ -50,7 +50,7 @@
         <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-default" ng-click="$dismiss()">Закрыть</button>
         <button type="submit" class="btn btn-primary">Сохранить задачу проекта</button>
     </div>
 </form>

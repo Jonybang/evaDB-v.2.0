@@ -11,9 +11,11 @@
 // about supported directives.
 //
 // require app_assets
-//= require polyfiller
+// require polyfiller
+//= require modernizr.min
 //= require jquery
 //= require angular.min
+//= require angular-date-picker-polyfill.min
 //= require angular-resource.min
 //= require angular-route.min
 //= require ui-bootstrap-tpls-0.13.0.min
@@ -35,7 +37,11 @@
 
 // require manager
 
-webshim.polyfill('es5 mediaelement forms forms-ext');
+//webshim.polyfill('es5 mediaelement forms forms-ext');
+//$(function(){
+//    webshim.polyfill('es5 mediaelement forms forms-ext');
+//});
+
 //$(document).on("ready page:load", function(){
 //    $('.eva-select').select2();
 //    $("form").validate();

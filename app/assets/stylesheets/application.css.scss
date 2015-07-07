@@ -11,6 +11,7 @@
  * file per style scope.
  *= require select2
  *= require select2-bootstrap
+ *= require angular-date-picker-polyfill-basic.min
  */
 @import 'bootstrap-sprockets';
 @import 'bootstrap';

@@ -71,3 +71,5 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 # gem to enable all heroku platform features
 # See https://devcenter.heroku.com/articles/rails-integration-gems for more information.
 gem 'rails_12factor'
+
+gem 'ng-rails-csrf'

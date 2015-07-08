@@ -27,6 +27,7 @@
 //= require angular-resource.min
 //= require angular-route.min
 //= require ui-bootstrap-tpls-0.13.0.min
+//= require ng-rails-csrf
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min

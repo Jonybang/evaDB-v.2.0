@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   # get 'manager/cabinet', :as => 'cabinet'
 
   scope '/api' do
+    resources :contacts, :defaults => {format: :json}
 
     resources :project_resources
     resources :resource_types

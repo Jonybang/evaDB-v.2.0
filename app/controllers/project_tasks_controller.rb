@@ -9,10 +9,12 @@ class ProjectTasksController < InheritsController
   private
     def get_collection
       load_parent
-      if params[:parent_task_id].nil? || params[:parent_task_id].empty?
+      if params[:parent_task_id]
+        @collection = ProjectTask.find(params[:parent_task_id]).child_tasks
+      elsif @parent
         @collection = @parent.main_tasks
       else
-        @collection = ProjectTask.find(params[:parent_task_id]).child_tasks
+        @collection = sort_and_paging ProjectTask.all
       end
 
     end
@@ -20,7 +22,9 @@ class ProjectTasksController < InheritsController
       params.require(:project_task).permit!
     end
     def load_parent
-      @parent = Project.find(params[:project_id])
+      if params[:project_id]
+        @parent = Project.find(params[:project_id])
+      end
     end
 end
 

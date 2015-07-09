@@ -1,7 +1,7 @@
 <h2>Проект: {{project.name}}</h2>
 <hr/>
 
-<div ng-controller="ProjectTasksController">
+<div ng-controller="ProjectTasksCtrl">
 
     <!-- This will only show when there's no items to let the user know there's purposefully nothing there.. -->
     <div ng-show="project_tasks.$resolved && project_tasks.length == 0">

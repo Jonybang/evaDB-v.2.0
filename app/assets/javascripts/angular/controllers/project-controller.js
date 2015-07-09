@@ -5,7 +5,7 @@
 
 var app = angular.module('app');
 
-app.controller('ProjectIndexController', ['$scope', 'Project', 'User', function($scope, Project, User) {
+app.controller('ProjectIndexCtrl', ['$scope', 'Project', 'User', function($scope, Project, User) {
     //Grab all forums from the server
     User.get_contact().then(function(result){
         $scope.contact = result;
@@ -23,7 +23,7 @@ app.controller('ProjectIndexController', ['$scope', 'Project', 'User', function(
     }
 }]);
 
-app.controller('ProjectCreateController', ['$scope', '$location', 'Project', 'User', function($scope, $location, Project, User) {
+app.controller('ProjectCreateCtrl', ['$scope', '$location', 'Project', 'User', function($scope, $location, Project, User) {
     //The save method which is called when the user wants to submit their data
     User.get_contact().then(function(result){
         $scope.contact = result;
@@ -49,7 +49,7 @@ app.controller('ProjectCreateController', ['$scope', '$location', 'Project', 'Us
 }]);
 
 //A controller to show the forum and all it's glory
-app.controller('ProjectShowController', ['$scope', 'Project', 'ProjectTask', '$routeParams', function($scope, Project, ProjectTask, $routeParams) {
+app.controller('ProjectShowCtrl', ['$scope', 'Project', 'ProjectTask', '$routeParams', function($scope, Project, ProjectTask, $routeParams) {
     //Grab the forum from the server
     $scope.project = Project.get({id: $routeParams.id})
 }]);

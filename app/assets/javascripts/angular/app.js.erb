@@ -12,9 +12,9 @@
 angular.module('app', ['ngResource', 'ngRoute', 'app.loading', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'angular-date-picker-polyfill', 'ng-rails-csrf'])
         .config(['$routeProvider', '$locationProvider', 'showErrorsConfigProvider', function($routeProvider, $locationProvider, showErrorsConfigProvider) {
             $routeProvider
-                    .when('/',          {controller: 'ProjectIndexController',    templateUrl: '<%= asset_path('angular/templates/project/index.html') %>'})
-                    .when('/project/new', {controller: 'ProjectCreateController',   templateUrl: '<%= asset_path('angular/templates/project/new.html') %>'})
-                    .when('/project/:id', {controller: 'ProjectShowController',     templateUrl: '<%= asset_path('angular/templates/project/show.html') %>'})
+                    .when('/',          {controller: 'ProjectIndexCtrl',    templateUrl: '<%= asset_path('angular/templates/project/index.html') %>'})
+                    .when('/project/new', {controller: 'ProjectCreateCtrl',   templateUrl: '<%= asset_path('angular/templates/project/new.html') %>'})
+                    .when('/project/:id', {controller: 'ProjectShowCtrl',     templateUrl: '<%= asset_path('angular/templates/project/show.html') %>'})
                     .otherwise({redirectTo: '/'});
             $locationProvider.html5Mode(true);
             showErrorsConfigProvider.showSuccess(true);

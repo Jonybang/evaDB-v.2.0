@@ -5,7 +5,7 @@
 
 var app = angular.module('app');
 
-app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', 'Helpers', '$routeParams', '$modal', function($scope, ProjectTask, Gantt, Helpers, $routeParams, $modal) {
+app.controller('ProjectTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers', '$routeParams', '$modal', function($scope, ProjectTask, Gantt, Helpers, $routeParams, $modal) {
     var project_id = $routeParams.id;
     $scope.project_tasks = ProjectTask.query({project_id: project_id});
 
@@ -36,7 +36,7 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', 'Hel
         var modalInstance = $modal.open({
             animation: true,
             templateUrl: '<%= asset_path('angular/templates/project/modals/project-task-form.html') %>',
-            controller: 'ProjectTaskFormController',
+            controller: 'ProjectTaskFormCtrl',
             //size: size,
             resolve: {
                 inputs: function(){
@@ -70,7 +70,7 @@ app.controller('ProjectTasksController', ['$scope', 'ProjectTask', 'Gantt', 'Hel
     }
 }]);
 
-app.controller('ProjectTaskFormController', ['$scope', 'ProjectTask', 'ProjectStatus', '$routeParams', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, $routeParams, $modalInstance, inputs, Helpers) {
+app.controller('ProjectTaskFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', '$routeParams', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, $routeParams, $modalInstance, inputs, Helpers) {
     //Если это задача не является подзадачей
     if(!inputs.parent_task_id){
         //Ищем её по id проекта

@@ -16,6 +16,7 @@ gem 'sorted-mongoid'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'sass-rails', '>= 3.2'
 gem 'quiet_assets', group: :development
+gem "font-awesome-rails"
 #gem 'js_assets'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

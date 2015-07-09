@@ -251,6 +251,7 @@ DEPENDENCIES
   byebug
   cancan
   coffee-rails (~> 4.1.0)
+  font-awesome-rails
   inherited_resources!
   jquery-rails
   mongoid (~> 4.0.0)

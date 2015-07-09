@@ -14,12 +14,15 @@
 // require polyfiller
 //= require modernizr.min
 
+//= require moment-with-locales.min
+
 //= require jquery
 //= require jquery_ujs
 //= require select2
 //= require select2_locale_ru
 //= require jquery.validate.min
 //= require jquery_nested_form
+//= require jquery.noty.packaged.min
 
 //= require angular.min
 //= require angular-date-picker-polyfill.min
@@ -28,6 +31,7 @@
 //= require angular-route.min
 //= require ui-bootstrap-tpls-0.13.0.min
 //= require ng-rails-csrf
+//= require angular-moment.min
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min
@@ -61,3 +65,9 @@
 //        }
 //    });
 //});
+$(function(){
+    $('a.disabled').click(function(){
+        noty({text:"Извините, но в настоящее время данная функция недоступна. Сайт находится на стадии альфа."});
+        return false;
+    });
+});

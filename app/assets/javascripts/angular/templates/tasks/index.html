@@ -1,0 +1,46 @@
+<div class="btn-toolbar col-xs-12">
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 4 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 3 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 2 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 1 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+</div>
+<table class="table table-condensed col-xs-12">
+    <tr>
+        <th>Задачи</th>
+        <th>Проект</th>
+        <th>Доп. инфо.</th>
+    </tr>
+    <tr ng-repeat="task in tasks | orderBy:['end_date', 'project.name']">
+        <td>{{task.name}}<span class="pull-right label label-default" am-time-ago="task.end_date"></span></td>
+        <td>{{task.project.name}}</td>
+        <td><pre>{{task.description}}</pre></td>
+    </tr>
+</table>

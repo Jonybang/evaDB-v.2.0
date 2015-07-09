@@ -6,3 +6,6 @@ child(:project_status) { attributes :id, :name, :color }
 child :responsible => :contact do
     attributes :id, :name
 end
+child :project do
+    attributes :id, :name
+end

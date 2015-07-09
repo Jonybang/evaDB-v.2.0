@@ -2,20 +2,18 @@
  * Created by jonybang on 03.07.15.
  */
 'use strict';
-/*
- This is our main launch point from Angular. We'll put anything to do with the
- general well being of our app in this file. For now it'll basically just contain
- the routing information.
 
- Our module will be called 'app'.
- */
-angular.module('app', ['ngResource', 'ngRoute', 'app.loading', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'angular-date-picker-polyfill', 'ng-rails-csrf'])
+angular.module('app', ['ngResource', 'ngRoute', 'app.loading', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'angular-date-picker-polyfill', 'ng-rails-csrf', 'angularMoment', 'notyModule'])
         .config(['$routeProvider', '$locationProvider', 'showErrorsConfigProvider', function($routeProvider, $locationProvider, showErrorsConfigProvider) {
             $routeProvider
-                    .when('/',          {controller: 'ProjectIndexCtrl',    templateUrl: '<%= asset_path('angular/templates/project/index.html') %>'})
+                    .when('/',          {controller: 'TasksCtrl',    templateUrl: '<%= asset_path('angular/templates/tasks/index.html') %>'})
                     .when('/project/new', {controller: 'ProjectCreateCtrl',   templateUrl: '<%= asset_path('angular/templates/project/new.html') %>'})
                     .when('/project/:id', {controller: 'ProjectShowCtrl',     templateUrl: '<%= asset_path('angular/templates/project/show.html') %>'})
                     .otherwise({redirectTo: '/'});
             $locationProvider.html5Mode(true);
             showErrorsConfigProvider.showSuccess(true);
         }]);
+
+angular.module('app').run(['amMoment', function(amMoment) {
+    amMoment.changeLocale('ru');
+}]);

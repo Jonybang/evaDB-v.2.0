@@ -20,15 +20,25 @@ html ng-app="app"
           ul.nav.navbar-nav
             -if current_user
               li
-                a href="#" class="disabled" О компании
+                a href="#" class="disabled"
+                  =fa_icon 'info'
+                  | &nbsp; О компании
               li
-                a href="#" class="disabled" Управл. учет
+                a href="#" class="disabled"
+                  =fa_icon 'line-chart'
+                  | &nbsp; Управленческий учет
               li
-                =link_to 'БД', rails_admin_path, target: "_blank"
+                =link_to rails_admin_path, target: "_blank" do
+                  =fa_icon 'database'
+                  | &nbsp; База данных
               li
-                a href="#" class="disabled" Файлы
+                a href="#" class="disabled"
+                  =fa_icon 'skyatlas'
+                  | &nbsp; Файлы
               li
-                a href="#" class="disabled" Настройки
+                a href="#" class="disabled"
+                  =fa_icon 'cogs'
+                  | &nbsp; Настройки
             -else
               li.first.dropdown
                 a href="/" title="Главная"
@@ -53,5 +63,5 @@ html ng-app="app"
                 =link_to 'Зарегистрироваться', sign_up_path
               li
                 =link_to 'Войти', log_in_path
-    div class="col-md-offset-2 col-md-8" style="padding-top: 80px"
+    div class="col-md-offset-1 col-md-10" style="padding-top: 80px"
       = yield

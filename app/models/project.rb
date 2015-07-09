@@ -5,7 +5,7 @@ class Project
   field :description, type: String
   field :result, type: String
 
-  has_many :project_tasks, class_name: "ProjectTask"
+  has_many :project_tasks, class_name: "ProjectTask", dependent: :delete
   accepts_nested_attributes_for :project_tasks
 
   has_many :resources, class_name: "ProjectResource", inverse_of: :project

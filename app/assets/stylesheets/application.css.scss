@@ -12,9 +12,11 @@
  *= require select2
  *= require select2-bootstrap
  *= require angular-date-picker-polyfill-basic.min
+ *= require animate.min
  */
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+@import "font-awesome";
 /*@import 'manager';*/
 pre hr {
    border-top: 1px solid #cccccc;
@@ -60,4 +62,21 @@ a.navbar-brand{
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+.margin-bottom{
+  margin-bottom: 15px;
+}
+.right-panel {
+  & > .row{
+    margin-bottom: 15px;
+  }
+  .panel {
+    margin-bottom: 0;
+  }
+}
+a[disabled],a.disabled{
+  color: #B3B3B3 !important;
+}
+.nav-tabs, .btn-toolbar {
+  margin-bottom: 15px;
 }

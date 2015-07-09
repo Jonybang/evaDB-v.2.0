@@ -18,12 +18,21 @@ html ng-app="app"
             =image_tag "eva.png"
         .collapse.navbar-collapse
           ul.nav.navbar-nav
-            li.first.dropdown
-              a href="/" title="Главная"
-                | Главная
             -if current_user
               li
-                =link_to 'Админка', rails_admin_path, target: "_blank"
+                a href="#" class="disabled" О компании
+              li
+                a href="#" class="disabled" Управл. учет
+              li
+                =link_to 'БД', rails_admin_path, target: "_blank"
+              li
+                a href="#" class="disabled" Файлы
+              li
+                a href="#" class="disabled" Настройки
+            -else
+              li.first.dropdown
+                a href="/" title="Главная"
+                  | Главная
             /li.last.dropdown
             /  a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" href="#" role="button"
             /    | Связаться с нами

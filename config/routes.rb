@@ -32,9 +32,9 @@ Rails.application.routes.draw do
 
     resources :finance_sources
 
-    resources :projects, :defaults => {format: :json} do
-      resources :project_tasks, :defaults => {format: :json}
-    end
+    resources :projects, :defaults => {format: :json}
+
+    resources :project_tasks, :defaults => {format: :json}
 
     resources :project_statuses, :defaults => {format: :json}
 

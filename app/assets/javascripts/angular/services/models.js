@@ -10,8 +10,8 @@ app.factory('ProjectStatus', ['$resource', function($resource) {
 }]);
 
 app.factory('ProjectTask', ['$resource', 'Helpers', function($resource, Helpers) {
-    return $resource('/api/projects/:project_id/project_tasks/:id',
-        {project_id: '@project_id', id: '@id'},
+    return $resource('/api/project_tasks/:id',
+        {id: '@id'},
         {'update': {
             method: 'PUT',
             interceptor: {response: Helpers.parseDatesToStr}

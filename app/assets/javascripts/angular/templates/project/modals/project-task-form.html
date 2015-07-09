@@ -19,8 +19,8 @@
                 <label>Сроки</label>
             </div>
             <div class="col-md-6 col-lg-7">
-                от <input type="date" name="begin_date" ng-model="task.begin_date" class="form-control" required >
-                до <input type="date" name="end_date" ng-model="task.end_date" class="form-control" required >
+                от <input type="date" datepicker-popup is-open="opened" ng-click="opened=true" name="begin_date" ng-model="task.begin_date" class="form-control" datepickerLocaldate required/>
+                до <input type="date" name="end_date" ng-model="task.end_date" class="form-control" required />
             </div>
         </div>
         <div ng-repeat="error in errors.begin_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>

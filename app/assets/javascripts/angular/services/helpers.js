@@ -41,6 +41,15 @@ angular.module('app')
                     }
                     return obj.id == id;
                 });
+            },
+            parseDatesToStr: function (object) {
+                var key;
+                var data = object.resource ? object.resource : object;
+                for (key in data) {
+                    if(Object.prototype.toString.call(data[key]) === '[object Date]')
+                        data[key] = data[key].getFullYear() +'-'+ ("0" + (data[key].getMonth() + 1)).slice(-2) +'-'+ ("0" + data[key].getDate()).slice(-2);
+                }
+                return object;
             }
         };
         return service;

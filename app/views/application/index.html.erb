@@ -5,6 +5,7 @@
             <div class="panel-heading">Оперативная информация</div>
             <div class="panel-body">
                 <h3>Последние задачи</h3>
+                {{path}}
             </div>
 
             <!-- List group -->
@@ -13,12 +14,7 @@
             </ul>
         </div>
         <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#">Задачи</a></li>
-            <li role="presentation"><a href="#" disabled>Личный календарь</a></li>
-            <li role="presentation"><a href="#" disabled>Гант</a></li>
-            <li role="presentation"><a href="#" disabled>Проекты</a></li>
-            <li role="presentation"><a href="#" disabled>Ресурсы</a></li>
-            <li role="presentation"><a href="#" disabled>Бизнес процессы</a></li>
+            <li role="presentation" ng-repeat="tab in tabs" ng-click="active_tab = tab" ng-class="{'active':active_tab==tab}"><a ng-href="{{tab.link}}" ng-disabled="tab.disabled">{{tab.label}}</a></li>
         </ul>
         <div ng-view></div>
     </div>

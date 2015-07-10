@@ -7,8 +7,9 @@ angular.module('app', ['ngResource', 'ngRoute', 'app.loading', 'ui.bootstrap', '
         .config(['$routeProvider', '$locationProvider', 'showErrorsConfigProvider', function($routeProvider, $locationProvider, showErrorsConfigProvider) {
             $routeProvider
                     .when('/',          {controller: 'TasksCtrl',    templateUrl: '<%= asset_path('angular/templates/tasks/index.html') %>'})
-                    .when('/project/new', {controller: 'ProjectCreateCtrl',   templateUrl: '<%= asset_path('angular/templates/project/new.html') %>'})
-                    .when('/project/:id', {controller: 'ProjectShowCtrl',     templateUrl: '<%= asset_path('angular/templates/project/show.html') %>'})
+                    .when('/projects', {controller: 'ProjectsIndexCtrl',   templateUrl: '<%= asset_path('angular/templates/projects/index.html') %>'})
+                    .when('/projects/new', {controller: 'ProjectsCreateCtrl',   templateUrl: '<%= asset_path('angular/templates/projects/new.html') %>'})
+                    .when('/projects/:id', {controller: 'ProjectsShowCtrl',     templateUrl: '<%= asset_path('angular/templates/projects/show.html') %>'})
                     .otherwise({redirectTo: '/'});
             $locationProvider.html5Mode(true);
             showErrorsConfigProvider.showSuccess(true);

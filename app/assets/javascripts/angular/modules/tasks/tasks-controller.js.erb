@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app');
+var app = angular.module('app.tasks');
 
 app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'Helpers', '$state', '$modal', function($scope, ProjectTask, Helpers, $state, $modal) {
     var project_id = $state.id;

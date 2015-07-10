@@ -7,7 +7,7 @@
 
  @license Licensed under the MIT licenses: http://www.opensource.org/licenses/mit-license.php
  */
-angular.module('notyModule', []).provider('$noty', function () {
+angular.module('noty', []).provider('$noty', function () {
 //    var settings  = $.noty.defaults;
 //    angular.extend(settings, {
     angular.extend($.noty.defaults, {
@@ -20,21 +20,23 @@ angular.module('notyModule', []).provider('$noty', function () {
             close : 'animated flipOutX'
         }
     });
-    var settings  = $.noty.defaults;
+    var settings = $.noty.defaults;
 
     return {
         settings: settings,
         $get: function () {
-            var callNoty = function (newSettings) {
-                return noty(newSettings || {});
-            };
-
             return {
-                show: function (message, type) {
-                    callNoty({text: message || settings.text, type: type || settings.type});
+                show: function(options){
+                    var temp = {};
+                    angular.copy(settings, temp);
+                    angular.extend(temp, options)
+                    return noty(temp);
                 },
                 closeAll: function () {
                     return $.noty.closeAll()
+                },
+                closeById: function (_noty) {
+                    return $.noty.close(_noty.options.id)
                 },
                 clearShowQueue: function () {
                     return $.noty.clearQueue();

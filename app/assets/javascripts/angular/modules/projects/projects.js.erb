@@ -1,0 +1,25 @@
+/**
+ * Created by jonybang on 10.07.15.
+ */
+angular.module('app.projects', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'angular-date-picker-polyfill', 'ng-rails-csrf', 'angularMoment', 'noty', 'ui.router', 'ui.router.tabs'])
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider) {
+
+            <% @templates_path = 'angular/modules/projects/templates/' %>
+
+            $stateProvider
+                    .state('app.projects', {
+                        url: '/projects',
+                        abstract: true,
+                        template: '<ui-view/>'
+                    })
+                    .state('app.projects.index', {
+                        url: '',
+                        templateUrl: '<%= asset_path(@templates_path + 'index.html') %>',
+                        controller: 'ProjectsIndexCtrl'
+                    })
+                    .state('app.projects.new', {
+                        url: '/new',
+                        templateUrl: '<%= asset_path(@templates_path + 'new.html') %>',
+                        controller: 'ProjectsCreateCtrl'
+                    });
+        }]);

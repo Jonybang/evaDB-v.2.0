@@ -1,33 +1,51 @@
 /*
  Borrowed from: https://github.com/lavinjj/angularjs-spinner
  */
-angular.module('app.loading', [])
-    .config(['$httpProvider', function ($httpProvider) {
-    var $http,
-        interceptor = ['$q', '$injector', function ($q, $injector) {
-            function success(response) {
-                // get $http via $injector because of circular dependency problem
-                $http = $http || $injector.get('$http');
-                if($http.pendingRequests.length < 1) {
-                    $('#loading').hide();
+angular.module('app').factory('loadingInterceptor', ['$q', '$rootScope', '$noty', '$location', 'debounce',
+    function ($q, $rootScope, $noty, $location, debounce) {
+        function timeoutForClosing(){
+            setTimeout(function(){
+                if(!loading.showing){
+                    if(loading.close)
+                        loading.close();
+                    loading = '';
+                } else {
+                    timeoutForClosing();
                 }
-                return response;
-            }
+            }, 200);
+        }
+        var loading,
+            close = debounce(600, function(){
+                timeoutForClosing();
+            });
+        return {
+            request: function (config) {
+                if(!loading)
+                    loading = $noty.show({text:'Загрузка данных', type:'success', timeout: false, killer: true, dismissQueue: false});
 
-            function error(response) {
-                // get $http via $injector because of circular dependency problem
-                $http = $http || $injector.get('$http');
-                if($http.pendingRequests.length < 1) {
-                    $('#loading').hide();
+                return config || $q.when(config);
+            },
+            requestError: function(request){
+                $noty.show({text:'Ошибка загрузки данных', type:'error'});
+                return $q.reject(request);
+            },
+            response: function (response) {
+                close();
+                return response || $q.when(response);
+            },
+            responseError: function (response) {
+                close();
+                if (response && response.status === 404) {
+                    $noty.show({text:'Ошибка загрузки данных: Не найдено', type:'error'});
+                }
+                if (response && response.status >= 500) {
+                    $noty.show({text:'Ошибка загрузки данных: Ошибка сервера', type:'error'});
                 }
                 return $q.reject(response);
             }
+        };
+    }]);
 
-            return function (promise) {
-                $('#loading').show();
-                return promise.then(success, error);
-            }
-        }];
-
-    $httpProvider.interceptors.push(interceptor);
+angular.module('app').config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push('loadingInterceptor');
 }]);

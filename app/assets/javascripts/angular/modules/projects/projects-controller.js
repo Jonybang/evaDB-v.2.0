@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var app = angular.module('app');
+var app = angular.module('app.projects');
 
 app.controller('ProjectsIndexCtrl', ['$scope', 'Project', 'User', function($scope, Project, User) {
     //Grab all forums from the server
@@ -42,7 +42,7 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
         project.$save(function() {
 
             //Redirect us back to the main page
-            $state.go('app.projects.list');
+            $state.go('app.projects.index');
 
         }, function(response) {
 

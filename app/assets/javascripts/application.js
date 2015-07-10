@@ -34,6 +34,7 @@
 //= require angular-moment.min
 //= require angular-ui-router.min
 //= require ui-router-tabs
+//= require angular-debounce.min
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min
@@ -43,6 +44,8 @@
 //= require d3/text-wrap
 //= require d3/gantt-chart-d3v2
 
+//= require ./angular/modules/projects/projects.js.erb
+//= require ./angular/modules/tasks/tasks.js.erb
 //= require angular/app.js.erb
 //= require_tree ./angular
 

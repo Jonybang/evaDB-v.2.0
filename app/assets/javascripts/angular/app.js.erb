@@ -3,44 +3,31 @@
  */
 'use strict';
 
-angular.module('app', ['ngResource', 'app.loading', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'angular-date-picker-polyfill', 'ng-rails-csrf', 'angularMoment', 'notyModule', 'ui.router', 'ui.router.tabs'])
+angular.module('app', [
+    'app.tasks',
+    'app.projects',
+
+    'ngResource',
+    //'app.loading',
+    'ui.bootstrap',
+    'ui.bootstrap.showErrors',
+    'angular-date-picker-polyfill',
+    'ng-rails-csrf',
+    'angularMoment',
+    'rt.debounce',
+    'noty',
+    'ui.router',
+    'ui.router.tabs'])
         .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider) {
-//            $routeProvider
-//                    .when('/',          {controller: 'TasksCtrl',    templateUrl: '<%= asset_path('angular/templates/tasks/index.html') %>'})
-//                    .when('/projects', {controller: 'ProjectsIndexCtrl',   templateUrl: '<%= asset_path('angular/templates/projects/index.html') %>'})
-//                    .when('/projects/new', {controller: 'ProjectsCreateCtrl',   templateUrl: '<%= asset_path('angular/templates/projects/new.html') %>'})
-//                    .when('/projects/:id', {controller: 'ProjectsShowCtrl',     templateUrl: '<%= asset_path('angular/templates/projects/show.html') %>'})
-//                    .otherwise({redirectTo: '/'});
-            //
-            // For any unmatched url, redirect to /state1
+
             $urlRouterProvider.otherwise("/tasks");
-            //
-            // Now set up the states
+
+            <% @templates_path = 'angular/templates/' %>
             $stateProvider
                     .state('app', {
                         url: '',
                         controller: 'AppCtrl',
-                        templateUrl: '<%= asset_path('angular/templates/index.html') %>'
-                    })
-                    .state('app.tasks', {
-                        url: '/tasks',
-                        templateUrl: '<%= asset_path('angular/templates/tasks/index.html') %>',
-                        controller: 'TasksCtrl'
-                    })
-                    .state('app.projects', {
-                        url: '/projects',
-                        abstract: true,
-                        template: '<ui-view/>'
-                    })
-                    .state('app.projects.index', {
-                        url: '',
-                        templateUrl: '<%= asset_path('angular/templates/projects/index.html') %>',
-                        controller: 'ProjectsIndexCtrl'
-                    })
-                    .state('app.projects.new', {
-                        url: '/new',
-                        templateUrl: '<%= asset_path('angular/templates/projects/new.html') %>',
-                        controller: 'ProjectsCreateCtrl'
+                        templateUrl: '<%= asset_path(@templates_path + 'index.html') %>'
                     });
             $locationProvider.html5Mode(true);
 

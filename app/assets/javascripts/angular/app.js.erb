@@ -29,11 +29,16 @@ angular.module('app', ['ngResource', 'app.loading', 'ui.bootstrap', 'ui.bootstra
                     })
                     .state('app.projects', {
                         url: '/projects',
+                        abstract: true,
+                        template: '<ui-view/>'
+                    })
+                    .state('app.projects.index', {
+                        url: '',
                         templateUrl: '<%= asset_path('angular/templates/projects/index.html') %>',
                         controller: 'ProjectsIndexCtrl'
                     })
-                    .state('app.projects_new', {
-                        url: '/projects/new',
+                    .state('app.projects.new', {
+                        url: '/new',
                         templateUrl: '<%= asset_path('angular/templates/projects/new.html') %>',
                         controller: 'ProjectsCreateCtrl'
                     });

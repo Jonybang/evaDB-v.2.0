@@ -42,7 +42,7 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
         project.$save(function() {
 
             //Redirect us back to the main page
-            $state.go('app.projects');
+            $state.go('app.projects.list');
 
         }, function(response) {
 

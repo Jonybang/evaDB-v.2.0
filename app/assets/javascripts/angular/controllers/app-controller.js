@@ -9,7 +9,7 @@ angular.module('app').controller('AppCtrl', ['$scope', '$location', 'ProjectTask
             { route : 'app.tasks', heading : 'Задачи' },
             { route : '#', heading : 'Личный календарь', disabled: true },
             { route : '#', heading : 'Диаграмма Ганта', disabled: true },
-            { route : 'app.projects', heading : 'Проекты' },
+            { route : 'app.projects.index', heading : 'Проекты' },
             { route : '#', heading : 'Ресурсы', disabled: true },
             { route : '#', heading : 'Бизнес процессы', disabled: true }
         ];

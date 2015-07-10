@@ -23,12 +23,16 @@ app.controller('ProjectsIndexCtrl', ['$scope', 'Project', 'User', function($scop
     }
 }]);
 
-app.controller('ProjectsCreateCtrl', ['$scope', '$location', 'Project', 'User', function($scope, $location, Project, User) {
+app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', function($scope, $state, Project, User) {
     //The save method which is called when the user wants to submit their data
     User.get_contact().then(function(result){
         $scope.contact = result;
     });
     $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.projectForm.$valid) {
+            return;
+        }
 
         $scope.project.chief_id = $scope.contact.id;
         //Create the forum object to send to the back-end
@@ -38,7 +42,7 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$location', 'Project', 'User', 
         project.$save(function() {
 
             //Redirect us back to the main page
-            $location.path('/');
+            $state.go('app.projects');
 
         }, function(response) {
 

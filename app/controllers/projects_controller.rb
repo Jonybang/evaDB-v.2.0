@@ -14,7 +14,7 @@ class ProjectsController < InheritsController
   private
 
     def project_params
-      params.require(:projects).permit!
+      params.require(:project).permit!
     end
 
     def load_contact

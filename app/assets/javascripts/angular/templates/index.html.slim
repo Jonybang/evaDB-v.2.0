@@ -12,7 +12,7 @@
           small.pull-right am-time-ago="task.created_at"
 
     tabs data="tabsData" type="tabs" /
-    ui-view autoscroll=""
+    ui-view
   .col-md-2.right-panel
     .row
       img.img-responsive src="http://dummyimage.com/600x600/666566/030305&text=User+avatar" /
@@ -25,19 +25,19 @@
           strong Задачи
         ul.list-group
           li.list-group-item
-            | Выполнено:
+            | Выполнено:&nbsp;
             strong 0
           li.list-group-item
-            | В процессе:
+            | В процессе:&nbsp;
             strong 0
           li.list-group-item
-            | На будущее:
+            | На будущее:&nbsp;
             strong 0
           li.list-group-item
-            | Проекты:
+            | Проекты:&nbsp;
             strong 0
           li.list-group-item
-            | Встречи:
+            | Встречи:&nbsp;
             strong 0
     .row.col-sx-12
       .btn-group.btn-group-justified role="group"

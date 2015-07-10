@@ -16,8 +16,10 @@
  */
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
-@import "font-awesome";
+@import 'font-awesome';
+@import 'variables';
 /*@import 'manager';*/
+
 pre hr {
    border-top: 1px solid #cccccc;
    margin-top: 10px;
@@ -79,4 +81,13 @@ a[disabled],a.disabled{
 }
 .nav-tabs, .btn-toolbar {
   margin-bottom: 15px;
+}
+.dl-horizontal  dt{
+  width: 100px;
+}
+.dl-horizontal  dd{
+  margin-left: 120px;
+}
+.project-container > .col-md-9 > .panel {
+  min-height: 350px;
 }

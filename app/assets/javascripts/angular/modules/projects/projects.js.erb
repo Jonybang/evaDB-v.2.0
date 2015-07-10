@@ -21,5 +21,21 @@ angular.module('app.projects', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.show
                         url: '/new',
                         templateUrl: '<%= asset_path(@templates_path + 'new.html') %>',
                         controller: 'ProjectsCreateCtrl'
+                    })
+                    .state('app.projects.show', {
+                        url: '/:projectId',
+                        abstract: true,
+                        templateUrl: '<%= asset_path(@templates_path + 'show.html') %>',
+                        controller: 'ProjectsShowCtrl as show'
+                    })
+                    .state('app.projects.show.description', {
+                        url: '',
+                        templateUrl: '<%= asset_path(@templates_path + 'description.html') %>',
+                        controller: 'ProjectsDescCtrl'
+                    })
+                    .state('app.projects.tasks', {
+                        url: '/tasks',
+                        templateUrl: '<%= asset_path(@templates_path + 'tasks.html') %>',
+                        controller: 'ProjectsTasksCtrl'
                     });
         }]);

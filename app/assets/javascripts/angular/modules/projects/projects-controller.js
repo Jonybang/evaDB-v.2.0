@@ -53,7 +53,21 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
 }]);
 
 //A controller to show the forum and all it's glory
-app.controller('ProjectsShowCtrl', ['$scope', 'Project', 'ProjectTask', '$routeParams', function($scope, Project, ProjectTask, $routeParams) {
+app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
     //Grab the forum from the server
-    $scope.project = Project.get({id: $routeParams.id})
+    $scope.project = Project.get({id: $state.params.projectId});
+
+    $scope.tabsData = [
+        { route : 'app.projects.show.description', heading : 'Описание' },
+        { route : 'app.projects.show.tasks', heading : 'Задачи', disabled: true },
+        { route : '#', heading : 'Ресурсы', disabled: true },
+        { route : '#', heading : 'Документы', disabled: true },
+        { route : '#', heading : 'Метрики', disabled: true },
+        { route : '#', heading : 'Инфографика', disabled: true }
+    ];
+}]);
+
+app.controller('ProjectsDescCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
+    //Grab the forum from the server
+    $scope.project = $scope.$parent.project;
 }]);

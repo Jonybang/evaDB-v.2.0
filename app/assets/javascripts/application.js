@@ -28,10 +28,12 @@
 //= require angular-date-picker-polyfill.min
 //= require showErrors.min
 //= require angular-resource.min
-//= require angular-route.min
+// require angular-route.min
 //= require ui-bootstrap-tpls-0.13.0.min
 //= require ng-rails-csrf
 //= require angular-moment.min
+//= require angular-ui-router.min
+//= require ui-router-tabs
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min

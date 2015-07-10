@@ -1,0 +1,50 @@
+.row
+  .col-md-10
+    .panel.panel-default
+      .panel-heading Оперативная информация
+      .panel-body
+        h3 Последние задачи
+      ul.list-group
+        li.list-group-item ng-repeat=("task in last_tasks")
+          span
+            strong() {{task.project.name}}:&nbsp;
+            | {{task.name}}
+          small.pull-right am-time-ago="task.created_at"
+
+    tabs data="tabsData" type="tabs" /
+    ui-view autoscroll=""
+  .col-md-2.right-panel
+    .row
+      img.img-responsive src="http://dummyimage.com/600x600/666566/030305&text=User+avatar" /
+    .row
+      button.btn.btn-primary.col-xs-12 aria-label=("Left Align") disabled="" type="button"
+        | Профиль
+    .row
+      .panel.panel-default
+        .panel-heading
+          strong Задачи
+        ul.list-group
+          li.list-group-item
+            | Выполнено:
+            strong 0
+          li.list-group-item
+            | В процессе:
+            strong 0
+          li.list-group-item
+            | На будущее:
+            strong 0
+          li.list-group-item
+            | Проекты:
+            strong 0
+          li.list-group-item
+            | Встречи:
+            strong 0
+    .row.col-sx-12
+      .btn-group.btn-group-justified role="group"
+        a.btn.btn-default disabled="" href="#" title="Почта"
+          i.fa.fa-envelope-o
+        a.btn.btn-default disabled="" href="#" title="Встречи"
+          i.fa.fa-users
+        a.btn.btn-default disabled="" href="#" title="Совещания"
+          i.fa.fa-user-plus
+          i.fa.fa-bar-chart

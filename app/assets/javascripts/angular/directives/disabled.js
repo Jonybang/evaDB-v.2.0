@@ -10,7 +10,8 @@ angular.module('app').directive('disabled', ['$noty', function ($noty) {
     }
 
     var directive = {
-        restrict: 'A',
+        restrict: 'AC',
+        scope: {},
         link: link
     };
     return directive;

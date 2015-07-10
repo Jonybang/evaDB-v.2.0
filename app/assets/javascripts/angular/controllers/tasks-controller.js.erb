@@ -2,8 +2,9 @@
 
 var app = angular.module('app');
 
-app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'Helpers', '$routeParams', '$modal', function($scope, ProjectTask, Helpers, $routeParams, $modal) {
-    var project_id = $routeParams.id;
+app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'Helpers', '$state', '$modal', function($scope, ProjectTask, Helpers, $state, $modal) {
+    var project_id = $state.id;
+    //TODO: Выводить только те задачи, к которым данный контакт имеет отношение
     $scope.tasks = ProjectTask.query({sort: 'end_date DESC', limit: 50});
 
     $scope.newOrEdit = function (task, parent_task_id){

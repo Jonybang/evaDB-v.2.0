@@ -25,7 +25,7 @@ d3.gantt = function() {
 
         svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0, " + (self._height - self._margin.top - self._margin.bottom) + ")")
+            //.attr("transform", "translate(0, " + (self._height - self._margin.top - self._margin.bottom) + ")")
             .transition()
             .call(self.xAxis);
 
@@ -43,7 +43,7 @@ d3.gantt = function() {
     this.FIXED_TIME_DOMAIN_MODE = "fixed";
 
     this._margin = {
-        top : 20,
+        top : 40,
         right : 0,
         bottom : 20,
         left : 120
@@ -120,7 +120,7 @@ d3.gantt = function() {
         self.xAxis = d3.svg
             .axis()
             .scale(self.x)
-            .orient("bottom")
+            .orient("top")
             .tickFormat(d3.time.format(self._tickFormat))
             .tickSubdivide(true)
             .tickSize(8)

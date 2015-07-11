@@ -15,7 +15,6 @@
 //= require modernizr.min
 
 //= require moment-with-locales.min
-//= require moment-timezone-with-data-2010-2020
 
 //= require jquery
 //= require jquery_ujs

@@ -5,8 +5,8 @@ class Project
   field :description, type: String
   field :result, type: String
 
-  field :begin_date, type: Date
-  field :end_date, type: Date
+  field :begin_date, type: DateTime
+  field :end_date, type: DateTime
 
   has_many :project_tasks, class_name: "ProjectTask", dependent: :delete
   accepts_nested_attributes_for :project_tasks

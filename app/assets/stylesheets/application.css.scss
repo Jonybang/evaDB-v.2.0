@@ -90,4 +90,7 @@ a[disabled],a.disabled{
 }
 .project-container > .col-md-9 > .panel {
   min-height: 350px;
+  tabs > div {
+    margin-bottom: 15px;
+  }
 }

@@ -1,0 +1,195 @@
+/**
+ * Created by jonybang on 03.07.15.
+ */
+'use strict';
+
+var app = angular.module('app.projects');
+
+app.controller('ProjectsIndexCtrl', ['$scope', 'Project', 'User', function($scope, Project, User) {
+    //Grab all forums from the server
+    User.get_contact().then(function(result){
+        $scope.contact = result;
+        $scope.projects = Project.query({chief_id:result.id});
+    });
+
+    //Destroy method for deleting a forum
+    $scope.destroy = function(index) {
+
+        //Tell the server to remove the object
+        Project.remove({id: $scope.projects[index].id}, function() {
+            //If successful, remove it from our collection
+            $scope.projects.splice(index, 1);
+        });
+    }
+}]);
+
+app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', function($scope, $state, Project, User) {
+    //The save method which is called when the user wants to submit their data
+    User.get_contact().then(function(result){
+        $scope.contact = result;
+    });
+    $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.projectForm.$valid) {
+            return;
+        }
+
+        $scope.project.chief_id = $scope.contact.id;
+        //Create the forum object to send to the back-end
+        var project = new Project($scope.project);
+
+        //Save the forum object
+        project.$save(function() {
+
+            //Redirect us back to the main page
+            $state.go('app.projects.index');
+
+        }, function(response) {
+
+            //Post response objects to the view
+            $scope.errors = response.data.errors;
+        });
+    }
+}]);
+
+//A controller to show the forum and all it's glory
+app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
+    $scope.tabsData = [
+        { route : 'app.projects.show.description', heading : 'Описание' },
+        { route : 'app.projects.show.tasks.table', heading : 'Задачи'},
+        { route : '#', heading : 'Ресурсы', disabled: true },
+        { route : '#', heading : 'Документы', disabled: true },
+        { route : '#', heading : 'Метрики', disabled: true },
+        { route : '#', heading : 'Инфографика', disabled: true }
+    ];
+}]);
+
+app.controller('ProjectsDescCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
+    $scope.project = Project.get({id: $state.params.projectId});
+}]);
+
+app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers', '$state', '$modal', function($scope, ProjectTask, Gantt, Helpers, $state, $modal) {
+    $scope.tabsData = [
+        { route : 'app.projects.show.tasks.table', heading : 'Таблица' },
+        { route : 'app.projects.show.tasks.scheme', heading : 'Схема', disabled: true },
+        { route : 'app.projects.show.tasks.map', heading : 'Дорожная карта', disabled: true }
+    ];
+
+    var project_id = $state.params.projectId;
+    $scope.project_tasks = this.project_tasks  = ProjectTask.query({project_id: project_id});
+    $scope.project_tasks.$promise.then(function(){
+//        if($scope.project_tasks.length)
+//            Gantt.init($scope.project_tasks);
+    });
+
+    $scope.destroy = function(task) {
+        ProjectTask.remove({id: task.id, project_id: project_id}, function() {
+            Helpers.removeById($scope.project_tasks, task.id);
+
+            Gantt.redraw($scope.project_tasks);
+        });
+    };
+
+    $scope.newOrEdit = function (task, parent_task_id){
+        //Добавляет или редактирует задачу или подзадачу
+        //Если задача передана(task) - то редактируем её
+        //Если нет - то создаем новую задачу в текущем проекте
+        //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
+        //то задача добавляется подзадачей в родительскую
+
+        var task_id;
+        if(task)
+            task_id = task.id;
+
+        var modalInstance = $modal.open({
+            animation: true,
+            templateUrl: '<%= asset_path('angular/modules/projects/templates/modals/project-task-form.html') %>',
+            controller: 'ProjectsTasksFormCtrl',
+            //size: size,
+            resolve: {
+                inputs: function(){
+                    return {
+                        project_id: project_id,
+                        task_id: task_id,
+                        parent_task_id: parent_task_id
+                    };
+                }
+            }
+        });
+
+        modalInstance.result.then(function (result) {
+            //Если это задача не является подзадачей
+            if(!parent_task_id){
+                //добавляем её в проект
+                Helpers.addOrReplace($scope.project_tasks, result, task_id, true);
+            }
+            else{
+                //иначе, добавляем её в родительскую задачу
+                Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
+            }
+
+            //Gantt.redraw($scope.project_tasks);
+        }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+    $scope.getSubTasks = function (parent_task){
+        parent_task.child_tasks = ProjectTask.query({project_id: project_id, parent_task_id: parent_task.id });
+    }
+}]);
+
+app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, $modalInstance, inputs, Helpers) {
+    //Если это задача не является подзадачей
+    if(!inputs.parent_task_id){
+        //Ищем её по id проекта
+        $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id}) : {};
+    } else {
+        //Иначе ищем её по id родительской задачи
+        $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id, parent_task_id: inputs.parent_task_id}) : {};
+        $scope.task.parent_task_id = inputs.parent_task_id;
+    }
+
+    $scope.task.project_id = inputs.project_id;
+
+    if($scope.task.$promise)
+        $scope.task.$promise.then(function(){
+            //TODO: вынести в сервис
+            $scope.task.begin_date = $scope.task.begin_date ? new Date($scope.task.begin_date) : '';
+            $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
+            $scope.task.project_status_id = $scope.task.project_status.id;
+        });
+
+    $scope.statuses = ProjectStatus.query();
+
+    $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.taskForm.$valid) {
+            return;
+        }
+
+        //$scope.task = Helpers.parseDatesToStr($scope.task);
+
+        var obj, isNew = $scope.task.id ? false : true;
+        $scope.task.project_status = $scope.statuses.filter(function(obj){
+            return obj.id == $scope.task.project_status_id;
+        })[0];
+
+        if(isNew)
+            obj = new ProjectTask($scope.task);
+        else
+            obj = ProjectTask.update({ id: inputs.task_id, project_id: inputs.project_id }, $scope.task);
+
+        function success (result){
+            var task = result.resource ? result.resource : result;
+
+            $modalInstance.close(task);
+        }
+        function error (info){
+            $scope.errors = info.data.errors;
+        }
+        if(isNew)
+            obj.$save(success, error);
+        else
+            obj.$promise.then(success, error)
+    }
+}]);

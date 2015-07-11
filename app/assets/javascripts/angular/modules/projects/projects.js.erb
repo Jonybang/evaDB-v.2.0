@@ -33,9 +33,23 @@ angular.module('app.projects', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.show
                         templateUrl: '<%= asset_path(@templates_path + 'description.html') %>',
                         controller: 'ProjectsDescCtrl'
                     })
-                    .state('app.projects.tasks', {
+                    .state('app.projects.show.tasks', {
                         url: '/tasks',
+                        abstract: true,
                         templateUrl: '<%= asset_path(@templates_path + 'tasks.html') %>',
-                        controller: 'ProjectsTasksCtrl'
+                        controller: 'ProjectsTasksCtrl',
+                        controllerAs: 'tasks'
+                    })
+                    .state('app.projects.show.tasks.table', {
+                        url: '',
+                        templateUrl: '<%= asset_path(@templates_path + 'tasks_table.html') %>'
+                    })
+                    .state('app.projects.show.tasks.scheme', {
+                        url: '/scheme',
+                        templateUrl: '<%= asset_path(@templates_path + 'tasks_scheme.html') %>'
+                    })
+                    .state('app.projects.show.tasks.map', {
+                        url: '/map',
+                        templateUrl: '<%= asset_path(@templates_path + 'tasks_map.html') %>'
                     });
         }]);

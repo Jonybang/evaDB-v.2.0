@@ -4,8 +4,8 @@ class ProjectTask
   field :name, type: String
   field :number, type: Integer
 
-  field :begin_date, type: Date
-  field :end_date, type: Date
+  field :begin_date, type: DateTime
+  field :end_date, type: DateTime
 
   field :description, type: String
 

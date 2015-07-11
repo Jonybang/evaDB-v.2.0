@@ -13,7 +13,6 @@ app.factory('ProjectTask', ['$resource', 'Helpers', function($resource, Helpers)
     return $resource('/api/project_tasks/:id',
         {id: '@id'},
         {'update': {
-            method: 'PUT',
-            interceptor: {response: Helpers.parseDatesToStr}
+            method: 'PUT'
         }});
 }]);

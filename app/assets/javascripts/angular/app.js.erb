@@ -18,7 +18,7 @@ angular.module('app', [
     'noty',
     'ui.router',
     'ui.router.tabs'])
-        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider) {
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', '$httpProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider) {
 
             $urlRouterProvider.otherwise("/tasks");
 
@@ -32,8 +32,26 @@ angular.module('app', [
             $locationProvider.html5Mode(true);
 
             showErrorsConfigProvider.showSuccess(true);
+
+            $httpProvider.interceptors.push('loadingInterceptor');
+
+
+            $httpProvider.defaults.transformResponse.push(function(responseData){
+                if( Object.prototype.toString.call( responseData ) === '[object Array]' ) {
+                    responseData.forEach(function(item, i){
+                        convertDateStringsToDates(responseData[i], true);
+                    });
+                } else {
+                    convertDateStringsToDates(responseData, true);
+                }
+
+                return responseData;
+            });
         }]);
 
 angular.module('app').run(['amMoment', function(amMoment) {
     amMoment.changeLocale('ru');
 }]);
+//angular.module('app').constant('angularMomentConfig', {
+//    timezone: 'Name of Timezone' // e.g. 'Europe/London'
+//});

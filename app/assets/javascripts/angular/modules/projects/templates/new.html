@@ -16,6 +16,18 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="control-label">Описание проекта:</label>
+
+        <div class="controls">
+            <!-- This input is tied to the forum.name object. -->
+            <textarea class="form-control" ng-model="project.description"
+                      name="description"/>
+
+            <!-- If there's any errors that pertain to name display them here! -->
+            <div ng-repeat="error in errors.name">{{error}}</div>
+        </div>
+    </div>
+    <div class="form-group">
         <div class="controls">
             <input class="btn btn-primary" type="submit" value="Создать!"/>
         </div>

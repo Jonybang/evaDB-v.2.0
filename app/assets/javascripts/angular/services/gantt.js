@@ -138,8 +138,9 @@ angular.module('app')
                 //                var minDate = tasks[0].startDate;
                 funcs.convertTasks(initTasks);
 
-                self.gantt = d3.gantt()
-                    .containerId(self.options.containerId)
+                self.gantt = new d3.gantt();
+
+                self.gantt.containerId(self.options.containerId)
                     .taskTypes(self.data.taskNames)
                     .taskStatus(self.data.taskStatuses)
                     .tickFormat(self.options.format)
@@ -152,7 +153,7 @@ angular.module('app')
 
                 self.gantt(self.data.tasks);
 
-                funcs.changeTimeDomain(self.options.timeDomainString);
+                //funcs.changeTimeDomain(self.options.timeDomainString);
 
             };
             this.addTask = function (task) {

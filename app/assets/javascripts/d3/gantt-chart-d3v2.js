@@ -102,7 +102,10 @@ d3.gantt = function() {
             .ticks(8, "%");
     };
 
-    function gantt(tasks) {
+    function gantt(tasks, _containerId) {
+        if(_containerId)
+            containerId = _containerId;
+
         initTimeDomain(tasks);
         initAxis();
 

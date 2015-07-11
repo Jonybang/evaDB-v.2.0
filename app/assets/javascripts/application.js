@@ -45,6 +45,7 @@
 //= require d3/gantt-chart-d3v2
 
 //= require ./angular/modules/projects/projects.js.erb
+//= require ./angular/modules/gantt/gantt.js.erb
 //= require ./angular/modules/tasks/tasks.js.erb
 //= require angular/app.js.erb
 //= require_tree ./angular

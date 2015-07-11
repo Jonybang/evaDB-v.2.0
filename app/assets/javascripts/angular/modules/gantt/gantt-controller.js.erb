@@ -1,15 +1,36 @@
+/**
+ * Created by jonybang on 11.07.15.
+ */
 'use strict';
 
-var app = angular.module('app.tasks');
+var app = angular.module('app.gantt');
 
-app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'User', 'Helpers', '$state', '$modal', function($scope, ProjectTask, User, Helpers, $state, $modal) {
-    var project_id = $state.id;
-    //TODO: Выводить только те задачи, к которым данный контакт имеет отношение
+app.controller('GanttCtrl', ['$scope', 'Project', 'ProjectTask', 'User', 'Gantt', 'Helpers', '$state', function($scope, Project, ProjectTask, User, Gantt, Helpers, $state) {
     User.get_contact().then(function(result){
         $scope.contact = result;
-        $scope.tasks = ProjectTask.query({sort: 'end_date DESC', limit: 50, contact_id: result.id});
+        $scope.projects = Project.query({chief_id:result.id, with_tasks: 1});
+
+        $scope.projects.$promise.then(function(){
+            if($scope.projects.length){
+                setTimeout(function(){
+                    $scope.projects.forEach(function(proj){
+                        proj.gantt = new Gantt();
+                        proj.gantt.init(proj.tasks, 'svg-grantt-' + proj.id);
+                    });
+                }, 1000);
+            }
+        });
     });
 
+
+
+    $scope.destroy = function(task) {
+        ProjectTask.remove({id: task.id, project_id: project_id}, function() {
+            Helpers.removeById($scope.project_tasks, task.id);
+
+            Gantt.redraw($scope.project_tasks);
+        });
+    };
 
     $scope.newOrEdit = function (task, parent_task_id){
         //Добавляет или редактирует задачу или подзадачу
@@ -48,6 +69,8 @@ app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'User', 'Helpers', '$state
                 //иначе, добавляем её в родительскую задачу
                 Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
             }
+
+            Gantt.redraw($scope.project_tasks);
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });

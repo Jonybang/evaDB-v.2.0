@@ -3,142 +3,159 @@
  */
 angular.module('app')
     .factory('Gantt', ['$http', function($http) {
-        var data = {
-            tasks: [],
-            taskStatuses: {},
-            taskNames: []
-        };
-
-        var gantt;
-
-        var options = {
-            containerId: 'svg-gantt',
-            timeDomainString : '6month',
-            format: "%d %b"
-        };
-
-        var funcs = {
-            resetData: function(){
-                data = {
-                    tasks: [],
-                    taskStatuses: {},
-                    taskNames: []
-                };
-            },
-            getEndDate: function(){
-                var lastEndDate = Date.now();
-                if (data.tasks.length > 0) {
-                    lastEndDate = data.tasks[data.tasks.length - 1].endDate;
-                }
-                return lastEndDate;
-            },
-            changeTimeDomain : function (timeDomainString) {
-                this.timeDomainString = timeDomainString;
-                var format, level, number;
-                switch (timeDomainString) {
-                    case "1hr":
-                        format = "%H:%M:%S"; level = 'hour'; number = -1;
-                        break;
-                    case "3hr":
-                        format = "%H:%M"; level = 'hour'; number = -3;
-                        break;
-
-                    case "6hr":
-                        format = "%H:%M"; level = 'hour'; number = -6;
-                        break;
-
-                    case "1day":
-                        format = "%H:%M"; level = 'day'; number = -1;
-                        break;
-
-                    case "1week":
-                        format = "%d"; level = 'day'; number = -7;
-                        break;
-
-                    case "1month":
-                        format = "%d"; level = 'month'; number = -1;
-                        break;
-
-                    case "2month":
-                        format = "%d %b"; level = 'month'; number = -2;
-                        break;
-
-                    case "6month":
-                        format = "%d %b"; level = 'month'; number = -6;
-                        break;
-                    default:
-                        format = "%H:%M"
-
-                }
-                gantt.timeDomain([ d3.time[level].offset(this.getEndDate(), number), this.getEndDate() ]);
-                gantt.tickFormat(format);
-                gantt.redraw(data.tasks);
-            },
-            convertTasks: function(tasks) {
-                this.resetData();
-
-                tasks.sort(function(a, b){
-                    if(a.begin_date < b.begin_date)
-                        return -1;
-                    else if(a.begin_date > b.begin_date)
-                        return 1;
-                    else
-                        return 0;
-                });
-
-                data.tasks = tasks.map(function(item){
-                    var task ={
-                        "startDate":new Date(item.begin_date),
-                        "endDate":new Date(item.end_date),
-                        "taskName": item.name,
-                        "status": item.project_status.name,
-                        "title": item.name
+        function ganttFactory (){
+            var self = {};
+            self.gantt = this.gantt = {};
+            self.data = this.data = {
+                tasks: [],
+                taskStatuses: {},
+                taskNames: []
+            };
+            self.options =this.options = {
+                containerId: 'svg-gantt',
+                timeDomainString : '6month',
+                format: "%d %b"
+            };
+            var funcs = {
+                resetData: function () {
+                    self.data = {
+                        tasks: [],
+                        taskStatuses: {},
+                        taskNames: []
                     };
-                    function searchTaskName(task_name){
-                        return task_name == item.name;
+                },
+                getEndDate: function () {
+                    var lastEndDate = Date.now();
+                    if (self.data.tasks.length > 0) {
+                        lastEndDate = self.data.tasks[self.data.tasks.length - 1].endDate;
                     }
-                    if(!data.taskNames.some(searchTaskName)){
-                        data.taskNames.push(item.name);
-                    }
-                    if(!data.taskStatuses[item.project_status.name]){
-                        data.taskStatuses[item.project_status.name] = item.project_status.color;
-                    }
-                    return task;
-                });
-            }
-        };
+                    return lastEndDate;
+                },
+                changeTimeDomain: function (timeDomainString) {
+                    this.timeDomainString = timeDomainString;
+                    var format, level, number;
+                    switch (timeDomainString) {
+                        case "1hr":
+                            format = "%H:%M:%S";
+                            level = 'hour';
+                            number = -1;
+                            break;
+                        case "3hr":
+                            format = "%H:%M";
+                            level = 'hour';
+                            number = -3;
+                            break;
 
-        var service = {
-            init: function (initTasks){
+                        case "6hr":
+                            format = "%H:%M";
+                            level = 'hour';
+                            number = -6;
+                            break;
 
-//                tasks.sort(function(a, b) {
-//                    return a.endDate - b.endDate;
-//                });
-//                var maxDate = tasks[tasks.length - 1].endDate;
-//                tasks.sort(function(a, b) {
-//                    return a.startDate - b.startDate;
-//                });
-//                var minDate = tasks[0].startDate;
+                        case "1day":
+                            format = "%H:%M";
+                            level = 'day';
+                            number = -1;
+                            break;
+
+                        case "1week":
+                            format = "%d";
+                            level = 'day';
+                            number = -7;
+                            break;
+
+                        case "1month":
+                            format = "%d";
+                            level = 'month';
+                            number = -1;
+                            break;
+
+                        case "2month":
+                            format = "%d %b";
+                            level = 'month';
+                            number = -2;
+                            break;
+
+                        case "6month":
+                            format = "%d %b";
+                            level = 'month';
+                            number = -6;
+                            break;
+                        default:
+                            format = "%H:%M"
+
+                    }
+                    self.gantt.timeDomain([ d3.time[level].offset(this.getEndDate(), number), this.getEndDate() ]);
+                    self.gantt.tickFormat(format);
+                    self.gantt.redraw(self.data.tasks);
+                },
+                convertTasks: function (tasks) {
+                    this.resetData();
+
+                    tasks.sort(function (a, b) {
+                        if (a.begin_date < b.begin_date)
+                            return -1;
+                        else if (a.begin_date > b.begin_date)
+                            return 1;
+                        else
+                            return 0;
+                    });
+
+                    self.data.tasks = tasks.map(function (item) {
+                        var task = {
+                            "startDate": new Date(item.begin_date),
+                            "endDate": new Date(item.end_date),
+                            "taskName": item.name,
+                            "status": item.project_status ? item.project_status.name : '',
+                            "title": item.name
+                        };
+
+                        function searchTaskName(task_name) {
+                            return task_name == item.name;
+                        }
+
+                        if (!self.data.taskNames.some(searchTaskName)) {
+                            self.data.taskNames.push(item.name);
+                        }
+                        if (item.project_status && !self.data.taskStatuses[item.project_status.name]) {
+                            self.data.taskStatuses[item.project_status.name] = item.project_status.color;
+                        }
+                        return task;
+                    });
+                }
+            };
+
+            this.init = function (initTasks, containerId) {
+                if(containerId)
+                    self.options.containerId = containerId;
+                //                tasks.sort(function(a, b) {
+                //                    return a.endDate - b.endDate;
+                //                });
+                //                var maxDate = tasks[tasks.length - 1].endDate;
+                //                tasks.sort(function(a, b) {
+                //                    return a.startDate - b.startDate;
+                //                });
+                //                var minDate = tasks[0].startDate;
                 funcs.convertTasks(initTasks);
 
-                gantt = d3.gantt()
-                    .containerId(options.containerId)
-                    .taskTypes(data.taskNames)
-                    .taskStatus(data.taskStatuses)
-                    .tickFormat(options.format)
-                    .height(data.taskNames.length * 100)
-                    .width(document.getElementById(options.containerId).offsetWidth - 120);
+                self.gantt = d3.gantt()
+                    .containerId(self.options.containerId)
+                    .taskTypes(self.data.taskNames)
+                    .taskStatus(self.data.taskStatuses)
+                    .tickFormat(self.options.format)
+                    .height(self.data.taskNames.length * 100)
+                    .width(document.getElementById(self.options.containerId).offsetWidth - 120);
 
 
-                gantt.timeDomainMode("fit");
-//    changeTimeDomain(timeDomainString);
+                self.gantt.timeDomainMode("fit");
+                //    changeTimeDomain(timeDomainString);
 
-                gantt(data.tasks);
+                self.gantt(self.data.tasks);
 
-                funcs.changeTimeDomain(options.timeDomainString);
+                funcs.changeTimeDomain(self.options.timeDomainString);
 
-            },
-            addTask: function (task) {
+            };
+            this.addTask = function (task) {
 
                 var lastEndDate = funcs.getEndDate();
                 var taskStatusKeys = Object.keys(taskStatus);
@@ -154,25 +171,25 @@ angular.module('app')
 
                 funcs.changeTimeDomain(options.timeDomainString);
                 gantt.redraw(data.tasks);
-            },
-            removeTask:function (id) {
+            };
+            this.removeTask = function (id) {
                 data.tasks.pop();
                 funcs.changeTimeDomain(options.timeDomainString);
                 gantt.redraw(data.tasks);
-            },
-            redraw: function(tasks){
-                if(gantt){
+            };
+            this.redraw =  function(tasks){
+                if(self.gantt){
                     funcs.convertTasks(tasks);
-                    gantt
-                        .taskTypes(data.taskNames)
-                        .taskStatus(data.taskStatuses)
-                        .redraw(data.tasks);
+                    self.gantt
+                        .taskTypes(self.data.taskNames)
+                        .taskStatus(self.data.taskStatuses)
+                        .redraw(self.data.tasks);
                 } else {
                     this.init(tasks);
                 }
-            }
-        };
-        return service;
+            };
+        }
+        return ganttFactory;
     }]);
 
 //    var tasks = [

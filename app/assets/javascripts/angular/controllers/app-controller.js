@@ -8,7 +8,7 @@ angular.module('app').controller('AppCtrl', ['$scope', '$location', 'ProjectTask
         $scope.tabsData = [
             { route : 'app.tasks', heading : 'Задачи' },
             { route : '#', heading : 'Личный календарь', disabled: true },
-            { route : '#', heading : 'Диаграмма Ганта', disabled: true },
+            { route : 'app.gantt', heading : 'Диаграмма Ганта'},
             { route : 'app.projects.index', heading : 'Проекты' },
             { route : '#', heading : 'Ресурсы', disabled: true },
             { route : '#', heading : 'Бизнес процессы', disabled: true }

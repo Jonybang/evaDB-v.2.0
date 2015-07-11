@@ -37,4 +37,6 @@ class Contact
   has_and_belongs_to_many :expert_projects, class_name: "Project", inverse_of: :experts
 
   has_and_belongs_to_many :member_events, class_name: "Event", inverse_of: :members
+
+  has_and_belongs_to_many :performer_tasks, class_name: "ProjectTask", inverse_of: :performers
 end

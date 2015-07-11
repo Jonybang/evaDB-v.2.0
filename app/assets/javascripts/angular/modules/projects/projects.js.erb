@@ -2,7 +2,7 @@
  * Created by jonybang on 10.07.15.
  */
 angular.module('app.projects', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'angular-date-picker-polyfill', 'ng-rails-csrf', 'angularMoment', 'noty', 'ui.router', 'ui.router.tabs'])
-        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider) {
+        .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
 
             <% @templates_path = 'angular/modules/projects/templates/' %>
 

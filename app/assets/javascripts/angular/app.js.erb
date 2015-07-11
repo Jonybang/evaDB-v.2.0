@@ -47,6 +47,19 @@ angular.module('app', [
 
                 return responseData;
             });
+//            $urlRouterProvider.otherwise(function(injector, location) {
+//                // N.b.: arguments are not injected via usual Angular magic, thus no $'s;
+//                //     the second argument, location, is not the same as window.location
+//
+//                // In my case, I want any urls that DON'T start with /admin to escape
+//                //     ui-router's control
+//                //return false;
+//                var path = location.path();
+//                if (path.match(/^\/logout/)) {
+//                    return false;
+//                }
+//                // else: could redirect to some default /admin homepage or something
+//            });
         }]);
 
 angular.module('app').run(['amMoment', function(amMoment) {

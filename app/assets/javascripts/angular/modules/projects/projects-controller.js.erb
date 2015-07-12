@@ -54,6 +54,8 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
 
 //A controller to show the forum and all it's glory
 app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
+    $scope.project = Project.get({id: $state.params.projectId});
+
     $scope.tabsData = [
         { route : 'app.projects.show.description', heading : 'Описание' },
         { route : 'app.projects.show.tasks.table', heading : 'Задачи'},
@@ -65,7 +67,12 @@ app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($sco
 }]);
 
 app.controller('ProjectsDescCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
-    $scope.project = Project.get({id: $state.params.projectId});
+    //Если после подгрузки контроллера загрузка проекта все еще идет в родительском контроллере
+    //то подписываемся на результат загрузки
+    if($scope.$parent.project.$promise && !$scope.$parent.project.$resolved)
+        $scope.project = $scope.$parent.project;
+    else
+        $scope.project = Project.get({id: $state.params.projectId});
 }]);
 
 app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers', '$state', '$modal', function($scope, ProjectTask, Gantt, Helpers, $state, $modal) {

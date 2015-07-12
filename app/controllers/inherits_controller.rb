@@ -13,7 +13,11 @@ class InheritsController < ApplicationController
       @resource = resource
     end
     def get_collection
-      @collection = sort_and_paging collection
+      @collection = collection
+      if params[:q]
+        @collection = @collection.ransack(params[:q])
+      end
+      @collection = sort_and_paging @collection
     end
     def sort_and_paging(collection)
       if params[:sort]

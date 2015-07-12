@@ -1,6 +1,10 @@
 'use strict';
 
 var app = angular.module('app');
+app.factory('Contact', ['$resource', function($resource) {
+    return $resource('/api/contacts/:id', {id: '@id'}, {'update': {method: 'PUT'}});
+}]);
+
 app.factory('Project', ['$resource', function($resource) {
     return $resource('/api/projects/:id', {id: '@id'}, {'update': {method: 'PUT'}});
 }]);

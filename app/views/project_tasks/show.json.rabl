@@ -9,3 +9,6 @@ end
 child :project do
     attributes :id, :name
 end
+child :performers, :root => "performers", :object_root => false do
+    attributes :id, :name
+end

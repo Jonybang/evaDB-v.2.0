@@ -35,6 +35,8 @@
 //= require angular-ui-router.min
 //= require ui-router-tabs
 //= require angular-debounce.min
+//= require angular-sanitize.min
+//= require select.min
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min

@@ -17,6 +17,8 @@ class ProjectTask
   has_many :child_tasks, class_name: "ProjectTask", inverse_of: :parent_task
 
   has_and_belongs_to_many :performers, class_name: "Contact", inverse_of: :performer_tasks
+  accepts_nested_attributes_for :performers
+
   has_and_belongs_to_many :equips, class_name: "Equip"
 
   def self.has_contact(contact_id)

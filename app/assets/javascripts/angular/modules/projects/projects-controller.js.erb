@@ -86,7 +86,7 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         ProjectTask.remove({id: task.id, project_id: project_id}, function() {
             Helpers.removeById($scope.project_tasks, task.id);
 
-            Gantt.redraw($scope.project_tasks);
+            //Gantt.redraw($scope.project_tasks);
         });
     };
 
@@ -138,7 +138,7 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
     }
 }]);
 
-app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, $modalInstance, inputs, Helpers) {
+app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, Contact, $modalInstance, inputs, Helpers) {
     //Если это задача не является подзадачей
     if(!inputs.parent_task_id){
         //Ищем её по id проекта
@@ -150,6 +150,8 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
     }
 
     $scope.task.project_id = inputs.project_id;
+    if(!$scope.task.performers || !$scope.task.performers.length)
+        $scope.task.performers = [];
 
     if($scope.task.$promise)
         $scope.task.$promise.then(function(){
@@ -160,6 +162,11 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
         });
 
     $scope.statuses = ProjectStatus.query();
+
+    $scope.contacts = Contact.query({limit:50});
+    $scope.refreshContacts = function(q) {
+        $scope.contacts = ProjectTask.query({q: q, limit:50});
+    };
 
     $scope.save = function() {
         $scope.$broadcast('show-errors-check-validity');

@@ -8,7 +8,7 @@
         <th>Прочее</th>
     </tr>
     <tr ng-repeat="task in tasks.project_tasks">
-        <td>{{$index+1}}. {{task.name}}</td>
+        <td>{{$index+1}}. <a href ng-click="newOrEdit(task)">{{task.name}}</a></td>
         <td><span class="label label-default">{{task.begin_date | amDateFormat:'D.M.YYYY'}}</span> - <span class="label label-default">{{task.end_date | amDateFormat:'D.M.YYYY'}}</span></td>
         <td><div class="text-center"><unavailable/></div></td>
         <td><div class="text-center"><unavailable/></div></td>

@@ -4,50 +4,73 @@
 </div>
 <form name="taskForm" ng-submit="save()" novalidate>
     <div class="modal-body row">
-        <div class="form-group col-md-12" show-errors>
-            <div class="col-md-4 col-lg-3 text-right">
-                <label>Название задачи</label>
-            </div>
-            <div class="col-md-6 col-lg-7">
-                <input type="text" name="name" ng-model="task.name" class="form-control" required >
-            </div>
-        </div>
-        <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+        <tabset>
+            <tab heading="Основные данные">
+                <div class="form-group col-md-12" show-errors>
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Название задачи</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        <input type="text" name="name" ng-model="task.name" class="form-control" required >
+                    </div>
+                </div>
+                <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
 
-        <div class="form-group col-md-12" show-errors>
-            <div class="col-md-4 col-lg-3 text-right">
-                <label>Сроки</label>
-            </div>
-            <div class="col-md-6 col-lg-7">
-                от <input type="date" name="begin_date" ng-model="task.begin_date" class="form-control" required/>
-                до <input type="date" name="end_date" ng-model="task.end_date" class="form-control" required />
-            </div>
-        </div>
-        <div ng-repeat="error in errors.begin_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>
-        <div ng-repeat="error in errors.end_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+                <div class="form-group col-md-12" show-errors>
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Сроки</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        от <input type="date" name="begin_date" ng-model="task.begin_date" class="form-control" required/>
+                        до <input type="date" name="end_date" ng-model="task.end_date" class="form-control" required />
+                    </div>
+                </div>
+                <div ng-repeat="error in errors.begin_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+                <div ng-repeat="error in errors.end_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>
 
-        <div class="form-group col-md-12" show-errors>
-            <div class="col-md-4 col-lg-3 text-right">
-                <label>Описание задачи</label>
-            </div>
-            <div class="col-md-6 col-lg-7">
-                <textarea name="description" ng-model="task.description" class="form-control" rows="5" ></textarea>
-            </div>
-        </div>
-        <div ng-repeat="error in errors.description" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+                <div class="form-group col-md-12" show-errors>
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Описание задачи</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        <textarea name="description" ng-model="task.description" class="form-control" rows="5" ></textarea>
+                    </div>
+                </div>
+                <div ng-repeat="error in errors.description" class="alert alert-error"><strong>Название</strong> {{error}}</div>
 
-        <div class="form-group col-md-12" show-errors>
-            <div class="col-md-4 col-lg-3 text-right">
-                <label>Статус</label>
-            </div>
-            <div class="col-md-6 col-lg-7">
-                <select name="project_status" class="form-control" ng-options="status.id as status.name for status in statuses" ng-model="task.project_status_id" required/>
-                <!--<select ng-model="task.project_status_id" class="form-control">-->
-                    <!--<option class="form-control" ng-repeat="status in statuses" ng-value="status.id" ng-selected="status.id == task.project_status_id">{{status.name}}</option>-->
-                <!--</select>-->
-            </div>
-        </div>
-        <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+                <div class="form-group col-md-12" show-errors>
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Статус</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        <select name="project_status" class="form-control" ng-options="status.id as status.name for status in statuses" ng-model="task.project_status_id" required/>
+                        <!--<select ng-model="task.project_status_id" class="form-control">-->
+                        <!--<option class="form-control" ng-repeat="status in statuses" ng-value="status.id" ng-selected="status.id == task.project_status_id">{{status.name}}</option>-->
+                        <!--</select>-->
+                    </div>
+                </div>
+                <div ng-repeat="error in errors.project_status" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+            </tab>
+            <tab heading="Исполнители">
+                <div class="form-group col-md-12">
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Исполнители</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        <ui-select multiple close-on-select="false" ng-model="tasks.performers">
+                            <ui-select-match placeholder="Выберите исполнителей">
+                                {{$item.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="contact.id as contact in contacts | propsFilter: {name: $select.search}"
+                                               refresh="refreshAddresses($select.search)"
+                                               refresh-delay="0">
+                                <div ng-bind-html="contact.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="$dismiss()">Закрыть</button>

@@ -10,7 +10,7 @@ gem 'mongoid', '~> 4.0.0'
 gem 'moped', github: 'mongoid/moped'
 gem 'simple_enum', '~> 2.0.0' , require: 'simple_enum/mongoid'
 gem 'sorted-mongoid'
-
+gem 'ransack'
 
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3.5'

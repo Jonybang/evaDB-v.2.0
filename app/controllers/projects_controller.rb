@@ -1,7 +1,6 @@
 class ProjectsController < InheritsController
   before_filter :load_contact
 
-
   private
     def get_collection
       @with_tasks = params[:with_tasks]

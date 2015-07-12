@@ -39,10 +39,10 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
         var project = new Project($scope.project);
 
         //Save the forum object
-        project.$save(function() {
+        project.$save(function(response) {
 
             //Redirect us back to the main page
-            $state.go('app.projects.index');
+            $state.go('app.projects.show.tasks.table', {projectId: response.id});
 
         }, function(response) {
 

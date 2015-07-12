@@ -6,7 +6,7 @@ class InheritsController < ApplicationController
   before_action :get_resource, only: :show
 
   def create
-    create! { @resource }
+    create! { redirect_to resource_url and return }
   end
   protected
     def get_resource

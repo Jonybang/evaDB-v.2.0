@@ -1,4 +1,12 @@
-<table class="table table-bordered table-condensed">
+<div ng-show="tasks.project_tasks.$resolved && tasks.project_tasks.length == 0">
+    <div>
+        <hr/>
+        <h4>Здесь пока ничего нет...</h4>
+
+        <p>Попробуйте добавить задачу</p>
+    </div>
+</div>
+<table class="table table-bordered table-condensed" ng-if="tasks.project_tasks.$resolved && tasks.project_tasks.length">
     <tr>
         <th>Задача</th>
         <th>Сроки</th>

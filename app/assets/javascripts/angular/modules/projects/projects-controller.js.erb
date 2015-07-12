@@ -81,12 +81,10 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         { route : 'app.projects.show.tasks.scheme', heading : 'Схема', disabled: true },
         { route : 'app.projects.show.tasks.map', heading : 'Дорожная карта', disabled: true }
     ];
-
+    var self = this;
     var project_id = $state.params.projectId;
-    $scope.project_tasks = this.project_tasks  = ProjectTask.query({project_id: project_id});
-    $scope.project_tasks.$promise.then(function(){
-//        if($scope.project_tasks.length)
-//            Gantt.init($scope.project_tasks);
+    ProjectTask.query({project_id: project_id}).then(function (tasks) {
+          $scope.project_tasks = self.project_tasks = tasks;
     });
 
     $scope.destroy = function(task) {
@@ -146,27 +144,29 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
 }]);
 
 app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, Contact, $modalInstance, inputs, Helpers) {
-    //Если это задача не является подзадачей
-    if(!inputs.parent_task_id){
-        //Ищем её по id проекта
-        $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id}) : {};
-    } else {
-        //Иначе ищем её по id родительской задачи
-        $scope.task = inputs.task_id ? ProjectTask.get({id: inputs.task_id, project_id: inputs.project_id, parent_task_id: inputs.parent_task_id}) : {};
-        $scope.task.parent_task_id = inputs.parent_task_id;
+    $scope.task = {
+        project_id: inputs.project_id,
+        parent_task_id: inputs.parent_task_id
+    };
+
+    if(inputs.task_id){
+        ProjectTask.get(inputs.task_id).then(function(task){
+            angular.extend(task, $scope.task);
+            $scope.task = task;
+            console.log(task);
+        })
     }
 
-    $scope.task.project_id = inputs.project_id;
     if(!$scope.task.performers || !$scope.task.performers.length)
         $scope.task.performers = [];
 
-    if($scope.task.$promise)
-        $scope.task.$promise.then(function(){
-            //TODO: вынести в сервис
-            $scope.task.begin_date = $scope.task.begin_date ? new Date($scope.task.begin_date) : '';
-            $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
-            $scope.task.project_status_id = $scope.task.project_status.id;
-        });
+//    if($scope.task.$promise)
+//        $scope.task.$promise.then(function(){
+//            //TODO: вынести в сервис
+//            $scope.task.begin_date = $scope.task.begin_date ? new Date($scope.task.begin_date) : '';
+//            $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
+//            $scope.task.project_status_id = $scope.task.project_status.id;
+//        });
 
     $scope.statuses = ProjectStatus.query();
 
@@ -181,29 +181,27 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
             return;
         }
 
-        //$scope.task = Helpers.parseDatesToStr($scope.task);
-
-        var obj, isNew = $scope.task.id ? false : true;
+        $scope.task.performers.map(function(item, index){
+            $scope.task.performers[index] = {_id: item.id};
+        });
         $scope.task.project_status = $scope.statuses.filter(function(obj){
             return obj.id == $scope.task.project_status_id;
         })[0];
 
-        if(isNew)
-            obj = new ProjectTask($scope.task);
+        var obj;
+        //если id нет - значит это новая задача
+        if(!$scope.task.id)
+            obj = new ProjectTask($scope.task).create();
         else
-            obj = ProjectTask.update({ id: inputs.task_id, project_id: inputs.project_id }, $scope.task);
+            obj = new ProjectTask($scope.task).update();
 
-        function success (result){
-            var task = result.resource ? result.resource : result;
+        obj.then(function success (result){
+                    var task = result.resource ? result.resource : result;
 
-            $modalInstance.close(task);
-        }
-        function error (info){
-            $scope.errors = info.data.errors;
-        }
-        if(isNew)
-            obj.$save(success, error);
-        else
-            obj.$promise.then(success, error)
+                    $modalInstance.close(task);
+                },
+                function error (info){
+                    $scope.errors = info.data.errors;
+                });
     }
 }]);

@@ -75,3 +75,4 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'rails_12factor'
 
 gem 'ng-rails-csrf'
+gem 'angularjs-rails-resource', '~> 2.0.0'

@@ -1,4 +1,4 @@
-<div ng-show="tasks.$resolved && tasks.length == 0">
+<div ng-show="!tasks.length">
     <div>
         <hr/>
         <h4>Здесь пока ничего нет...</h4>
@@ -9,7 +9,7 @@
         <a href="/projects/new" class="btn btn-success">Добавить проект</a>
     </div>
 </div>
-<div class="btn-toolbar col-xs-12" ng-if="tasks.$resolved && tasks.length">
+<div class="btn-toolbar col-xs-12" ng-if="tasks.length">
     <div class="btn-group pull-right" dropdown>
         <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
             Фильтр 4 <span class="caret"></span>
@@ -43,7 +43,7 @@
         </ul>
     </div>
 </div>
-<table class="table table-condensed col-xs-12" ng-if="tasks.$resolved && tasks.length">
+<table class="table table-condensed col-xs-12" ng-if="tasks.length">
     <tr>
         <th>Задачи</th>
         <th>Проект</th>

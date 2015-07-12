@@ -57,11 +57,11 @@
                         <label>Исполнители</label>
                     </div>
                     <div class="col-md-6 col-lg-7">
-                        <ui-select multiple close-on-select="false" ng-model="tasks.performers">
+                        <ui-select multiple close-on-select="false" ng-model="task.performers">
                             <ui-select-match placeholder="Выберите исполнителей">
                                 {{$item.name}}
                             </ui-select-match>
-                            <ui-select-choices repeat="contact.id as contact in contacts | propsFilter: {name: $select.search}"
+                            <ui-select-choices repeat="contact in contacts | propsFilter: {name: $select.search}"
                                                refresh="refreshAddresses($select.search)"
                                                refresh-delay="0">
                                 <div ng-bind-html="contact.name | highlight: $select.search"></div>

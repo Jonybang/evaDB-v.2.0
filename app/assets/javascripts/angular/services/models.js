@@ -13,10 +13,22 @@ app.factory('ProjectStatus', ['$resource', function($resource) {
     return $resource('/api/project_statuses/:id', {id: '@id'}, {'update': {method: 'PUT'}});
 }]);
 
-app.factory('ProjectTask', ['$resource', 'Helpers', function($resource, Helpers) {
-    return $resource('/api/project_tasks/:id',
-        {id: '@id'},
-        {'update': {
-            method: 'PUT'
-        }});
+//app.factory('ProjectTask', ['$resource', 'Helpers', function($resource, Helpers) {
+//    return $resource('/api/project_tasks/:id',
+//        {id: '@id'},
+//        {'update': {
+//            method: 'PUT'
+//        }});
+//}]);
+app.factory('ProjectTask', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/project_tasks',
+        name: 'project_task',
+        serializer: railsSerializer(function () {
+            this.exclude('performers');
+            //this.nestedAttribute('performers');
+            this.exclude('contact');
+            //this.resource('performers', 'Contact');
+        })
+    });
 }]);

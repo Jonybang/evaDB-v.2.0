@@ -37,6 +37,7 @@
 //= require angular-debounce.min
 //= require angular-sanitize.min
 //= require select.min
+//= require angularjs/rails/resource
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min

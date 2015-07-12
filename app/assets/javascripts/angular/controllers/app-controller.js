@@ -3,7 +3,9 @@
  */
 angular.module('app').controller('AppCtrl', ['$scope', '$location', 'ProjectTask',
     function($scope, $location, ProjectTask) {
-        $scope.last_tasks = ProjectTask.query({sort: 'created_at DESC', limit: 3});
+        ProjectTask.query({sort: 'created_at DESC', limit: 3}).then(function (tasks) {
+            $scope.last_tasks = tasks;
+        });
 
         $scope.tabsData = [
             { route : 'app.tasks', heading : 'Задачи' },

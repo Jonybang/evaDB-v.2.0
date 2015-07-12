@@ -8,8 +8,8 @@ angular.module('app', [
     'app.gantt',
     'app.projects',
 
+    'rails',
     'ngResource',
-    //'app.loading',
     'ui.bootstrap',
     'ui.bootstrap.showErrors',
     'angular-date-picker-polyfill',
@@ -19,7 +19,7 @@ angular.module('app', [
     'noty',
     'ui.router',
     'ui.router.tabs'])
-        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', '$httpProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider) {
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', '$httpProvider', 'railsSerializerProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider) {
 
             $urlRouterProvider.otherwise("/tasks");
 
@@ -48,24 +48,10 @@ angular.module('app', [
 
                 return responseData;
             });
-//            $urlRouterProvider.otherwise(function(injector, location) {
-//                // N.b.: arguments are not injected via usual Angular magic, thus no $'s;
-//                //     the second argument, location, is not the same as window.location
-//
-//                // In my case, I want any urls that DON'T start with /admin to escape
-//                //     ui-router's control
-//                //return false;
-//                var path = location.path();
-//                if (path.match(/^\/logout/)) {
-//                    return false;
-//                }
-//                // else: could redirect to some default /admin homepage or something
-//            });
+
+            railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
         }]);
 
 angular.module('app').run(['amMoment', function(amMoment) {
     amMoment.changeLocale('ru');
 }]);
-//angular.module('app').constant('angularMomentConfig', {
-//    timezone: 'Name of Timezone' // e.g. 'Europe/London'
-//});

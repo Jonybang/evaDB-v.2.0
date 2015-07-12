@@ -7,7 +7,9 @@ app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'User', 'Helpers', '$state
     //TODO: Выводить только те задачи, к которым данный контакт имеет отношение
     User.get_contact().then(function(result){
         $scope.contact = result;
-        $scope.tasks = ProjectTask.query({sort: 'end_date DESC', limit: 50, contact_id: result.id});
+        ProjectTask.query({sort: 'end_date DESC', limit: 50, contact_id: result.id}).then(function (tasks) {
+            $scope.tasks = tasks;
+        });
     });
 
 

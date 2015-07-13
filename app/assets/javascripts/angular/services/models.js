@@ -26,6 +26,8 @@ app.factory('ProjectTask', ['railsResourceFactory', 'railsSerializer', function 
         name: 'project_task',
         serializer: railsSerializer(function () {
             this.exclude('performers');
+            this.exclude('project_status');
+            this.exclude('project');
             //this.nestedAttribute('performers');
             this.exclude('contact');
             //this.resource('performers', 'Contact');

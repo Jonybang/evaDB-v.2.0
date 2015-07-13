@@ -1,19 +1,15 @@
-class Subunit
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  field :name, type: String
+class Subunit < Base
+  belongs_to :organization
 
-  embeds_one :contact_data, as: :cdata_parent, class_name: "ContactData"
+  has_one :contact_data, as: :cdata_parent, class_name: 'ContactDatum'
   accepts_nested_attributes_for :contact_data
 
   has_one :link, as: :linkable
   accepts_nested_attributes_for :link
 
-  belongs_to :organization
+  has_many :rooms, class_name: 'Room'
+  #accepts_nested_attributes_for :rooms
 
-  has_many :rooms, class_name: "Room"
-  accepts_nested_attributes_for :rooms
-
-  has_many :equips, class_name: "Equip"
-  accepts_nested_attributes_for :equips
+  has_many :equips, class_name: 'Equip'
+  #accepts_nested_attributes_for :equips
 end

@@ -1,20 +1,13 @@
-class Equip
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  field :name, type: String
-  field :model, type: String
-  field :description, type: String
-  field :parametres, type: String
-
-  has_many :project_resources, as: :resoursable
-  accepts_nested_attributes_for :project_resources
-
-  belongs_to :responsible, class_name: "Contact"
+class Equip < Base
+  belongs_to :responsible, class_name: 'Contact', inverse_of: :equips
   belongs_to :organization
   belongs_to :subunit
   belongs_to :room
   belongs_to :equip_status
 
-  has_and_belongs_to_many :project_tasks, class_name: "ProjectTask"
-  accepts_nested_attributes_for :project_tasks
+  has_and_belongs_to_many :project_tasks, class_name: 'ProjectTask', inverse_of: :equips
+  #accepts_nested_attributes_for :project_tasks
+
+  has_many :project_resources, as: :resoursable, class_name: 'ProjectResource'
+  #accepts_nested_attributes_for :project_resources
 end

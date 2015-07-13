@@ -1,6 +1,3 @@
-class These
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  field :name, type: String
-  embedded_in :scientist, class_name: "Scientist", :inverse_of => :theses
+class These < Base
+  belongs_to :scientist, class_name: 'Scientist', :inverse_of => :theses
 end

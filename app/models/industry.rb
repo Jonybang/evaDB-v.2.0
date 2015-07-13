@@ -1,7 +1,3 @@
-class Industry
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  field :name, type: String
-
-  has_and_belongs_to_many :contacts
+class Industry < Base
+  has_and_belongs_to_many :contacts, inverse_of: :industries
 end

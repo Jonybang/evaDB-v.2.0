@@ -1,6 +1,4 @@
 class Partner < Contact
-  field :terms, type: String
-
-  has_and_belongs_to_many :sponsor_events, class_name: "Event", inverse_of: :sponsors
-  has_and_belongs_to_many :expert_events, class_name: "Event", inverse_of: :experts
+  has_and_belongs_to_many :sponsor_events, class_name: 'Event', inverse_of: :sponsors, join_table: 'sponsors_events'
+  has_and_belongs_to_many :expert_events, class_name: 'Event', inverse_of: :experts, join_table: 'experts_events'
 end

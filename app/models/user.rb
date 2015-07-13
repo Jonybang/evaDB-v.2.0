@@ -1,8 +1,4 @@
-class User
-  include Mongoid::Document
-  field :encrypted_password, :type => String
-  field :email, :type => String
-
+class User < ActiveRecord::Base
   has_one :contact
   accepts_nested_attributes_for :contact
 

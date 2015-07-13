@@ -1,6 +1,4 @@
-class ProjectResource
-  include Mongoid::Document
-
+class ProjectResource < ActiveRecord::Base
   def name
     self.value
   end
@@ -8,9 +6,6 @@ class ProjectResource
     self.owner.name
   end
   belongs_to :resource_type
-  field :value, type: String
-
   belongs_to :project
-
   belongs_to :resoursable, polymorphic: true, :dependent => :destroy
 end

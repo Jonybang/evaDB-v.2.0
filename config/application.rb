@@ -1,15 +1,15 @@
 require File.expand_path('../boot', __FILE__)
 
-#require 'rails/all'
+require 'rails/all'
 
-require "active_model/railtie"
-# require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "sprockets/railtie"
-require 'rabl'
-require 'simple_enum/mongoid'
+# require "active_model/railtie"
+# # require "active_record/railtie"
+# require "action_controller/railtie"
+# require "action_mailer/railtie"
+# require "action_view/railtie"
+# require "sprockets/railtie"
+# require 'rabl'
+# require 'simple_enum/mongoid'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -42,7 +42,7 @@ module EvaDBV20
 
     # Enable the asset pipeline
     config.assets.enabled = true
-
+    #config.active_record.record_timestamps = false
     # Version of your assets, change this if you want to expire all your assets
     #config.assets.version = '1.0'
 

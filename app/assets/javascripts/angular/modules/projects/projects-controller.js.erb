@@ -168,9 +168,14 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
 //            $scope.task.project_status_id = $scope.task.project_status.id;
 //        });
 
-    $scope.statuses = ProjectStatus.query();
+    ProjectStatus.query().$promise.then(function(statuses){
+        $scope.statuses = statuses;
+    });
 
-    $scope.contacts = Contact.query({limit:50});
+    Contact.query({limit:50}).$promise.then(function(contacts){
+        $scope.contacts  = contacts;
+    });
+
     $scope.refreshContacts = function(q) {
         $scope.contacts = ProjectTask.query({q: q, limit:50});
     };

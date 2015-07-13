@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     if (!session || !session[:user_id])
       return
     end
-    user_id = session[:user_id]['$oid'] || session[:user_id]
+    user_id = session[:user_id]
     @current_user ||= User.find_by(id: user_id) if user_id
   end
 end

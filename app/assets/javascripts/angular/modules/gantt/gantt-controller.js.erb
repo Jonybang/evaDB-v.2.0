@@ -8,9 +8,9 @@ var app = angular.module('app.gantt');
 app.controller('GanttCtrl', ['$scope', 'Project', 'ProjectTask', 'User', 'Gantt', 'Helpers', '$state', function($scope, Project, ProjectTask, User, Gantt, Helpers, $state) {
     User.get_contact().then(function(result){
         $scope.contact = result;
-        $scope.projects = Project.query({contact_id:result.id, with_tasks: 1});
 
-        $scope.projects.$promise.then(function(){
+        Project.query({contact_id:result.id, with_tasks: 1}).then(function(projects){
+            $scope.projects = projects;
             if($scope.projects.length){
                 setTimeout(function(){
                     $scope.projects.forEach(function(proj){

@@ -3,9 +3,15 @@
     .panel.panel-default
       .panel-heading Оперативная информация
       .panel-body
-        h3 Последние задачи
+        h3 ng-if=('last_tasks.length')  Последние задачи
+        div ng-if=('!last_tasks.length')
+          p
+            | Добро пожаловать в систему управления инновационными проектами.
+            | Чтобы начать работать создайте проект.
+          .btn-toolbar
+            a.btn.btn-success href="/projects/new" Добавить проект
       ul.list-group
-        li.list-group-item ng-repeat=("task in last_tasks")
+        li.list-group-item ng-repeat=('task in last_tasks')
           span
             strong() {{task.project.name}}:&nbsp;
             | {{task.name}}

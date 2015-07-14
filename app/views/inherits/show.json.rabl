@@ -1,3 +1,3 @@
 object @resource
-attribute :_id => :id
+attribute :id
 attributes :name, :created_at, :updated_at

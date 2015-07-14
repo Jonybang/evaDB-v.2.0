@@ -20,9 +20,11 @@ class ProjectTasksController < InheritsController
         #     project_ids_set.add(project._id)
         #   end
         # end
-        project_ids = Project.where(chief_id: params[:contact_id]).map(&:_id)
-        tasks_ids = Contact.find(params[:contact_id]).performer_tasks.map(&:_id)
-        @collection = ProjectTask.or(:project_id.in => project_ids).or(:_id.in => tasks_ids)
+        #project_ids = Project.where(contact_id: params[:contact_id]).map(&:_id)
+        #tasks_ids = Contact.find(params[:contact_id]).performer_tasks.map(&:_id)
+        #@collection = Project.where(:contact_id => params[:contact_id]).project_tasks
+        @collection = ProjectTask.includes(:project).where('projects.contact_id = ?', params[:contact_id]).references(:project)
+        #@collection = ProjectTask.or(:project_id.in => project_ids).or(:_id.in => tasks_ids)
         #@collection = Contact.find(params[:contact_id]).performer_tasks
         #@collection = ProjectTask.where()
         #@collection = ProjectTask.has_contact params[:contact_id]

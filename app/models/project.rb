@@ -2,7 +2,7 @@ class Project < Base
 
   belongs_to :project_status
   belongs_to :project_direction
-  belongs_to :chief, class_name: 'Contact', inverse_of: :chief_projects
+  belongs_to :chief, class_name: 'Contact', inverse_of: :chief_projects, foreign_key: 'contact_id'
 
   has_many :project_tasks, class_name: 'ProjectTask', dependent: :destroy, inverse_of: :project
   #accepts_nested_attributes_for :project_tasks

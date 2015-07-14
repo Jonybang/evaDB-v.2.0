@@ -9,7 +9,9 @@ app.controller('ProjectsIndexCtrl', ['$scope', 'Project', 'User', function($scop
     //Grab all forums from the server
     User.get_contact().then(function(result){
         $scope.contact = result;
-        $scope.projects = Project.query({chief_id:result.id});
+        Project.query({contact_id:result.id}).then(function(projects){
+            $scope.projects =projects;
+        });
     });
 
     //Destroy method for deleting a forum
@@ -34,12 +36,12 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
             return;
         }
 
-        $scope.project.chief_id = $scope.contact.id;
+        $scope.project.contact_id = $scope.contact.id;
         //Create the forum object to send to the back-end
-        var project = new Project($scope.project);
+        var project = new Project($scope.project).create();
 
         //Save the forum object
-        project.$save(function(response) {
+        project.then(function(response) {
 
             //Redirect us back to the main page
             $state.go('app.projects.show.tasks.table', {projectId: response.id});
@@ -54,7 +56,9 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
 
 //A controller to show the forum and all it's glory
 app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
-    $scope.project = Project.get({id: $state.params.projectId});
+    Project.get($state.params.projectId).then(function(project){
+        $scope.project = project;
+    });
 
     $scope.tabsData = [
         { route : 'app.projects.show.description', heading : 'Описание' },

@@ -4,8 +4,8 @@ class ProjectsController < InheritsController
   private
     def get_collection
       @with_tasks = params[:with_tasks]
-      if params[:chief_id]
-        @collection = Project.where(:chief_id => params[:chief_id])
+      if params[:contact_id]
+        @collection = Project.where(:contact_id => params[:contact_id])
       else
         @collection = Project.all
       end

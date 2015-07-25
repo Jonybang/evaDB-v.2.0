@@ -4,6 +4,7 @@
     <list id="94684e40-c7a3-4eba-85f0-d76147d78f2f" name="Default" comment="изменил поведение редиректов регистрации и авторизации" />
     <list default="true" id="263d6e68-aeda-474e-8e4f-195479e7df61" name="New changelist" comment="test development branch">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/tasks.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/tasks.js.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="evaDB-v.2.0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,8 +73,8 @@
       <file leaf-file-name="tasks.js.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/tasks.js.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.08035714" vertical-offset="0" max-vertical-offset="560">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.42857143" vertical-offset="0" max-vertical-offset="560">
+              <caret line="16" column="12" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -1692,8 +1693,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/tasks.js.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08035714" vertical-offset="0" max-vertical-offset="560">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.42857143" vertical-offset="0" max-vertical-offset="560">
+          <caret line="16" column="12" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="12" />
           <folding />
         </state>
       </provider>

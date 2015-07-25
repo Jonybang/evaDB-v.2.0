@@ -309,23 +309,21 @@ ActiveRecord::Schema.define(version: 20150713212453) do
     t.integer  "project_id"
     t.integer  "parent_task_id"
     t.integer  "project_status_id"
-    t.integer  "contact_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
-  add_index "project_tasks", ["contact_id"], name: "index_project_tasks_on_contact_id"
   add_index "project_tasks", ["parent_task_id"], name: "index_project_tasks_on_parent_task_id"
   add_index "project_tasks", ["project_id"], name: "index_project_tasks_on_project_id"
   add_index "project_tasks", ["project_status_id"], name: "index_project_tasks_on_project_status_id"
 
-  create_table "project_tasks_performers", id: false, force: :cascade do |t|
+  create_table "project_tasks_responsible", id: false, force: :cascade do |t|
     t.integer "project_task_id"
     t.integer "contact_id"
   end
 
-  add_index "project_tasks_performers", ["contact_id"], name: "index_project_tasks_performers_on_contact_id"
-  add_index "project_tasks_performers", ["project_task_id"], name: "index_project_tasks_performers_on_project_task_id"
+  add_index "project_tasks_responsible", ["contact_id"], name: "index_project_tasks_responsible_on_contact_id"
+  add_index "project_tasks_responsible", ["project_task_id"], name: "index_project_tasks_responsible_on_project_task_id"
 
   create_table "projects", force: :cascade do |t|
     t.string   "name",                 null: false

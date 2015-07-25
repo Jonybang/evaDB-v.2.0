@@ -10,7 +10,7 @@ class CreateProjectTasks < ActiveRecord::Migration
       t.belongs_to :project, index: true
       t.belongs_to :parent_task, index: true
       t.belongs_to :project_status, index: true
-      t.belongs_to :contact, index: true
+      #t.belongs_to :contact, index: true
 
       t.timestamps null: false
     end

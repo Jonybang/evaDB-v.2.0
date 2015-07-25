@@ -15,7 +15,7 @@ class Contact < Base
   has_many :socnet_links, class_name: 'SocnetLink', as: :linkable
   #accepts_nested_attributes_for :socnet_links
 
-  has_many :project_tasks, class_name: 'ProjectTask', inverse_of: :responsible
+  has_and_belongs_to_many :responsible_tasks, class_name: 'ProjectTask', inverse_of: :responsible
   #accepts_nested_attributes_for :project_tasks
 
   has_and_belongs_to_many :skills, inverse_of: :contacts
@@ -30,5 +30,5 @@ class Contact < Base
 
   has_and_belongs_to_many :member_events, class_name: 'Event', inverse_of: :members
 
-  has_and_belongs_to_many :performer_tasks, class_name: 'ProjectTask', inverse_of: :performers
+  #has_and_belongs_to_many :performer_tasks, class_name: 'ProjectTask', inverse_of: :performers
 end

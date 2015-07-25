@@ -51,17 +51,17 @@
                 </div>
                 <div ng-repeat="error in errors.project_status" class="alert alert-error"><strong>Название</strong> {{error}}</div>
             </tab>
-            <tab heading="Исполнители">
+            <tab heading="Ресурсы">
                 <div class="form-group col-md-12">
                     <div class="col-md-4 col-lg-3 text-right">
-                        <label>Исполнители</label>
+                        <label>Ответственные</label>
                     </div>
                     <div class="col-md-6 col-lg-7">
-                        <ui-select multiple close-on-select="false" ng-model="task.performers">
+                        <ui-select multiple close-on-select="false" ng-model="task.responsible_ids">
                             <ui-select-match placeholder="Выберите исполнителей">
                                 {{$item.name}}
                             </ui-select-match>
-                            <ui-select-choices repeat="contact in contacts | propsFilter: {name: $select.search}"
+                            <ui-select-choices repeat="contact.id as contact in contacts | propsFilter: {name: $select.search}"
                                                refresh="refreshAddresses($select.search)"
                                                refresh-delay="0">
                                 <div ng-bind-html="contact.name | highlight: $select.search"></div>

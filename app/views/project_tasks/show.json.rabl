@@ -11,6 +11,11 @@ end
 child :responsible => :contact do
     attributes :id, :name
 end
+
+node :responsible_ids do |resource|
+  resource.responsible.map {|r| r.id }
+end
+
 child :project do
     attributes :id, :name
 end

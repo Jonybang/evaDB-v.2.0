@@ -38,7 +38,7 @@ angular.module('app').factory('loadingInterceptor', ['$q', '$rootScope', '$noty'
             responseError: function (response) {
                 close();
                 if (response && response.status === 404) {
-                    $noty.show({text:'Ошибка загрузки данных: Не найдено', type:'error'});
+                    $noty.show({text:'Ошибка загрузки данных: Не найдено', type:'warning'});
                 }
                 if (response && response.status >= 500) {
                     $noty.show({text:'Ошибка загрузки данных: Ошибка сервера', type:'error'});

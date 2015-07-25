@@ -159,11 +159,9 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
             $scope.task = task;
             console.log(task);
         })
+    } else {
+        $scope.task.responsible_ids = [];
     }
-
-    if(!$scope.task.performers || !$scope.task.performers.length)
-        $scope.task.performers = [];
-
 //    if($scope.task.$promise)
 //        $scope.task.$promise.then(function(){
 //            //TODO: вынести в сервис
@@ -189,10 +187,6 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
         if (!$scope.taskForm.$valid) {
             return;
         }
-
-        $scope.task.performers.map(function(item, index){
-            $scope.task.performers[index] = {_id: item.id};
-        });
         $scope.task.project_status = $scope.statuses.filter(function(obj){
             return obj.id == $scope.task.project_status_id;
         })[0];

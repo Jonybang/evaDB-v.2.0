@@ -1,6 +1,8 @@
 /**
  * Created by jonybang on 04.07.15.
  */
+'use strict';
+
 angular.module('app')
     .factory('Gantt', ['$http', function($http) {
         function ganttFactory (){

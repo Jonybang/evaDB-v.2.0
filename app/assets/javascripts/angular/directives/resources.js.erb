@@ -1,0 +1,29 @@
+angular.module('app').directive('resources', function() {
+    return {
+        restrict: 'E',
+        templateUrl: "<%= asset_path('angular/directives/resources.html') %>",
+        scope: {
+            list: '='
+        },
+        link: function (scope, element) {
+            scope.selected = {};
+            scope.list = [
+                {name: 'resource 1'},
+                {name: 'resource 2'},
+                {name: 'resource 3'},
+                {name: 'resource 4'},
+                {name: 'resource 5'}
+            ];
+            scope.startDate = new Date('01-01-2015');
+            scope.endDate = new Date('01-05-2015');
+
+            scope.calendar = [];
+
+            var interimDate = scope.startDate;
+            while(interimDate < scope.endDate){
+                scope.calendar.push({'date': angular.copy(interimDate), resources: [scope.list[interimDate.getDate()-1]]});
+                interimDate.setDate(interimDate.getDate() + 1);
+            }
+        }
+    };
+});

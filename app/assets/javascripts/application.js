@@ -38,6 +38,7 @@
 //= require angular-sanitize.min
 //= require select.min
 //= require angularjs/rails/resource
+//= require angular-drag-and-drop-lists.min.js
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min

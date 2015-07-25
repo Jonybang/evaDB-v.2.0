@@ -1,0 +1,21 @@
+<table class="table">
+    <tr>
+        <th ng-repeat="date in calendar">{{date.date | date:'d'}}</th>
+    </tr>
+    <tr ng-repeat="item in list">
+        <td ng-repeat="date in calendar">
+            <ul dnd-list="date.resources" class="list-unstyled" style="min-height: 30px;">
+                <li ng-repeat="resource in date.resources"
+                    dnd-draggable="resource"
+                    dnd-moved="date.resources.splice($index, 1)"
+                    dnd-effect-allowed="move"
+                    dnd-selected="selected = item"
+                    ng-if="item === resource">
+                    <span ng-class="['label',{'label-info': selected === item},{'label-primary': selected !== item}]">
+                        {{resource.name}}
+                    </span>
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>

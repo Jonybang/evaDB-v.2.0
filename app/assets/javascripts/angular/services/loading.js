@@ -1,6 +1,8 @@
 /*
  Borrowed from: https://github.com/lavinjj/angularjs-spinner
  */
+'use strict';
+
 angular.module('app').factory('loadingInterceptor', ['$q', '$rootScope', '$noty', '$location', 'debounce',
     function ($q, $rootScope, $noty, $location, debounce) {
         function timeoutForClosing(){

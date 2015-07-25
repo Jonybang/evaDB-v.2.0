@@ -4,7 +4,6 @@
     <list id="94684e40-c7a3-4eba-85f0-d76147d78f2f" name="Default" comment="изменил поведение редиректов регистрации и авторизации" />
     <list default="true" id="263d6e68-aeda-474e-8e4f-195479e7df61" name="New changelist" comment="test development branch">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects.js.erb" />
     </list>
     <ignored path="evaDB-v.2.0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,28 +32,28 @@
       <file leaf-file-name="gantt-controller.js.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt-controller.js.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="45" max-vertical-offset="1290">
+            <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1290">
               <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="projects.js.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="projects.js.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects.js.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12842466" vertical-offset="0" max-vertical-offset="975">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="75" max-vertical-offset="975">
               <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gantt.js.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="gantt.js.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt.js.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5" vertical-offset="0" max-vertical-offset="345">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.051369864" vertical-offset="0" max-vertical-offset="584">
+              <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -187,8 +186,8 @@
         <option value="$PROJECT_DIR$/db/migrate/20150713040941_create_project_tasks_performers.rb" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/modernizr.min.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt.js.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects.js.erb" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt.js.erb" />
       </list>
     </option>
   </component>
@@ -701,8 +700,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="RailsProjectView" />
       <pane id="Scope" />
+      <pane id="RailsProjectView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1248,10 +1247,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="24" width="1313" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2551409" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2551409" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15460777" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1663,14 +1662,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt.js.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5" vertical-offset="0" max-vertical-offset="345">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt-controller.js.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1290">
@@ -1681,8 +1672,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects.js.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12842466" vertical-offset="0" max-vertical-offset="975">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="75" max-vertical-offset="975">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/gantt/gantt.js.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.051369864" vertical-offset="0" max-vertical-offset="584">
+          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
           <folding />
         </state>
       </provider>

@@ -1,6 +1,8 @@
 /**
  * Created by jonybang on 08.07.15.
  */
+'use strict';
+
 angular.module('app')
     .factory('Helpers', ['$http', function($http) {
 

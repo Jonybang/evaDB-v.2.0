@@ -48,6 +48,7 @@ module EvaDBV20
 
     # config/application.rb
     #config.assets.paths << Rails.root.join('app', 'assets', 'angular')
+    config.action_dispatch.perform_deep_munge = false
 
   end
 end

@@ -92,7 +92,7 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         ProjectTask.query({project_id: project_id}).then(function (tasks) {
             $scope.project_tasks = self.project_tasks = tasks;
         });
-    };
+    }
     getTasks();
 
     $scope.destroy = function(task) {
@@ -158,8 +158,10 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
 app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, Contact, $modalInstance, inputs, Helpers) {
     $scope.task = {
         project_id: inputs.project_id,
-        parent_task_id: inputs.parent_task_id
+        parent_task_id: inputs.parent_task_id,
+        resources: []
     };
+    $scope.responsible = $scope.contacts = [];
 
     if(inputs.task_id){
         ProjectTask.get(inputs.task_id).then(function(task){
@@ -172,13 +174,13 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
         $scope.statuses = statuses;
     });
 
-    Contact.query({limit:50}).$promise.then(function(contacts){
-        $scope.contacts  = contacts;
+    Contact.query({limit:50}).then(function(contacts){
+        $scope.responsible = $scope.contacts = contacts;
     });
 
-    $scope.refreshContacts = function(q, selected) {
-        return Contact.query({q: q, limit:50}).$promise.then(function(contacts){
-            $scope.contacts = contacts.filter(function(contact){
+    $scope.refreshResponsible = function(q, selected) {
+        return Contact.query({q: q, limit:50}).then(function(contacts){
+            $scope.responsible = contacts.filter(function(contact){
                 return selected.indexOf(contact.id) == -1;
             });
         });

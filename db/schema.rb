@@ -283,6 +283,7 @@ ActiveRecord::Schema.define(version: 20150713212453) do
     t.string   "value",            null: false
     t.integer  "resource_type_id"
     t.integer  "project_id"
+    t.integer  "project_task_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "resoursable_id"
@@ -290,6 +291,7 @@ ActiveRecord::Schema.define(version: 20150713212453) do
   end
 
   add_index "project_resources", ["project_id"], name: "index_project_resources_on_project_id"
+  add_index "project_resources", ["project_task_id"], name: "index_project_resources_on_project_task_id"
   add_index "project_resources", ["resource_type_id"], name: "index_project_resources_on_resource_type_id"
   add_index "project_resources", ["resoursable_type", "resoursable_id"], name: "index_project_resources_on_resoursable_type_and_resoursable_id"
 

@@ -7,5 +7,6 @@ class ProjectResource < ActiveRecord::Base
   end
   belongs_to :resource_type
   belongs_to :project
+  belongs_to :project_task
   belongs_to :resoursable, polymorphic: true, :dependent => :destroy
 end

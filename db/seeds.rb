@@ -17,3 +17,14 @@ project_status_list = [
 project_status_list.each do |name, color|
   ProjectStatus.create( name: name, color: color )
 end
+
+jonybang = User.create(email:'jonybang@mail.ru', password: 'Jb192837')
+jonybang.contact = Contact.new(name:'Паничев Евгений')
+jonybang.contact.contact_data = ContactDatum.create({email:jonybang.email})
+
+Project.create(name:'Первый проект', description: 'Описание к первому проекту', chief: jonybang.contact)
+
+Contact.create(name: 'Контакт 1')
+Contact.create(name: 'Контакт 2')
+Contact.create(name: 'Студент 1')
+Contact.create(name: 'Студент 2')

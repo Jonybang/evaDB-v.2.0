@@ -1,29 +1,99 @@
-angular.module('app').directive('resources', function() {
+angular.module('app').directive('resources', ['$timeout', function($timeout) {
     return {
         restrict: 'E',
         templateUrl: "<%= asset_path('angular/directives/resources.html') %>",
         scope: {
-            list: '='
+            resoursable: '=',
+            list: '=',
+            startDate: '=',
+            endDate: '='
         },
         link: function (scope, element) {
-            scope.selected = {};
-            scope.list = [
-                {name: 'resource 1'},
-                {name: 'resource 2'},
-                {name: 'resource 3'},
-                {name: 'resource 4'},
-                {name: 'resource 5'}
-            ];
-            scope.startDate = new Date('01-01-2015');
-            scope.endDate = new Date('01-05-2015');
+            function initResources (){
+                if(!scope.resoursable || !scope.resoursable.length)
+                    return;
+                if(!scope.list && !scope.list.length)
+                    return;
 
-            scope.calendar = [];
+                scope.list.forEach(function(resource){
+                    scope.resoursable.some(function(obj){
+                        var result = obj.id == resource.resoursable_id;
+                        if(result)
+                            resource.resoursable = obj;
+                        return result;
+                    })
+                });
 
-            var interimDate = scope.startDate;
-            while(interimDate < scope.endDate){
-                scope.calendar.push({'date': angular.copy(interimDate), resources: [scope.list[interimDate.getDate()-1]]});
-                interimDate.setDate(interimDate.getDate() + 1);
+                scope.calendar = [];
+
+                var interimDate = scope.startDate;
+                while(interimDate <= scope.endDate){
+                    scope.calendar.push({'date': angular.copy(interimDate), resources: [scope.list[interimDate.getDate()-1]]});
+                    interimDate.setDate(interimDate.getDate() + 1);
+                }
             }
+            scope.watch('list', initResources);
+            scope.watch('resoursable', initResources);
+
+            //scope.startDate = new Date('01/01/2015');
+            //scope.endDate = new Date('01/05/2015');
+
+            scope.getResStyle = function(resource){
+                var width = resource.value*10;
+                resource.style = {'width': (width ? width : 0) +'px'};
+                return resource.style;
+            };
+
+            scope.removeResIfEmpty = function(resources, index){
+                var res = resources[index];
+                if(res.value)
+                    return;
+
+                resources.splice(index, 1);
+
+                scope.list.some(function(obj, index){
+                    var result = obj == res;
+                    if(result)
+                        scope.list.splice(index, 1);
+
+                    return result;
+                });
+            };
+
+            scope.isEmptyDate = function(date, res) {
+                return !date.resources.some(function(obj){
+                    return obj.resoursable.id == res.id;
+                });
+            };
+
+            scope.isResAvaible = function(res) {
+                return scope.list.some(function(obj){
+                    return obj.resoursable.id == res.id;
+                });
+            };
+
+            scope.addResToList = function(res){
+                scope.list.push({resoursable:res});
+                scope.calendar[0].resources.push(scope.list[scope.list.length-1]);
+            };
+
+            scope.resDropped = function(date,res,item){
+                scope.leaveAddButton(date, res);
+                return item;
+            };
+            var timer;
+            scope.enterAddButton = function(date, res) {
+                scope.calendar.forEach(function(_date){
+                    _date.hover = false;
+                });
+                date.timer = res.timer = $timeout(function(){
+                    date.hover = res.hover = true;
+                }, 500);
+            };
+            scope.leaveAddButton = function(date, res) {
+                $timeout.cancel(date.timer);
+                date.hover = res.hover = false;
+            };
         }
     };
-});
+}]);

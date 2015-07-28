@@ -5,6 +5,8 @@ class ProjectTask < Base
 
   has_many :child_tasks, class_name: 'ProjectTask', inverse_of: :parent_task, foreign_key: :parent_task_id
 
+  has_many :resources, class_name: 'ProjectResource', inverse_of: :project_task
+
   has_and_belongs_to_many :responsible, class_name: 'Contact', inverse_of: :responsible_tasks
 
   #has_and_belongs_to_many :performers, class_name: 'Contact', inverse_of: :performer_tasks

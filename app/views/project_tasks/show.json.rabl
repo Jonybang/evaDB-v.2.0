@@ -8,10 +8,6 @@ glue :project_status do
   attributes :id => :project_status_id
 end
 
-child :responsible => :contact do
-    attributes :id, :name
-end
-
 node :responsible_ids do |resource|
   resource.responsible.map {|r| r.id }
 end
@@ -19,6 +15,11 @@ end
 child :project do
     attributes :id, :name
 end
-child :performers, :root => "performers", :object_root => false do
+
+child :resources, :root => "resources", :object_root => false do
+    attributes :id, :name
+end
+
+child :responsible, :root => "responsible", :object_root => false do
     attributes :id, :name
 end

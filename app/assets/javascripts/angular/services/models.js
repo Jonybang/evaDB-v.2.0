@@ -1,9 +1,9 @@
 'use strict';
 
 var app = angular.module('app');
-app.factory('Contact', ['$resource', function($resource) {
-    return $resource('/api/contacts/:id', {id: '@id'}, {'update': {method: 'PUT'}});
-}]);
+//app.factory('Contact', ['$resource', function($resource) {
+//    return $resource('/api/contacts/:id', {id: '@id'}, {'update': {method: 'PUT'}});
+//}]);
 
 //app.factory('Project', ['$resource', function($resource) {
 //    return $resource('/api/projects/:id', {id: '@id'}, {'update': {method: 'PUT'}});
@@ -40,6 +40,14 @@ app.factory('ProjectTask', ['railsResourceFactory', 'railsSerializer', function 
             //this.nestedAttribute('performers');
             this.exclude('contact');
             //this.resource('performers', 'Contact');
+        })
+    });
+}]);
+app.factory('Contact', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/contacts',
+        name: 'contact',
+        serializer: railsSerializer(function () {
         })
     });
 }]);

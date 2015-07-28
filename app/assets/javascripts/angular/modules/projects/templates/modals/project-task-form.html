@@ -61,8 +61,8 @@
                             <ui-select-match placeholder="Выберите исполнителей">
                                 {{$item.name}}
                             </ui-select-match>
-                            <ui-select-choices repeat="contact.id as contact in contacts | propsFilter: {name: $select.search} "
-                                               refresh="refreshContacts($select.search, $select)"
+                            <ui-select-choices repeat="contact.id as contact in responsible | propsFilter: {name: $select.search} "
+                                               refresh="refreshResponsible($select.search, $select)"
                                                refresh-delay="300">
                                 <div ng-bind-html="contact.name | highlight: $select.search"></div>
                             </ui-select-choices>
@@ -74,7 +74,7 @@
                         <label>Ресурсы</label>
                     </div>
                     <div class="col-md-12">
-                        <!--<resources></resources>-->
+                        <!--<resources resoursable="contacts" list="task.resources" start-date="task.begin_date" end-date="task.end_date"></resources>-->
                     </div>
                 </div>
             </tab>

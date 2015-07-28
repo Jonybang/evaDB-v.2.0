@@ -10,6 +10,7 @@ gem 'rails', '4.2.1'
 # gem 'moped', github: 'mongoid/moped'
 # gem 'simple_enum', '~> 2.0.0' , require: 'simple_enum/mongoid'
 gem 'sorted'
+gem 'sorted-activerecord'
 gem 'ransack'
 
 # Use SCSS for stylesheets
@@ -47,7 +48,8 @@ group :development, :test do
   gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
+  gem 'debase'
+  gem 'ruby-debug-ide'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 

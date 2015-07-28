@@ -57,13 +57,13 @@
                         <label>Ответственные</label>
                     </div>
                     <div class="col-md-6 col-lg-7">
-                        <ui-select multiple close-on-select="false" ng-model="task.responsible_ids">
+                        <ui-select multiple="true" close-on-select="false" ng-model="task.responsible_ids">
                             <ui-select-match placeholder="Выберите исполнителей">
                                 {{$item.name}}
                             </ui-select-match>
-                            <ui-select-choices repeat="contact.id as contact in contacts | propsFilter: {name: $select.search}"
-                                               refresh="refreshAddresses($select.search)"
-                                               refresh-delay="0">
+                            <ui-select-choices repeat="contact.id as contact in contacts | propsFilter: {name: $select.search} "
+                                               refresh="refreshContacts($select.search, $select)"
+                                               refresh-delay="300">
                                 <div ng-bind-html="contact.name | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
@@ -74,7 +74,7 @@
                         <label>Ресурсы</label>
                     </div>
                     <div class="col-md-12">
-                        <resources></resources>
+                        <!--<resources></resources>-->
                     </div>
                 </div>
             </tab>

@@ -56,8 +56,9 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
 
 //A controller to show the forum and all it's glory
 app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
+    $scope.project = {};
     Project.get($state.params.projectId).then(function(project){
-        $scope.project = project;
+        angular.extend($scope.project, project);
     });
 
     $scope.tabsData = [
@@ -73,7 +74,7 @@ app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($sco
 app.controller('ProjectsDescCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
     //Если после подгрузки контроллера загрузка проекта все еще идет в родительском контроллере
     //то подписываемся на результат загрузки
-    if($scope.$parent.project.$promise && !$scope.$parent.project.$resolved)
+    if(!$scope.$parent.project.name)
         $scope.project = $scope.$parent.project;
     else
         $scope.project = Project.get({id: $state.params.projectId});
@@ -87,9 +88,12 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
     ];
     var self = this;
     var project_id = $state.params.projectId;
-    ProjectTask.query({project_id: project_id}).then(function (tasks) {
-          $scope.project_tasks = self.project_tasks = tasks;
-    });
+    function getTasks(){
+        ProjectTask.query({project_id: project_id}).then(function (tasks) {
+            $scope.project_tasks = self.project_tasks = tasks;
+        });
+    };
+    getTasks();
 
     $scope.destroy = function(task) {
         ProjectTask.remove({id: task.id, project_id: project_id}, function() {
@@ -127,14 +131,19 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         });
 
         modalInstance.result.then(function (result) {
-            //Если это задача не является подзадачей
-            if(!parent_task_id){
-                //добавляем её в проект
-                Helpers.addOrReplace($scope.project_tasks, result, task_id, true);
-            }
-            else{
-                //иначе, добавляем её в родительскую задачу
-                Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
+            //Если редактировали существущую задачу
+            if(task_id){
+                getTasks();
+            } else {
+                //Если это задача не является подзадачей
+                if(!parent_task_id){
+                    //добавляем её в проект
+                    Helpers.addOrReplace($scope.project_tasks, result, task_id, true);
+                }
+                else{
+                    //иначе, добавляем её в родительскую задачу
+                    Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
+                }
             }
 
             //Gantt.redraw($scope.project_tasks);
@@ -146,7 +155,6 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         parent_task.child_tasks = ProjectTask.query({project_id: project_id, parent_task_id: parent_task.id });
     }
 }]);
-
 app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, Contact, $modalInstance, inputs, Helpers) {
     $scope.task = {
         project_id: inputs.project_id,
@@ -155,20 +163,10 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
 
     if(inputs.task_id){
         ProjectTask.get(inputs.task_id).then(function(task){
-            angular.extend(task, $scope.task);
-            $scope.task = task;
-            console.log(task);
+            angular.extend($scope.task, task);
+            console.log(task)
         })
-    } else {
-        $scope.task.responsible_ids = [];
     }
-//    if($scope.task.$promise)
-//        $scope.task.$promise.then(function(){
-//            //TODO: вынести в сервис
-//            $scope.task.begin_date = $scope.task.begin_date ? new Date($scope.task.begin_date) : '';
-//            $scope.task.end_date = $scope.task.end_date ? new Date($scope.task.end_date) : '';
-//            $scope.task.project_status_id = $scope.task.project_status.id;
-//        });
 
     ProjectStatus.query().$promise.then(function(statuses){
         $scope.statuses = statuses;
@@ -178,8 +176,12 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
         $scope.contacts  = contacts;
     });
 
-    $scope.refreshContacts = function(q) {
-        $scope.contacts = ProjectTask.query({q: q, limit:50});
+    $scope.refreshContacts = function(q, selected) {
+        return Contact.query({q: q, limit:50}).$promise.then(function(contacts){
+            $scope.contacts = contacts.filter(function(contact){
+                return selected.indexOf(contact.id) == -1;
+            });
+        });
     };
 
     $scope.save = function() {
@@ -199,12 +201,12 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
             obj = new ProjectTask($scope.task).update();
 
         obj.then(function success (result){
-                    var task = result.resource ? result.resource : result;
+            var task = result.resource ? result.resource : result;
 
-                    $modalInstance.close(task);
-                },
-                function error (info){
-                    $scope.errors = info.data.errors;
-                });
+            $modalInstance.close(task);
+        },
+        function error (info){
+            $scope.errors = info.data.errors;
+        });
     }
 }]);

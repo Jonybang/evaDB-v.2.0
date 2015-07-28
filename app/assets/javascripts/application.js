@@ -23,13 +23,14 @@
 //= require jquery.validate.min
 //= require jquery_nested_form
 //= require jquery.noty.packaged.min
+//= require selectize.min
 
 //= require angular.min
 //= require angular-date-picker-polyfill.min
 //= require showErrors.min
 //= require angular-resource.min
 // require angular-route.min
-//= require ui-bootstrap-tpls-0.13.0.min
+//= require ui-bootstrap-tpls
 //= require ng-rails-csrf
 //= require angular-moment.min
 //= require angular-ui-router.min
@@ -39,6 +40,8 @@
 //= require select.min
 //= require angularjs/rails/resource
 //= require angular-drag-and-drop-lists.min.js
+//= require angular-animate.min
+//= require angular-selectize
 
 //= require bootstrap
 //= require bootstrap-formhelpers.min
@@ -75,9 +78,9 @@
 //        }
 //    });
 //});
-//$(function(){
-//    $('a.disabled').click(function(){
-//        noty({text:"Извините, но в настоящее время данная функция недоступна. Сайт находится на стадии альфа."});
-//        return false;
-//    });
-//});
+$(function(){
+    $('a.disabled').click(function(){
+        noty({text:"Извините, но в настоящее время данная функция недоступна. Сайт находится на стадии альфа."});
+        return false;
+    });
+});

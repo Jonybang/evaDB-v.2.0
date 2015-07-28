@@ -3,7 +3,7 @@
     .panel.panel-default
       .panel-heading Оперативная информация
       .panel-body
-        h3 ng-if=('last_tasks.length')  Последние задачи
+        h3.no-margin ng-if=('last_tasks.length')  Последние задачи
         div ng-if=('!last_tasks.length')
           p
             | Добро пожаловать в систему управления инновационными проектами.
@@ -15,7 +15,7 @@
           span
             strong() {{task.project.name}}:&nbsp;
             | {{task.name}}
-          small.pull-right am-time-ago="task.created_at"
+          span.label.label-default.pull-right am-time-ago="task.created_at"
 
     tabs data="tabsData" type="tabs" /
     ui-view
@@ -23,7 +23,7 @@
     .row
       img.img-responsive src="https://dummyimage.com/600x600/666566/030305&text=User+avatar" /
     .row
-      button.btn.btn-primary.col-xs-12 aria-label=("Left Align") disabled="" type="button"
+      button.btn.btn-primary.col-xs-12.disabled aria-label=("Left Align") type="button"
         | Профиль
     .row
       .panel.panel-default

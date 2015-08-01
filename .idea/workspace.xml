@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="94684e40-c7a3-4eba-85f0-d76147d78f2f" name="Default" comment="изменил поведение редиректов регистрации и авторизации" />
-    <list default="true" id="263d6e68-aeda-474e-8e4f-195479e7df61" name="New changelist" comment="добавлены ресурсы в задачи проекта, пофиксены баги">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/app.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/app.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/application.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/modals/project-task-form.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/modals/project-task-form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects-controller.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects-controller.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/directives/resources.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/directives/resources.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/directives/resources.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/directives/resources.js.erb" />
+    <list default="true" id="263d6e68-aeda-474e-8e4f-195479e7df61" name="New changelist" comment="исправлены ресурсы, работают, но пока не передают данные на сервер">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="evaDB-v.2.0.iws" />
@@ -1316,7 +1310,11 @@
       <created>1438103171437</created>
       <updated>1438103171437</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="исправлены ресурсы, работают, но пока не передают данные на сервер">
+      <created>1438465483350</created>
+      <updated>1438465483352</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1326,6 +1324,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25209445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917318" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15460777" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27793697" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1335,7 +1334,6 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2551409" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917318" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1360,7 +1358,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="реализация функционала просмотра и добавления задач проекта, разобрался с датами наконец" />
     <MESSAGE value="вывод тасков в соответствующей вкладке, относящихся к конкретному контакту" />
     <MESSAGE value="удаление moment timezone" />
     <MESSAGE value="перемещение ng-app на уровень ниже, чтобы кнопки на навбаре не перехватывались ангуляром" />
@@ -1385,7 +1382,8 @@
     <MESSAGE value="test development branch" />
     <MESSAGE value="исправлено куча багов, теперь в табличке задач отображаются ответственные" />
     <MESSAGE value="добавлены ресурсы в задачи проекта, пофиксены баги" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавлены ресурсы в задачи проекта, пофиксены баги" />
+    <MESSAGE value="исправлены ресурсы, работают, но пока не передают данные на сервер" />
+    <option name="LAST_COMMIT_MESSAGE" value="исправлены ресурсы, работают, но пока не передают данные на сервер" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

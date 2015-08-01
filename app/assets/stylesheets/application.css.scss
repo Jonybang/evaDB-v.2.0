@@ -99,3 +99,49 @@ a[disabled],a.disabled{
     margin-bottom: 15px;
   }
 }
+
+
+table.resources{
+  border-collapse: collapse;
+  margin-bottom: 100px!important;
+  td, th {
+    text-align:center;
+    min-width: 100px;
+  }
+  tr:last-child td{
+    text-align: left;
+  }
+  tr:not(:last-child) > td:first-child, tr:not(:last-child) > th:first-child {
+    border: 1px solid #ccc;
+    border-width: 1px 1px 0 0;
+  }
+
+  ul[dnd-list] {
+    min-height: 25px;
+    min-width: 60px;
+  }
+  ul[dnd-list], ul[dnd-list] > li{
+    position: relative;
+  }
+  ul[dnd-list] > li{
+    cursor: pointer;
+  }
+  ul[dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 25px;
+  }
+
+  span.label{
+    display:block;
+    height: 30px;
+    font-size: 110%;
+    min-width: 60px;
+    margin-bottom: 5px;
+  }
+  span.label input {
+    width:60%;
+    color: black;
+    font-weight: normal;
+  }
+}

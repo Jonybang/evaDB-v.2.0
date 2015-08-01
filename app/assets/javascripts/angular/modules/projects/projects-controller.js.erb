@@ -6,7 +6,6 @@
 var app = angular.module('app.projects');
 
 app.controller('ProjectsIndexCtrl', ['$scope', 'Project', 'User', function($scope, Project, User) {
-    //Grab all forums from the server
     User.get_contact().then(function(result){
         $scope.contact = result;
         Project.query({contact_id:result.id}).then(function(projects){
@@ -14,19 +13,14 @@ app.controller('ProjectsIndexCtrl', ['$scope', 'Project', 'User', function($scop
         });
     });
 
-    //Destroy method for deleting a forum
     $scope.destroy = function(index) {
-
-        //Tell the server to remove the object
         Project.remove({id: $scope.projects[index].id}, function() {
-            //If successful, remove it from our collection
             $scope.projects.splice(index, 1);
         });
     }
 }]);
 
 app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', function($scope, $state, Project, User) {
-    //The save method which is called when the user wants to submit their data
     User.get_contact().then(function(result){
         $scope.contact = result;
     });
@@ -37,24 +31,17 @@ app.controller('ProjectsCreateCtrl', ['$scope', '$state', 'Project', 'User', fun
         }
 
         $scope.project.contact_id = $scope.contact.id;
-        //Create the forum object to send to the back-end
         var project = new Project($scope.project).create();
 
-        //Save the forum object
         project.then(function(response) {
-
-            //Redirect us back to the main page
             $state.go('app.projects.show.tasks.table', {projectId: response.id});
 
         }, function(response) {
-
-            //Post response objects to the view
             $scope.errors = response.data.errors;
         });
     }
 }]);
 
-//A controller to show the forum and all it's glory
 app.controller('ProjectsShowCtrl', ['$scope', 'Project', '$state', function($scope, Project, $state) {
     $scope.project = {};
     Project.get($state.params.projectId).then(function(project){
@@ -166,7 +153,6 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
     if(inputs.task_id){
         ProjectTask.get(inputs.task_id).then(function(task){
             angular.extend($scope.task, task);
-            console.log(task)
         })
     }
 
@@ -180,9 +166,12 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
 
     $scope.refreshResponsible = function(q, selected) {
         return Contact.query({q: q, limit:50}).then(function(contacts){
-            $scope.responsible = contacts.filter(function(contact){
-                return selected.indexOf(contact.id) == -1;
-            });
+            if(!selected || !selected.length)
+                $scope.responsible = contacts;
+            else
+                $scope.responsible = contacts.filter(function(contact){
+                    return selected.indexOf(contact.id) == -1;
+                });
         });
     };
 

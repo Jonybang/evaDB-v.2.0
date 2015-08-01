@@ -22,7 +22,8 @@ angular.module('app', [
     'noty',
     'ui.router',
     'ui.router.tabs'])
-        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', '$httpProvider', 'railsSerializerProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider) {
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider',
+            '$httpProvider', 'railsSerializerProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider) {
 
             $urlRouterProvider.otherwise("/tasks");
 

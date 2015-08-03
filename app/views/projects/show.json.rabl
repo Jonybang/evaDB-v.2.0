@@ -8,6 +8,5 @@ child(:project_status) { attributes :id, :name, :color }
 child :chief => :contact do
     attributes :id, :name
 end
-child :project_tasks, :root => "tasks", :object_root => false do
-    attributes :id, :name
-end
+
+extends "projects/tasks"

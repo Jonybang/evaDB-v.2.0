@@ -157,18 +157,23 @@ angular.module('app')
                 funcs.changeTimeDomain(options.timeDomainString);
                 gantt.redraw(data.tasks);
             };
-            this.redraw =  function(tasks){
+            this.redraw =  function(tasks, timeDomain){
                 if(self.gantt){
-                    this.resetData();
+                    funcs.resetData();
                     self.data.tasks = tasks;
                     funcs.generateTasksNamesAndStatuses(tasks);
 
                     self.gantt
                         .taskTypes(self.data.taskNames)
-                        .taskStatus(self.data.taskStatuses)
+                        .taskStatus(self.data.taskStatuses);
+
+                    if(timeDomain)
+                        self.gantt.timeDomain(timeDomain);
+
+                    self.gantt
                         .redraw(self.data.tasks);
                 } else {
-                    this.init(tasks);
+                    funcs.init(tasks);
                 }
             };
         }

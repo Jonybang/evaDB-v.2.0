@@ -1,4 +1,4 @@
-class SkillsController  < InheritsController
+class SkillsController < InheritsController
 
   private
 

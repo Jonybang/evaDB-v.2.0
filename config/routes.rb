@@ -79,7 +79,7 @@ Rails.application.routes.draw do
 
     resources :workposts
 
-    resources :skills
+    resources :skills, :defaults => {format: :json}
 
     resources :organizations
 

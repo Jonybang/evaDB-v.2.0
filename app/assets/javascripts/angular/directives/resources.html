@@ -25,7 +25,7 @@
                         dnd-moved="date.resources.splice($index, 1)">
                 
                 <span ng-style="getResStyle(resource)" class="label label-primary">
-                  <input ng-model="resource.value" ng-blur="removeResIfEmpty(date.resources, $index)" />
+                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="removeResIfEmpty(date.resources, $index)" />
                     ч.
                 </span>
                     </li>

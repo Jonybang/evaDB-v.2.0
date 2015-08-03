@@ -1,2 +1,5 @@
 collection @collection
-attributes :id, :name, :color
+
+extends "inherits/base"
+
+attributes :color

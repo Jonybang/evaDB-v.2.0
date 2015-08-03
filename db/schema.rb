@@ -280,7 +280,9 @@ ActiveRecord::Schema.define(version: 20150713212453) do
   end
 
   create_table "project_resources", force: :cascade do |t|
-    t.string   "value",            null: false
+    t.string   "value"
+    t.datetime "begin_date"
+    t.datetime "end_date"
     t.integer  "resource_type_id"
     t.integer  "project_id"
     t.integer  "project_task_id"

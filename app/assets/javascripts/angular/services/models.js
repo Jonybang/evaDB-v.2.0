@@ -43,6 +43,14 @@ app.factory('ProjectTask', ['railsResourceFactory', 'railsSerializer', function 
         })
     });
 }]);
+app.factory('ProjectResource', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/project_resources',
+        name: 'project_resource',
+        serializer: railsSerializer(function () {
+        })
+    });
+}]);
 app.factory('Contact', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
     return railsResourceFactory({
         url: '/api/contacts',

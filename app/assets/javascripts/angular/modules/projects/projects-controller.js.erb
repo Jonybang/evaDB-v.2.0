@@ -142,7 +142,7 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         parent_task.child_tasks = ProjectTask.query({project_id: project_id, parent_task_id: parent_task.id });
     }
 }]);
-app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, Contact, $modalInstance, inputs, Helpers) {
+app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'ProjectResource', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, ProjectResource, Contact, $modalInstance, inputs, Helpers) {
     $scope.task = {
         project_id: inputs.project_id,
         parent_task_id: inputs.parent_task_id,
@@ -193,7 +193,16 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
 
         obj.then(function success (result){
             var task = result.resource ? result.resource : result;
+            $scope.task.resources.forEach(function(res){
+                res.project_task_id = task.id;
+                res.project_id = task.project_id;
+                res.resoursable_type = res.resoursable.class;
 
+                if(!res.id)
+                    obj = new ProjectResource(res).create();
+                else
+                    obj = new ProjectResource(res).update();
+            });
             $modalInstance.close(task);
         },
         function error (info){

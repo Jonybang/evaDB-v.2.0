@@ -3,6 +3,7 @@ class ProjectTasksController < InheritsController
 
   private
     def get_collection
+      @with_resources = params[:with_resources]
       load_parent
       if params[:parent_task_id]
         @collection = ProjectTask.find(params[:parent_task_id]).child_tasks

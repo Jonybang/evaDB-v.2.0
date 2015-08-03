@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   scope '/api' do
     resources :contacts, :defaults => {format: :json}
 
-    resources :project_resources
     resources :resource_types
     resources :partners
 
@@ -39,7 +38,7 @@ Rails.application.routes.draw do
 
     resources :project_statuses, :defaults => {format: :json}
 
-    resources :project_directions
+    resources :project_resources, :defaults => {format: :json}
 
     resources :equip_statuses
 

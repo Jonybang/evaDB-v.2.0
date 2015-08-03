@@ -19,7 +19,7 @@
         <td>{{$index+1}}. <a href ng-click="newOrEdit(task)">{{task.name}}</a></td>
         <td><span class="label label-default">{{task.begin_date | amDateFormat:'D.M.YYYY'}}</span> - <span class="label label-default">{{task.end_date | amDateFormat:'D.M.YYYY'}}</span></td>
         <td><div class="text-center" ng-repeat="responsible in task.responsible">{{responsible.name}}</div></td>
-        <td><div class="text-center"><unavailable/></div></td>
+        <td><div class="text-center" ng-repeat="resource in task.resources">{{resource.resoursable.name}} - {{resource.time}} ч.</div></td>
         <td><div class="text-center"><unavailable/></div></td>
         <td><div class="text-center"><unavailable/></div></td>
     </tr>

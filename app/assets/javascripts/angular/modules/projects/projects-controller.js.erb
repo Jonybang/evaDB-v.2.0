@@ -76,7 +76,7 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
     var self = this;
     var project_id = $state.params.projectId;
     function getTasks(){
-        ProjectTask.query({project_id: project_id}).then(function (tasks) {
+        ProjectTask.query({project_id: project_id, with_resources: 1}).then(function (tasks) {
             $scope.project_tasks = self.project_tasks = tasks;
         });
     }

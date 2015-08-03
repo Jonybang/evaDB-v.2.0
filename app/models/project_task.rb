@@ -1,5 +1,4 @@
 class ProjectTask < Base
-  default_scope { order('begin_date ASC') }
 
   belongs_to :project
   belongs_to :parent_task, class_name: 'ProjectTask', inverse_of: :child_tasks#, foreign_key: :parent_task_id

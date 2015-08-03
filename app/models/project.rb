@@ -1,5 +1,7 @@
 class Project < Base
 
+  default_scope { includes(:project_tasks).order('project_tasks.begin_date ASC') }
+
   belongs_to :project_status
   belongs_to :project_direction
   belongs_to :chief, class_name: 'Contact', inverse_of: :chief_projects, foreign_key: 'contact_id'

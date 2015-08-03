@@ -98,27 +98,17 @@ d3.gantt = function() {
                 self.timeDomainEnd = d3.time.hour.offset(new Date(), +3);
                 return;
             }
-            var tasksToSort = [];
-            angular.copy(tasks, tasksToSort);
-            function compareDates(a, b, field){
-                var firstDate, secondDate;
-                if(Object.prototype.toString.call(a[field]) === '[object Date]'){
-                    firstDate = a[field].getTime();
-                    secondDate = b[field].getTime();
-                } else {
-                    firstDate = a[field];
-                    secondDate = b[field];
-                }
-                return firstDate - secondDate;
-            }
-            tasksToSort.sort(function(a, b) {
-                return compareDates(a, b, 'end_date');
+
+            self.timeDomainStart = new Date();
+            self.timeDomainEnd = new Date();
+
+            tasks.forEach(function(task){
+                if(task.end_date > self.timeDomainEnd)
+                    self.timeDomainEnd = task.end_date;
+
+                if(task.begin_date < self.timeDomainStart)
+                    self.timeDomainStart = task.begin_date;
             });
-            self.timeDomainEnd = tasksToSort[tasksToSort.length - 1].end_date;
-            tasksToSort.sort(function(a, b) {
-                return compareDates(a, b, 'begin_date');
-            });
-            self.timeDomainStart = tasksToSort[0].begin_date;
         }
     };
 

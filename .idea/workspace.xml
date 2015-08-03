@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list id="94684e40-c7a3-4eba-85f0-d76147d78f2f" name="Default" comment="изменил поведение редиректов регистрации и авторизации" />
     <list default="true" id="263d6e68-aeda-474e-8e4f-195479e7df61" name="New changelist" comment="вывод на аватарке имя текущего пользователя">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="evaDB-v.2.0.iws" />
@@ -1444,7 +1442,11 @@
       <created>1438618179510</created>
       <updated>1438618179510</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="вывод на аватарке имя текущего пользователя">
+      <created>1438618973180</created>
+      <updated>1438618973180</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1488,7 +1490,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="мелкие правки под макет" />
     <MESSAGE value="вкладка с диаграммой ганта заработала, но там пока корректно отображается только один график" />
     <MESSAGE value="заставил работать диаграммы ганта по отдельности" />
     <MESSAGE value="немного поправил диаграммы ганта" />
@@ -1513,7 +1514,8 @@
     <MESSAGE value="добавил Ледкова в seeds" />
     <MESSAGE value="добавил ресурсы в таблицу задач проекта" />
     <MESSAGE value="добавил ссылки на проекты во всех вьюшках" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавил ссылки на проекты во всех вьюшках" />
+    <MESSAGE value="вывод на аватарке имя текущего пользователя" />
+    <option name="LAST_COMMIT_MESSAGE" value="вывод на аватарке имя текущего пользователя" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

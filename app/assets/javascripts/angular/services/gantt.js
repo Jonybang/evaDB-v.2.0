@@ -108,23 +108,17 @@ angular.module('app')
                 }
             };
 
-            this.init = function (initTasks, containerId) {
+            this.init = function (initTasks, containerId, timeDomain) {
                 if(containerId)
                     self.options.containerId = containerId;
-                //                tasks.sort(function(a, b) {
-                //                    return a.endDate - b.endDate;
-                //                });
-                //                var maxDate = tasks[tasks.length - 1].endDate;
-                //                tasks.sort(function(a, b) {
-                //                    return a.startDate - b.startDate;
-                //                });
-                //                var minDate = tasks[0].startDate;
+
                 self.data.tasks = initTasks;
                 funcs.generateTasksNamesAndStatuses(initTasks);
 
                 self.gantt = new d3.gantt();
 
                 self.gantt.containerId(self.options.containerId)
+                    .timeDomain(timeDomain)
                     .taskTypes(self.data.taskNames)
                     .taskStatus(self.data.taskStatuses)
                     .tickFormat(self.options.format)

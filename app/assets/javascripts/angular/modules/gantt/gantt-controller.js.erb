@@ -13,9 +13,19 @@ app.controller('GanttCtrl', ['$scope', 'Project', 'ProjectTask', 'User', 'Gantt'
             $scope.projects = projects;
             if($scope.projects.length){
                 setTimeout(function(){
+                    var startDate = new Date(), endDate = new Date();
+                    $scope.projects.forEach(function(proj){
+                        if(proj.tasks[0].begin_date < startDate)
+                            startDate = proj.tasks[0].begin_date;
+
+                        proj.tasks.forEach(function(task){
+                            if(task.end_date > endDate)
+                                endDate = task.end_date;
+                        });
+                    });
                     $scope.projects.forEach(function(proj){
                         proj.gantt = new Gantt();
-                        proj.gantt.init(proj.tasks, 'svg-grantt-' + proj.id);
+                        proj.gantt.init(proj.tasks, 'svg-grantt-' + proj.id, [startDate, endDate]);
                     });
                 }, 1000);
             }

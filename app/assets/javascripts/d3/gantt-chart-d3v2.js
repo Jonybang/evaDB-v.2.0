@@ -5,11 +5,11 @@
 
 d3.gantt = function() {
     var self = this;
-    this.gantt = function (tasks, _containerId) {
-        if(_containerId)
-            self._containerId = _containerId;
+    this.gantt = function (tasks, containerId) {
+        if(containerId)
+            self._containerId = containerId;
 
-        var svg = d3.select("#"+self._containerId)
+        var svg = d3.select("#" + self._containerId)
             .append("svg")
             .attr("class", "chart")
             .attr("width", self._width + self._margin.left + self._margin.right)
@@ -20,7 +20,9 @@ d3.gantt = function() {
             .attr("height", self._height + self._margin.top + self._margin.bottom)
             .attr("transform", "translate(" + self._margin.left + ", " + self._margin.top + ")");
 
-        self.initTimeDomain(tasks);
+        if(!self.manualTimeDomain)
+            self.initTimeDomain(tasks);
+
         self.initAxis();
 
         svg.append("g")
@@ -50,6 +52,7 @@ d3.gantt = function() {
     };
     this.yAxisPaddingRightLeft = 70;
     this._containerId = 'svg-gantt';
+    this.manualTimeDomain = false;
     this.timeDomainStart = d3.time.day.offset(new Date(),-3);
     this.timeDomainEnd = d3.time.hour.offset(new Date(),+3);
     this._timeDomainMode = this.FIT_TIME_DOMAIN_MODE;// fixed or fit
@@ -160,10 +163,12 @@ d3.gantt = function() {
 
     this.gantt.redraw = function(tasks) {
 
-        self.initTimeDomain(tasks);
+        if(!self.manualTimeDomain)
+            self.initTimeDomain(tasks);
+
         self.initAxis();
 
-        var svg = d3.select("#"+self._containerId).select("svg");
+        var svg = d3.select("#" + self._containerId).select("svg");
         var gTasks = svg.select(".gantt-chart")
             .selectAll(".task")
             .data(tasks, keyFunction);
@@ -244,7 +249,10 @@ d3.gantt = function() {
     this.gantt.timeDomain = function(value) {
         if (!arguments.length)
             return [ self.timeDomainStart, self.timeDomainEnd ];
-        self.timeDomainStart = +value[0], self.timeDomainEnd = +value[1];
+
+        self.manualTimeDomain = true;
+        self.timeDomainStart = value[0];
+        self.timeDomainEnd = value[1];
         return self.gantt;
     };
 

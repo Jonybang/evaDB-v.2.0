@@ -65,7 +65,7 @@ d3.gantt = function() {
         return d.startDate + d.taskName + d.endDate;
     }
     function getText(d) {
-        return d.title;
+        return d.description;
     }
     this.rectTransform = function (d) {
         return "translate(" + self.x(d.startDate) + "," + self.y(d.taskName) + ")";
@@ -154,7 +154,7 @@ d3.gantt = function() {
             .attr("y", self.y.rangeBand() / 4)
             .attr("dy", ".35em")
             .style("visibility", function(d) {
-                return self.x(d.startDate) == 0 ? "hidden" : "visible";
+                return self.getWidth(d) < 20 ? "hidden" : "visible";
             });
     };
 
@@ -223,7 +223,8 @@ d3.gantt = function() {
             .transition()
             .call(self.yAxis)
             .selectAll(".tick text")
-            .call(self.d3TextWrap, self._margin.left, self.yAxisPaddingRightLeft);
+            .attr("transform", 'translate(-' + self.yAxisPaddingRightLeft + ',0)')
+            .call(self.d3TextWrap, self._margin.left);
 
         return self.gantt;
     };
@@ -320,7 +321,7 @@ d3.gantt = function() {
             }
 
             var maxWidth = width; //I store the tooltip max width
-            width = width - (paddingRightLeft * 2); //Take the padding into account
+            //width = width - (paddingRightLeft * 2); //Take the padding into account
 
             //Clean the data in case <text> does not define those values
             if (isNaN(dy)) dy = 0; //Default padding (0em) : the 'dy' attribute on the first <tspan> _must_ be identical to the 'dy' specified on the <text> element, or start at '0em' if undefined

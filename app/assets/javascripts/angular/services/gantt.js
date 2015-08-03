@@ -109,7 +109,8 @@ angular.module('app')
                             "endDate": new Date(item.end_date),
                             "taskName": item.name,
                             "status": item.project_status ? item.project_status.name : '',
-                            "title": item.name
+                            "title": item.name,
+                            "description": item.description
                         };
 
                         function searchTaskName(task_name) {

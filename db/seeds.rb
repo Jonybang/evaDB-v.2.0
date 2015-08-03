@@ -22,6 +22,10 @@ jonybang = User.create(email:'jonybang@mail.ru', password: 'Jb192837')
 jonybang.contact = Contact.new(name:'Паничев Евгений')
 jonybang.contact.contact_data = ContactDatum.create({email:jonybang.email})
 
+ledkov = User.create(email:'ger2001a@mail.ru', password: '12345')
+ledkov.contact = Contact.new(name:'Ледков Евгений')
+ledkov.contact.contact_data = ContactDatum.create({email:ledkov.email})
+
 Project.create(name:'Первый проект', description: 'Описание к первому проекту', chief: jonybang.contact)
 
 Contact.create(name: 'Контакт 1')

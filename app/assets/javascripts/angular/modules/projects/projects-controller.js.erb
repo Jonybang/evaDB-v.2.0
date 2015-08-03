@@ -67,7 +67,7 @@ app.controller('ProjectsDescCtrl', ['$scope', 'Project', '$state', function($sco
         $scope.project = Project.get({id: $state.params.projectId});
 }]);
 
-app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers', '$state', '$modal', function($scope, ProjectTask, Gantt, Helpers, $state, $modal) {
+app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers', '$state', 'TaskEditor', function($scope, ProjectTask, Gantt, Helpers, $state, TaskEditor) {
     $scope.tabsData = [
         { route : 'app.projects.show.tasks.table', heading : 'Таблица' },
         { route : 'app.projects.show.tasks.scheme', heading : 'Схема', disabled: true },
@@ -97,45 +97,20 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
         //то задача добавляется подзадачей в родительскую
 
-        var task_id;
-        if(task)
-            task_id = task.id;
-
-        var modalInstance = $modal.open({
-            animation: true,
-            templateUrl: '<%= asset_path('angular/modules/projects/templates/modals/project-task-form.html') %>',
-            controller: 'ProjectsTasksFormCtrl',
-            //size: size,
-            resolve: {
-                inputs: function(){
-                    return {
-                        project_id: project_id,
-                        task_id: task_id,
-                        parent_task_id: parent_task_id
-                    };
-                }
-            }
-        });
-
-        modalInstance.result.then(function (result) {
-            //Если редактировали существущую задачу
-            if(task_id){
+        TaskEditor({project_id: project_id, parent_task_id: parent_task_id}, task).then(function(result){
+            if(result.is_new){
                 getTasks();
             } else {
                 //Если это задача не является подзадачей
                 if(!parent_task_id){
                     //добавляем её в проект
-                    Helpers.addOrReplace($scope.project_tasks, result, task_id, true);
+                    Helpers.addOrReplace($scope.project_tasks, result, result.id, true);
                 }
                 else{
                     //иначе, добавляем её в родительскую задачу
                     Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
                 }
             }
-
-            //Gantt.redraw($scope.project_tasks);
-        }, function () {
-            //$log.info('Modal dismissed at: ' + new Date());
         });
     };
     $scope.getSubTasks = function (parent_task){

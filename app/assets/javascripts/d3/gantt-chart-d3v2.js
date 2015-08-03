@@ -166,7 +166,6 @@ d3.gantt = function() {
     };
 
     this.gantt.redraw = function(tasks) {
-
         if(!self.manualTimeDomain)
             self.initTimeDomain(tasks);
 
@@ -195,7 +194,7 @@ d3.gantt = function() {
 
         gTasks.exit().remove();
 
-        var gRect = gTasks.insert("rect",":first-child")
+        var gRect = gTasks.insert("rect", ":first-child")
             .transition()
             .call(self.confRect);
 
@@ -238,18 +237,6 @@ d3.gantt = function() {
         return self.gantt;
     };
 
-    this.gantt.containerId = function(strId){
-        self._containerId = strId;
-        return self.gantt;
-    };
-
-    this.gantt.margin = function(value) {
-        if (!arguments.length)
-            return self._margin;
-        self._margin = value;
-        return self.gantt;
-    };
-
     this.gantt.timeDomain = function(value) {
         if (!arguments.length)
             return [ self.timeDomainStart, self.timeDomainEnd ];
@@ -259,56 +246,19 @@ d3.gantt = function() {
         self.timeDomainEnd = value[1];
         return self.gantt;
     };
-    this.gantt.locale = function(value){
-        self._locale = d3.locale(value);
-        return self.gantt;
-    };
-    /**
-     * @param {string}
-     *                vale The value can be "fit" - the domain fits the data or
-     *                "fixed" - fixed domain.
-     */
-    this.gantt.timeDomainMode = function(value) {
-        if (!arguments.length)
-            return self._timeDomainMode;
-        self._timeDomainMode = value;
-        return self.gantt;
-    };
 
-    this.gantt.taskTypes = function(value) {
-        if (!arguments.length)
-            return self._taskTypes;
-        self._taskTypes = value;
-        return self.gantt;
-    };
+    var initVariables = ['containerId', 'timeDomainMode', 'locale', 'taskTypes', 'taskStatus',
+        'margin', 'width', 'height', 'tickFormat'];
 
-    this.gantt.taskStatus = function(value) {
-        if (!arguments.length)
-            return self._taskStatus;
-        self._taskStatus = value;
-        return self.gantt;
-    };
+    initVariables.forEach(function(variable){
+        self.gantt[variable] = function(value) {
+            if (!arguments.length)
+                return self['_' + variable];
+            self['_' + variable] = value;
+            return self.gantt;
+        };
+    });
 
-    this.gantt.width = function(value) {
-        if (!arguments.length)
-            return self._width;
-        self._width = +value;
-        return self.gantt;
-    };
-
-    this.gantt.height = function(value) {
-        if (!arguments.length)
-            return self._height;
-        self._height = +value;
-        return self.gantt;
-    };
-
-    this.gantt.tickFormat = function(value) {
-        if (!arguments.length)
-            return self._tickFormat;
-        self._tickFormat = value;
-        return self.gantt;
-    };
     this.d3TextWrap = function (allText, inputWidth, paddingRightLeft, paddingTopBottom) {
         paddingRightLeft = paddingRightLeft || 5; //Default padding (5px)
         paddingTopBottom = (paddingTopBottom || 5) - 2; //Default padding (5px), remove 2 pixels because of the borders

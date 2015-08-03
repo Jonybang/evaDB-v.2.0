@@ -5,42 +5,7 @@
 
 d3.gantt = function() {
     var self = this;
-    this.gantt = function (tasks, containerId) {
-        if(containerId)
-            self._containerId = containerId;
 
-        var svg = d3.select("#" + self._containerId)
-            .append("svg")
-            .attr("class", "chart")
-            .attr("width", self._width + self._margin.left + self._margin.right)
-            .attr("height", self._height + self._margin.top + self._margin.bottom)
-            .append("g")
-            .attr("class", "gantt-chart")
-            .attr("width", self._width + self._margin.left + self._margin.right)
-            .attr("height", self._height + self._margin.top + self._margin.bottom)
-            .attr("transform", "translate(" + self._margin.left + ", " + self._margin.top + ")");
-
-        if(!self.manualTimeDomain)
-            self.initTimeDomain(tasks);
-
-        self.initAxis();
-
-        svg.append("g")
-            .attr("class", "x axis")
-            //.attr("transform", "translate(0, " + (self._height - self._margin.top - self._margin.bottom) + ")")
-            .transition()
-            .call(self.xAxis);
-
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(self.yAxis);
-
-        if(tasks && tasks.length){
-            self.gantt.redraw(tasks);
-        }
-
-        return self.gantt;
-    };
     this.FIT_TIME_DOMAIN_MODE = "fit";
     this.FIXED_TIME_DOMAIN_MODE = "fixed";
 
@@ -77,6 +42,42 @@ d3.gantt = function() {
 
     this._tickFormat = "%H:%M";
 
+    this.gantt = function (tasks, containerId) {
+        if(containerId)
+            self._containerId = containerId;
+
+        var svg = d3.select("#" + self._containerId)
+            .append("svg")
+            .attr("class", "chart")
+            .attr("width", self._width + self._margin.left + self._margin.right)
+            .attr("height", self._height + self._margin.top + self._margin.bottom)
+            .append("g")
+            .attr("class", "gantt-chart")
+            .attr("width", self._width + self._margin.left + self._margin.right)
+            .attr("height", self._height + self._margin.top + self._margin.bottom)
+            .attr("transform", "translate(" + self._margin.left + ", " + self._margin.top + ")");
+
+        if(!self.manualTimeDomain)
+            self.initTimeDomain(tasks);
+
+        self.initAxis();
+
+        svg.append("g")
+            .attr("class", "x axis")
+            //.attr("transform", "translate(0, " + (self._height - self._margin.top - self._margin.bottom) + ")")
+            .transition()
+            .call(self.xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(self.yAxis);
+
+        if(tasks && tasks.length){
+            self.gantt.redraw(tasks);
+        }
+
+        return self.gantt;
+    };
 
     function keyFunction (d) {
         return d.begin_date + d.name + d.end_date;
@@ -176,12 +177,12 @@ d3.gantt = function() {
             .selectAll(".task")
             .data(tasks, keyFunction);
 
-        svg.select(".gantt-chart")
-            .selectAll(".task")
-            .selectAll("*")
-            .data(tasks, keyFunction)
-            .exit()
-            .attr('width', 0).remove();
+//        svg.select(".gantt-chart")
+//            .selectAll(".task")
+//            .selectAll("*")
+//            .data(tasks, keyFunction)
+//            .exit()
+//            .attr('width', 0).remove();
 
         gTasks.exit().remove();
 
@@ -237,6 +238,11 @@ d3.gantt = function() {
         return self.gantt;
     };
 
+    this.gantt.locale = function(value){
+        self._locale = d3.locale(value);
+        return self.gantt;
+    };
+
     this.gantt.timeDomain = function(value) {
         if (!arguments.length)
             return [ self.timeDomainStart, self.timeDomainEnd ];
@@ -247,7 +253,7 @@ d3.gantt = function() {
         return self.gantt;
     };
 
-    var initVariables = ['containerId', 'timeDomainMode', 'locale', 'taskTypes', 'taskStatus',
+    var initVariables = ['containerId', 'timeDomainMode', 'taskTypes', 'taskStatus',
         'margin', 'width', 'height', 'tickFormat'];
 
     initVariables.forEach(function(variable){

@@ -11,16 +11,21 @@ app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
 
             $scope.startDate = new Date();
             $scope.endDate = new Date();
+            $scope.datesChanged = true;
 
             function getStartAndEndDate(){
                 $scope.projects.forEach(function(proj){
                     if(proj.tasks.length){
-                        if(proj.tasks[0].begin_date < $scope.startDate)
+                        if(proj.tasks[0].begin_date < $scope.startDate){
                             $scope.startDate = proj.tasks[0].begin_date;
+                            $scope.datesChanged = true;
+                        }
 
                         proj.tasks.forEach(function(task){
-                            if(task.end_date > $scope.endDate)
+                            if(task.end_date > $scope.endDate){
                                 $scope.endDate = task.end_date;
+                                $scope.datesChanged = true;
+                            }
                         });
                     }
                 });
@@ -31,6 +36,7 @@ app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
                     proj.gantt = new Gantt();
                     proj.gantt.init(proj.tasks, 'svg-grantt-' + proj.id, [$scope.startDate, $scope.endDate]);
                 });
+                $scope.datesChanged = false;
             }
             function buildProjectsGrantt(contact_id){
                 Project.query({contact_id: contact_id, with_tasks: 1}).then(function(projects){
@@ -43,11 +49,24 @@ app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
                     }
                 });
             }
-            function redrawProjectsGantts(){
+            function redrawProjectsGantts(project){
                 getStartAndEndDate();
-                $scope.projects.forEach(function(proj){
-                    proj.gantt.redraw(proj.tasks, [$scope.startDate, $scope.endDate]);
-                });
+
+                //Если начальная или конечная дата не изменилась
+                if(!$scope.datesChanged && project){
+                    //Обновить только один проект
+                    console.log('Обновить только один проект');
+                    project.gantt.redraw(project.tasks, [$scope.startDate, $scope.endDate]);
+                } else {
+                    //Иначе обновить все проекты
+                    console.log('Обновить все проекты');
+                    $scope.projects.forEach(function(proj){
+                        proj.gantt.redraw(proj.tasks, [$scope.startDate, $scope.endDate]);
+                    });
+                }
+
+                //Сбросить переменную
+                $scope.datesChanged = false;
             }
             User.get_contact().then(function(result){
                 $scope.contact = result;
@@ -68,8 +87,7 @@ app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
                             if(isCurProj){
                                 Project.get({id: proj.id}).then(function(project){
                                     angular.extend($scope.projects[index], project);
-                                    //$scope.projects[index].tasks = project.tasks;
-                                    redrawProjectsGantts();
+                                    redrawProjectsGantts($scope.projects[index]);
                                 });
                             }
                             return isCurProj;

@@ -177,12 +177,12 @@ d3.gantt = function() {
             .selectAll(".task")
             .data(tasks, keyFunction);
 
-//        svg.select(".gantt-chart")
-//            .selectAll(".task")
-//            .selectAll("*")
-//            .data(tasks, keyFunction)
-//            .exit()
-//            .attr('width', 0).remove();
+        svg.select(".gantt-chart")
+            .selectAll(".task")
+            .selectAll("*")
+            .data(tasks, keyFunction)
+            .exit()
+            .attr('width', 0).remove();
 
         gTasks.exit().remove();
 

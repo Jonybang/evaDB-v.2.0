@@ -91,20 +91,7 @@ angular.module('app')
                     self.gantt.tickFormat(format);
                     self.gantt.redraw(self.data.tasks);
                 },
-                convertTasks: function (tasks) {
-                    this.resetData();
-
-                    tasks.sort(function (a, b) {
-                        if (a.begin_date < b.begin_date)
-                            return -1;
-                        else if (a.begin_date > b.begin_date)
-                            return 1;
-                        else
-                            return 0;
-                    });
-
-                    self.data.tasks = tasks;
-
+                generateTasksNamesAndStatuses: function (tasks) {
                     tasks.forEach(function (item) {
                         function searchTaskName(task_name) {
                             return task_name == item.name;
@@ -132,7 +119,8 @@ angular.module('app')
                 //                    return a.startDate - b.startDate;
                 //                });
                 //                var minDate = tasks[0].startDate;
-                funcs.convertTasks(initTasks);
+                self.data.tasks = initTasks;
+                funcs.generateTasksNamesAndStatuses(initTasks);
 
                 self.gantt = new d3.gantt();
 
@@ -176,7 +164,10 @@ angular.module('app')
             };
             this.redraw =  function(tasks){
                 if(self.gantt){
-                    funcs.convertTasks(tasks);
+                    this.resetData();
+                    self.data.tasks = tasks;
+                    funcs.generateTasksNamesAndStatuses(tasks);
+
                     self.gantt
                         .taskTypes(self.data.taskNames)
                         .taskStatus(self.data.taskStatuses)

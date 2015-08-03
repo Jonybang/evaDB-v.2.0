@@ -103,16 +103,9 @@ angular.module('app')
                             return 0;
                     });
 
-                    self.data.tasks = tasks.map(function (item) {
-                        var task = {
-                            "startDate": new Date(item.begin_date),
-                            "endDate": new Date(item.end_date),
-                            "taskName": item.name,
-                            "status": item.project_status ? item.project_status.name : '',
-                            "title": item.name,
-                            "description": item.description
-                        };
+                    self.data.tasks = tasks;
 
+                    tasks.forEach(function (item) {
                         function searchTaskName(task_name) {
                             return task_name == item.name;
                         }
@@ -123,7 +116,7 @@ angular.module('app')
                         if (item.project_status && !self.data.taskStatuses[item.project_status.name]) {
                             self.data.taskStatuses[item.project_status.name] = item.project_status.color;
                         }
-                        return task;
+                        return item;
                     });
                 }
             };

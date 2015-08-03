@@ -62,16 +62,16 @@ d3.gantt = function() {
 
 
     function keyFunction (d) {
-        return d.startDate + d.taskName + d.endDate;
+        return d.begin_date + d.name + d.end_date;
     }
     function getText(d) {
         return d.description;
     }
     this.rectTransform = function (d) {
-        return "translate(" + self.x(d.startDate) + "," + self.y(d.taskName) + ")";
+        return "translate(" + self.x(d.begin_date) + "," + self.y(d.name) + ")";
     };
     this.getWidth = function(d){
-        return (self.x(d.endDate) - self.x(d.startDate));
+        return (self.x(d.end_date) - self.x(d.begin_date));
     };
 
     this.initTimeDomain = function(tasks) {
@@ -95,13 +95,13 @@ d3.gantt = function() {
                 return firstDate - secondDate;
             }
             tasksToSort.sort(function(a, b) {
-                return compareDates(a, b, 'endDate');
+                return compareDates(a, b, 'end_date');
             });
-            self.timeDomainEnd = tasksToSort[tasksToSort.length - 1].endDate;
+            self.timeDomainEnd = tasksToSort[tasksToSort.length - 1].end_date;
             tasksToSort.sort(function(a, b) {
-                return compareDates(a, b, 'startDate');
+                return compareDates(a, b, 'begin_date');
             });
-            self.timeDomainStart = tasksToSort[0].startDate;
+            self.timeDomainStart = tasksToSort[0].begin_date;
         }
     };
 

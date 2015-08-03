@@ -5,11 +5,9 @@
 
 var app = angular.module('app.gantt');
 
-app.controller('GanttCtrl', ['$scope', 'Project', 'ProjectTask', 'User', 'Gantt', 'Helpers', '$state', function($scope, Project, ProjectTask, User, Gantt, Helpers, $state) {
-    User.get_contact().then(function(result){
-        $scope.contact = result;
-
-        Project.query({contact_id:result.id, with_tasks: 1}).then(function(projects){
+app.controller('GanttCtrl', ['$scope', 'Project', 'ProjectTask', 'User', 'Gantt', 'Helpers', '$state', 'TaskEditor', function($scope, Project, ProjectTask, User, Gantt, Helpers, $state, TaskEditor) {
+    function buildProjectsGrantt(contact_id){
+        Project.query({contact_id: contact_id, with_tasks: 1}).then(function(projects){
             $scope.projects = projects;
             if($scope.projects.length){
                 setTimeout(function(){
@@ -30,59 +28,21 @@ app.controller('GanttCtrl', ['$scope', 'Project', 'ProjectTask', 'User', 'Gantt'
                 }, 1000);
             }
         });
+    }
+    User.get_contact().then(function(result){
+        $scope.contact = result;
+        buildProjectsGrantt(result.id);
     });
 
-
-
-    $scope.destroy = function(task) {
-        ProjectTask.remove({id: task.id, project_id: project_id}, function() {
-            Helpers.removeById($scope.project_tasks, task.id);
-
-            Gantt.redraw($scope.project_tasks);
-        });
-    };
-
-    $scope.newOrEdit = function (task, parent_task_id){
+    $scope.newOrEdit = function (project_id, task, parent_task_id){
         //Добавляет или редактирует задачу или подзадачу
         //Если задача передана(task) - то редактируем её
         //Если нет - то создаем новую задачу в текущем проекте
         //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
         //то задача добавляется подзадачей в родительскую
 
-        var task_id;
-        if(task)
-            task_id = task.id;
-
-        var modalInstance = $modal.open({
-            animation: true,
-            templateUrl: '<%= asset_path('angular/templates/project/modals/project-task-form.html') %>',
-            controller: 'ProjectTaskFormCtrl',
-            //size: size,
-            resolve: {
-                inputs: function(){
-                    return {
-                        project_id: project_id,
-                        task_id: task_id,
-                        parent_task_id: parent_task_id
-                    };
-                }
-            }
-        });
-
-        modalInstance.result.then(function (result) {
-            //Если это задача не является подзадачей
-            if(!parent_task_id){
-                //добавляем её в проект
-                Helpers.addOrReplace($scope.project_tasks, result, task_id);
-            }
-            else{
-                //иначе, добавляем её в родительскую задачу
-                Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
-            }
-
-            Gantt.redraw($scope.project_tasks);
-        }, function () {
-            //$log.info('Modal dismissed at: ' + new Date());
+        TaskEditor({project_id: project_id, parent_task_id: parent_task_id}, task).then(function(result){
+            buildProjectsGrantt($scope.contact.id);
         });
     };
     $scope.getSubTasks = function (parent_task){

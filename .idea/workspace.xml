@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="94684e40-c7a3-4eba-85f0-d76147d78f2f" name="Default" comment="изменил поведение редиректов регистрации и авторизации" />
-    <list default="true" id="263d6e68-aeda-474e-8e4f-195479e7df61" name="New changelist" comment="добавил ресурсы в таблицу задач проекта">
+    <list default="true" id="263d6e68-aeda-474e-8e4f-195479e7df61" name="New changelist" comment="вывод на аватарке имя текущего пользователя">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/index.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/templates/index.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/templates/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="evaDB-v.2.0.iws" />
@@ -32,6 +31,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="projects-controller.js.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects-controller.js.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.875" vertical-offset="30" max-vertical-offset="3255">
+              <caret line="13" column="7" selection-start-line="8" selection-start-column="4" selection-end-line="13" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -42,20 +51,40 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.slim" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim">
+      <file leaf-file-name="app-controller.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.125" vertical-offset="45" max-vertical-offset="1110">
-              <caret line="16" column="61" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html.slim" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5241546" vertical-offset="143" max-vertical-offset="1110">
+              <caret line="24" column="111" selection-start-line="24" selection-start-column="111" selection-end-line="24" selection-end-column="111" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/app.js.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-25.625" vertical-offset="0" max-vertical-offset="990">
+              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6208426" vertical-offset="20" max-vertical-offset="495">
+            <state vertical-scroll-proportion="-11.666667" vertical-offset="20" max-vertical-offset="495">
               <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
               <folding />
             </state>
@@ -91,7 +120,6 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/angular/directives/resources.js" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/controllers/inherits_controller.rb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/ui-bootstrap-tpls.min.js" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/ui-bootstrap-tpls.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/angular/filter/exist.js" />
@@ -129,8 +157,9 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects-controller.js.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/tasks_table.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/angular/modules/tasks/templates/index.html" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/index.html" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim" />
       </list>
     </option>
   </component>
@@ -1411,7 +1440,11 @@
       <created>1438617223746</created>
       <updated>1438617223752</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="добавил ссылки на проекты во всех вьюшках">
+      <created>1438618179510</created>
+      <updated>1438618179510</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1455,7 +1488,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="добавлено расписание в создание проекта" />
     <MESSAGE value="мелкие правки под макет" />
     <MESSAGE value="вкладка с диаграммой ганта заработала, но там пока корректно отображается только один график" />
     <MESSAGE value="заставил работать диаграммы ганта по отдельности" />
@@ -1480,7 +1512,8 @@
     <MESSAGE value="теперь менеджер ресурсов может как отправлять данные на сервер так и принимать их, аллилуя" />
     <MESSAGE value="добавил Ледкова в seeds" />
     <MESSAGE value="добавил ресурсы в таблицу задач проекта" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавил ресурсы в таблицу задач проекта" />
+    <MESSAGE value="добавил ссылки на проекты во всех вьюшках" />
+    <option name="LAST_COMMIT_MESSAGE" value="добавил ссылки на проекты во всех вьюшках" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1574,14 +1607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
-          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/services/loading.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
@@ -1616,14 +1641,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1464" max-vertical-offset="2295">
           <caret line="105" column="33" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/app.js.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.208333" vertical-offset="370" max-vertical-offset="990">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1851,14 +1868,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects-controller.js.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.0" vertical-offset="975" max-vertical-offset="3255">
-          <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/tasks_table.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.69863015" vertical-offset="9" max-vertical-offset="465">
@@ -1886,18 +1895,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.125" vertical-offset="45" max-vertical-offset="1110">
-          <caret line="16" column="61" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="61" />
+        <state vertical-scroll-proportion="-11.666667" vertical-offset="20" max-vertical-offset="495">
+          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/templates/index.html">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/app.js.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6208426" vertical-offset="20" max-vertical-offset="495">
-          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+        <state vertical-scroll-proportion="-25.625" vertical-offset="0" max-vertical-offset="990">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/modules/projects/projects-controller.js.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.875" vertical-offset="30" max-vertical-offset="3255">
+          <caret line="13" column="7" selection-start-line="8" selection-start-column="4" selection-end-line="13" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/controllers/app-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/angular/templates/index.html.slim">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5241546" vertical-offset="143" max-vertical-offset="1110">
+          <caret line="24" column="111" selection-start-line="24" selection-start-column="111" selection-end-line="24" selection-end-column="111" />
           <folding />
         </state>
       </provider>

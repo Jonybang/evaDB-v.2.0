@@ -22,7 +22,7 @@
     ui-view
   .col-md-2.right-panel
     .row
-      img.img-responsive src="https://dummyimage.com/600x600/666566/030305&text=User+avatar" /
+      img.img-responsive src="https://dummyimage.com/600x600/666566/030305&text={{contact.name || contact.email}}" /
     .row
       button.btn.btn-primary.col-xs-12.disabled aria-label=("Left Align") type="button"
         | Профиль

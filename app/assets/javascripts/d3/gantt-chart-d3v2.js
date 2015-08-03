@@ -55,6 +55,20 @@ d3.gantt = function() {
     this.manualTimeDomain = false;
     this.timeDomainStart = d3.time.day.offset(new Date(),-3);
     this.timeDomainEnd = d3.time.hour.offset(new Date(),+3);
+    this._locale = d3.locale({
+        "decimal": ".",
+        "thousands": ",",
+        "grouping": [3],
+        "currency": ["$", ""],
+        "dateTime": "%a %b %e %X %Y",
+        "date": "%m/%d/%Y",
+        "time": "%H:%M:%S",
+        "periods": ["AM", "PM"],
+        "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "shortDays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    });
     this._timeDomainMode = this.FIT_TIME_DOMAIN_MODE;// fixed or fit
     this._taskTypes = [];
     this._taskStatus = [];
@@ -124,7 +138,7 @@ d3.gantt = function() {
             .axis()
             .scale(self.x)
             .orient("top")
-            .tickFormat(d3.time.format(self._tickFormat))
+            .tickFormat(self._locale.timeFormat(self._tickFormat))
             .tickSubdivide(true)
             .tickSize(8)
             .tickPadding(8);
@@ -255,7 +269,10 @@ d3.gantt = function() {
         self.timeDomainEnd = value[1];
         return self.gantt;
     };
-
+    this.gantt.locale = function(value){
+        self._locale = d3.locale(value);
+        return self.gantt;
+    };
     /**
      * @param {string}
      *                vale The value can be "fit" - the domain fits the data or

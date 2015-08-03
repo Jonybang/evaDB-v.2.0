@@ -119,6 +119,7 @@ angular.module('app')
 
                 self.gantt.containerId(self.options.containerId)
                     .timeDomain(timeDomain)
+                    .locale(d3RU)
                     .taskTypes(self.data.taskNames)
                     .taskStatus(self.data.taskStatuses)
                     .tickFormat(self.options.format)

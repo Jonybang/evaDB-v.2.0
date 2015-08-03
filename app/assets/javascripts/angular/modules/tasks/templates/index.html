@@ -51,7 +51,7 @@
     </tr>
     <tr ng-repeat="task in tasks | orderBy:['end_date', 'project.name']">
         <td>{{task.name}}<span class="pull-right label label-default" am-time-ago="task.end_date"></span></td>
-        <td>{{task.project.name}}</td>
+        <td><a ng-href="/projects/{{task.project.id}}/tasks">{{task.project.name}}</a></td>
         <td><pre>{{task.description}}</pre></td>
     </tr>
 </table>

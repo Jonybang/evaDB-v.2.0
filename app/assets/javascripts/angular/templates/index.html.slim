@@ -13,7 +13,8 @@
       ul.list-group
         li.list-group-item ng-repeat=('task in last_tasks')
           span
-            strong() {{task.project.name}}:&nbsp;
+            strong()
+              a ng-href="/projects/{{task.project.id}}/tasks" {{task.project.name}}:&nbsp;
             | {{task.name}}
           span.label.label-default.pull-right am-time-ago="task.created_at"
 

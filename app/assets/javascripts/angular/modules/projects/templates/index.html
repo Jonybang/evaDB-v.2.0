@@ -18,11 +18,11 @@
         <th></th>
     </tr>
     <tr ng-repeat="project in projects | orderBy:'name'">
-        <td>{{project.name}}</td>
+        <td><a ng-href="/projects/{{project.id}}/tasks">{{project.name}}</a></td>
         <td>{{project.status}}</td>
         <td></td>
         <td>{{project.end_date}}</td>
         <td></td>
-        <td><a class="btn btn-primary" href="projects/{{project.id}}">Просмотр</a></td>
+        <td><a class="btn btn-primary" ng-href="/projects/{{project.id}}">Описание</a></td>
     </tr>
 </table>

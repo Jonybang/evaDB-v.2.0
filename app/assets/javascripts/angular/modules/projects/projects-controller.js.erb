@@ -119,10 +119,14 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
 }]);
 app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'ProjectResource', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, ProjectResource, Contact, $modalInstance, inputs, Helpers) {
     $scope.task = {
+        begin_date: '',
+        end_date: '',
         project_id: inputs.project_id,
         parent_task_id: inputs.parent_task_id,
         resources: []
     };
+    $scope.dt = new Date();
+    $scope.opened = {};
     $scope.responsible = $scope.contacts = [];
 
     if(inputs.task_id){

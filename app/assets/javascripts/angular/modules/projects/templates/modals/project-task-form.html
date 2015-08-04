@@ -2,7 +2,7 @@
     <button type="button" class="close" ng-click="$dismiss()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">{{task.id ? 'Редактировать' : 'Создать'}} задачу</h4>
 </div>
-<form name="taskForm" ng-submit="save()" novalidate>
+<form name="taskForm" ng-submit="save()" novalidate class="form-horizontal">
     <div class="modal-body row">
         <tabset>
             <tab heading="Основные данные">
@@ -20,9 +20,17 @@
                     <div class="col-md-4 col-lg-3 text-right">
                         <label>Сроки</label>
                     </div>
-                    <div class="col-md-6 col-lg-7">
-                        от <input type="date" name="begin_date" ng-model="task.begin_date" class="form-control" required/>
-                        до <input type="date" name="end_date" ng-model="task.end_date" class="form-control" required />
+                    <div class="col-md-6 col-lg-7 controls">
+                        <div class="input-group">
+                            <span class="input-group-addon">от</span>
+                            <input type="date" name="begin_date" max="{{task.end_date}}" ng-model="task.begin_date" class="form-control" required/>
+                            <!--<input type="text" class="form-control" name="begin_date" datepicker-popup="dd.MM.yyyy" ng-model="task.begin_date" is-open="opened.begin_date" ng-click="opened.begin_date=true" />-->
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">до</span>
+                            <input type="date" name="end_date" min="{{task.begin_date}}" ng-model="task.end_date" class="form-control" required/>
+                            <!--<input type="text" class="form-control" name="end_date" datepicker-popup="dd.MM.yyyy" ng-model="task.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" />-->
+                        </div>
                     </div>
                 </div>
                 <div ng-repeat="error in errors.begin_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>

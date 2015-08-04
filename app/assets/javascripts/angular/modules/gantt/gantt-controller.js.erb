@@ -6,8 +6,12 @@
 var app = angular.module('app.gantt');
 
 app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
-    'Project', 'ProjectTask', 'User', 'Gantt', 'Helpers', 'TaskEditor',
-        function($scope, $state, $timeout, Project, ProjectTask, User, Gantt, Helpers, TaskEditor) {
+    'Project', 'ProjectTask', 'ProjectStatus', 'User', 'Gantt', 'Helpers', 'TaskEditor',
+        function($scope, $state, $timeout, Project, ProjectTask, ProjectStatus, User, Gantt, Helpers, TaskEditor) {
+
+            ProjectStatus.query().$promise.then(function(statuses){
+                $scope.project_statuses = statuses;
+            });
 
             $scope.startDate = new Date();
             $scope.endDate = new Date();

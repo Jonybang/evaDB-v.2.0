@@ -7,7 +7,7 @@
         </tr>
         <tr>
             <th>Ресурсы</th>
-            <th ng-repeat="date in calendar">{{date.date | date:'d'}} окт.</th>
+            <th ng-repeat="date in calendar">{{date.date | amDateFormat:'D MMM'}}.</th>
         </tr>
         <tr ng-if="isResAvaible(res)" ng-repeat="res in resoursable">
             <td>{{res.name}}</td>

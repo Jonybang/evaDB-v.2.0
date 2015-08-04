@@ -144,6 +144,11 @@ table.resources{
     color: black;
     font-weight: normal;
   }
+
+  .dropdown-menu{
+    max-height: 100px;
+    overflow-y: scroll;
+  }
 }
 .statuses span{
   margin: 5px;

@@ -103,7 +103,15 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
                         newId = obj.id || obj.$id;
                 });
 
-                scope.list.push({$id: newId + 1, resoursable: res, resoursable_id: res.id, begin_date: date.date, end_date: date.date});
+                var newTask = {
+                    $id: newId + 1,
+                    resoursable: res,
+                    resoursable_id: res.id,
+                    begin_date: date.date,
+                    end_date: date.date,
+                    focus: true
+                };
+                scope.list.push(newTask);
                 date.resources.push(scope.list[scope.list.length - 1]);
             };
 

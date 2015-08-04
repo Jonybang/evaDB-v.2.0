@@ -6,11 +6,11 @@
 var app = angular.module('app.gantt');
 
 app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
-    'Project', 'ProjectTask', 'ProjectStatus', 'User', 'Gantt', 'Helpers', 'TaskEditor',
-        function($scope, $state, $timeout, Project, ProjectTask, ProjectStatus, User, Gantt, Helpers, TaskEditor) {
+    'Project', 'ProjectTask', 'ProjectTaskStatus', 'User', 'Gantt', 'Helpers', 'TaskEditor',
+        function($scope, $state, $timeout, Project, ProjectTask, ProjectTaskStatus, User, Gantt, Helpers, TaskEditor) {
 
-            ProjectStatus.query().$promise.then(function(statuses){
-                $scope.project_statuses = statuses;
+            ProjectTaskStatus.query().$promise.then(function(statuses){
+                $scope.project_task_statuses = statuses;
             });
 
             $scope.startDate = new Date();
@@ -59,11 +59,9 @@ app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
                 //Если начальная или конечная дата не изменилась
                 if(!$scope.datesChanged && project){
                     //Обновить только один проект
-                    console.log('Обновить только один проект');
                     project.gantt.redraw(project.tasks, [$scope.startDate, $scope.endDate]);
                 } else {
                     //Иначе обновить все проекты
-                    console.log('Обновить все проекты');
                     $scope.projects.forEach(function(proj){
                         proj.gantt.redraw(proj.tasks, [$scope.startDate, $scope.endDate]);
                     });

@@ -117,7 +117,7 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
         parent_task.child_tasks = ProjectTask.query({project_id: project_id, parent_task_id: parent_task.id });
     }
 }]);
-app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus', 'ProjectResource', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectStatus, ProjectResource, Contact, $modalInstance, inputs, Helpers) {
+app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskStatus', 'ProjectResource', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectTaskStatus, ProjectResource, Contact, $modalInstance, inputs, Helpers) {
     $scope.task = {
         begin_date: '',
         end_date: '',
@@ -135,7 +135,7 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
         })
     }
 
-    ProjectStatus.query().$promise.then(function(statuses){
+    ProjectTaskStatus.query().$promise.then(function(statuses){
         $scope.statuses = statuses;
     });
 
@@ -159,9 +159,6 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectStatus
         if (!$scope.taskForm.$valid) {
             return;
         }
-        $scope.task.project_status = $scope.statuses.filter(function(obj){
-            return obj.id == $scope.task.project_status_id;
-        })[0];
 
         var obj;
         //если id нет - значит это новая задача

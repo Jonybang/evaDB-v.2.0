@@ -152,8 +152,8 @@ d3.gantt = function() {
             .attr("rx", 5)
             .attr("ry", 5)
             .attr("fill", function(d){
-                if(self._taskStatus[d.status] == null){ return "grey";}
-                return self._taskStatus[d.status];
+                if(self._taskStatus[d.status_name] == null){ return "grey";}
+                return self._taskStatus[d.status_name];
             });
     };
 

@@ -151,6 +151,6 @@ table.resources{
     overflow-y: scroll;
   }
 }
-.statuses span{
-  margin: 5px;
+.statuses span:not(:last-child){
+  margin-right: 10px;
 }

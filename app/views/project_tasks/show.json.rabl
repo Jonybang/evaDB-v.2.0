@@ -4,10 +4,10 @@ extends "inherits/base"
 
 attribute :description, :number, :begin_date, :end_date
 
-child(:project_status) { attributes :id, :name, :color }
+child(:status => :status) { attributes :id, :name, :color }
 
-glue :project_status do
-  attributes :id => :project_status_id
+glue :status do
+  attributes :id => :status_id
 end
 
 node :responsible_ids do |task|

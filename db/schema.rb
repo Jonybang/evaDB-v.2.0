@@ -300,26 +300,35 @@ ActiveRecord::Schema.define(version: 20150713212453) do
   create_table "project_statuses", force: :cascade do |t|
     t.string   "name",       null: false
     t.string   "color"
+    t.string   "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "project_task_statuses", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "color"
+    t.string   "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "project_tasks", force: :cascade do |t|
-    t.string   "name",              null: false
+    t.string   "name",           null: false
     t.integer  "number"
     t.datetime "begin_date"
     t.datetime "end_date"
     t.string   "description"
     t.integer  "project_id"
     t.integer  "parent_task_id"
-    t.integer  "project_status_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "status_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "project_tasks", ["parent_task_id"], name: "index_project_tasks_on_parent_task_id"
   add_index "project_tasks", ["project_id"], name: "index_project_tasks_on_project_id"
-  add_index "project_tasks", ["project_status_id"], name: "index_project_tasks_on_project_status_id"
+  add_index "project_tasks", ["status_id"], name: "index_project_tasks_on_status_id"
 
   create_table "project_tasks_responsible", id: false, force: :cascade do |t|
     t.integer "project_task_id"
@@ -335,7 +344,7 @@ ActiveRecord::Schema.define(version: 20150713212453) do
     t.string   "result"
     t.datetime "begin_date"
     t.datetime "end_date"
-    t.integer  "project_status_id"
+    t.integer  "status_id"
     t.integer  "project_direction_id"
     t.integer  "contact_id"
     t.datetime "created_at",           null: false
@@ -344,7 +353,7 @@ ActiveRecord::Schema.define(version: 20150713212453) do
 
   add_index "projects", ["contact_id"], name: "index_projects_on_contact_id"
   add_index "projects", ["project_direction_id"], name: "index_projects_on_project_direction_id"
-  add_index "projects", ["project_status_id"], name: "index_projects_on_project_status_id"
+  add_index "projects", ["status_id"], name: "index_projects_on_status_id"
 
   create_table "ranks", force: :cascade do |t|
     t.string   "name",       null: false

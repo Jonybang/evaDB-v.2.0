@@ -1,6 +1,6 @@
-class CreateProjectStatuses < ActiveRecord::Migration
+class CreateProjectTaskStatuses < ActiveRecord::Migration
   def change
-    create_table :project_statuses do |t|
+    create_table :project_task_statuses do |t|
       t.string :name, null: false
       t.string :color
       t.string :role

@@ -38,6 +38,8 @@ Rails.application.routes.draw do
 
     resources :project_statuses, :defaults => {format: :json}
 
+    resources :project_task_statuses, :defaults => {format: :json}
+
     resources :project_resources, :defaults => {format: :json}
 
     resources :equip_statuses

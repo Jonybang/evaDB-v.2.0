@@ -2,7 +2,7 @@ class ProjectTask < Base
 
   belongs_to :project
   belongs_to :parent_task, class_name: 'ProjectTask', inverse_of: :child_tasks#, foreign_key: :parent_task_id
-  belongs_to :project_status
+  belongs_to :status, class_name: 'ProjectTaskStatus', inverse_of: :project_tasks
 
   has_many :child_tasks, class_name: 'ProjectTask', inverse_of: :parent_task, foreign_key: :parent_task_id
 

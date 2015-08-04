@@ -100,8 +100,8 @@ angular.module('app')
                         if (!self.data.taskNames.some(searchTaskName)) {
                             self.data.taskNames.push(item.name);
                         }
-                        if (item.project_status && !self.data.taskStatuses[item.project_status.name]) {
-                            self.data.taskStatuses[item.project_status.name] = item.project_status.color;
+                        if (item.status && !self.data.taskStatuses[item.status.name]) {
+                            self.data.taskStatuses[item.status.name] = item.status.color;
                         }
                         return item;
                     });

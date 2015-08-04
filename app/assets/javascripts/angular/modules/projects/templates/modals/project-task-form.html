@@ -51,13 +51,13 @@
                         <label>Статус</label>
                     </div>
                     <div class="col-md-6 col-lg-7">
-                        <select name="project_status" class="form-control" ng-options="status.id as status.name for status in statuses" ng-model="task.project_status_id" required/>
+                        <select name="status" class="form-control" ng-options="status.id as status.name for status in statuses" ng-model="task.status_id" required/>
                         <!--<select ng-model="task.project_status_id" class="form-control">-->
                         <!--<option class="form-control" ng-repeat="status in statuses" ng-value="status.id" ng-selected="status.id == task.project_status_id">{{status.name}}</option>-->
                         <!--</select>-->
                     </div>
                 </div>
-                <div ng-repeat="error in errors.project_status" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+                <div ng-repeat="error in errors.status" class="alert alert-error"><strong>Название</strong> {{error}}</div>
             </tab>
             <tab heading="Ресурсы">
                 <div class="form-group col-md-12">

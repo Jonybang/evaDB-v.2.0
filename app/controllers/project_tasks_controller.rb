@@ -40,7 +40,7 @@ class ProjectTasksController < InheritsController
 
     end
     def project_task_params
-      params.require(:project_task).permit(:id, :project_id, :parent_task_id, :name, :number, :begin_date, :end_date, :description, :project_status_id, :responsible_ids => [])
+      params.require(:project_task).permit(:id, :project_id, :parent_task_id, :name, :number, :begin_date, :end_date, :description, :status_id, :responsible_ids => [])
     end
     def load_parent
       if params[:project_id]

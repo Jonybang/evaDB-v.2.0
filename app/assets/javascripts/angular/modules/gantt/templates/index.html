@@ -1,5 +1,8 @@
-<div class="well well-sm pull-right statuses">
-    <span class="label" ng-style="{'background-color': status.color}" ng-repeat="status in project_statuses">{{status.name}}</span>
+<div class="panel panel-info pull-right statuses">
+    <div class="panel-heading">Статусы задач</div>
+    <div class="panel-body">
+        <span class="label" ng-repeat="status in project_task_statuses" ng-style="{'background-color': status.color}">{{status.name}}</span>
+    </div>
 </div>
 <div ng-repeat="project in projects">
     <h2><a ng-href="/projects/{{project.id}}/tasks">{{project.name}}</a></h2>

@@ -1,12 +1,13 @@
 angular.module('app').directive('focusMe', ['$timeout', function($timeout) {
     return {
-        link: function(scope, element, attrs) {
-            scope.$watch(attrs.focusMe, function(value) {
+        scope: { trigger: '=focusMe' },
+        link: function(scope, element) {
+            scope.$watch('trigger', function(value) {
                 if(value === true) {
-                    console.log('value=',value);
+                    console.log('trigger',value);
                     $timeout(function() {
                         element[0].focus();
-                        scope[attrs.focusMe] = false;
+                        scope.trigger = false;
                     });
                 }
             });

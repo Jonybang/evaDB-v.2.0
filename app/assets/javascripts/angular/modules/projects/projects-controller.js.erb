@@ -154,6 +154,24 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskSt
         });
     };
 
+    $scope.$watch('task.begin_date', function(){
+        if(!$scope.task.begin_date)
+            return;
+
+        var role;
+        if($scope.task.begin_date > (new Date()))
+            role = 'future';
+        else
+            role = 'active';
+
+        $scope.statuses.some(function(status){
+            var result = status.role == role;
+            if(result)
+                $scope.task.status_id = status.id;
+            return result;
+        });
+    });
+
     $scope.save = function() {
         $scope.$broadcast('show-errors-check-validity');
         if (!$scope.taskForm.$valid) {

@@ -23,7 +23,7 @@
                     <div class="col-md-6 col-lg-7 controls">
                         <div class="input-group">
                             <span class="input-group-addon">от</span>
-                            <input type="date" name="begin_date" ng-model="task.begin_date" class="form-control" required/>
+                            <input type="date" name="begin_date" ng-model="task.begin_date" ng-change="autoStatus()" class="form-control" required/>
                             <!--<input type="text" class="form-control" name="begin_date" datepicker-popup="dd.MM.yyyy" ng-model="task.begin_date" is-open="opened.begin_date" ng-click="opened.begin_date=true" />-->
                         </div>
                         <div class="input-group">

@@ -172,8 +172,14 @@ d3.gantt = function() {
 
         self.initAxis();
 
-        var svg = d3.select("#" + self._containerId).select("svg");
+        var svg = d3.select("#" + self._containerId)
+            .select("svg")
+            .attr("width", self._width + self._margin.left + self._margin.right)
+            .attr("height", self._height + self._margin.top + self._margin.bottom);
+
         var gTasks = svg.select(".gantt-chart")
+            .attr("width", self._width + self._margin.left + self._margin.right)
+            .attr("height", self._height + self._margin.top + self._margin.bottom)
             .selectAll(".task")
             .data(tasks, keyFunction);
 

@@ -117,13 +117,15 @@ angular.module('app')
 
                 self.gantt = new d3.gantt();
 
+                var height = self.data.taskNames.length * 100;
+
                 self.gantt.containerId(self.options.containerId)
                     .timeDomain(timeDomain)
                     .locale(d3RU)
                     .taskTypes(self.data.taskNames)
                     .taskStatus(self.data.taskStatuses)
                     .tickFormat(self.options.format)
-                    .height(self.data.taskNames.length * 100)
+                    .height(height < 150 ? 150 : height)
                     .width(document.getElementById(self.options.containerId).offsetWidth - 120);
 
 
@@ -163,9 +165,12 @@ angular.module('app')
                     self.data.tasks = tasks;
                     funcs.generateTasksNamesAndStatuses(tasks);
 
+                    var height = self.data.taskNames.length * 100;
+
                     self.gantt
                         .taskTypes(self.data.taskNames)
-                        .taskStatus(self.data.taskStatuses);
+                        .taskStatus(self.data.taskStatuses)
+                        .height(height < 150 ? 150 : height);
 
                     if(timeDomain)
                         self.gantt.timeDomain(timeDomain);

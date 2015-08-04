@@ -1,4 +1,7 @@
 == Система управления инновационными проектами
 
 Создано на основе концепта аритектуры https://github.com/thedillonb/rails-angularjs-simple-forum
+
+Применяемые модули:
+Менеджер ресурсов - http://plnkr.co/edit/tqhf8KhsKzcXa4DmVGQy?p=preview
 <tt>rake doc:app</tt>.

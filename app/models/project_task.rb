@@ -20,12 +20,12 @@ class ProjectTask < Base
     where( 'project.chief' => Contact.find(contact_id) )
   end
 
-  private
-  def set_status
-    logger.debug "set status"
-    #if self.status.role == 'future' && Date.today > self.begin_date
-      #self.status = ProjectTaskStatus.find_by role: 'active'
-      #self.save
-    #end
+  alias_method :original_status, :status
+  def status
+    if self.original_status.role == 'future' && Date.today > self.begin_date
+      self.status = ProjectTaskStatus.find_by role: 'active'
+      self.save
+    end
+    self.original_status
   end
 end

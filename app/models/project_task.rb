@@ -1,4 +1,5 @@
 class ProjectTask < Base
+  #after_touch :set_status
 
   belongs_to :project
   belongs_to :parent_task, class_name: 'ProjectTask', inverse_of: :child_tasks#, foreign_key: :parent_task_id
@@ -17,5 +18,14 @@ class ProjectTask < Base
 
   def self.has_contact(contact_id)
     where( 'project.chief' => Contact.find(contact_id) )
+  end
+
+  private
+  def set_status
+    logger.debug "set status"
+    #if self.status.role == 'future' && Date.today > self.begin_date
+      #self.status = ProjectTaskStatus.find_by role: 'active'
+      #self.save
+    #end
   end
 end

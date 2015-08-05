@@ -4,7 +4,7 @@ extends "inherits/base"
 
 attribute :description, :number, :begin_date, :end_date
 
-child(:status => :status) { attributes :id, :name, :color }
+child(:status => :status) { attributes :id, :name, :color, :role }
 
 glue :status do
   attributes :id => :status_id

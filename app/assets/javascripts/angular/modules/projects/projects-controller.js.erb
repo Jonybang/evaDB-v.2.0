@@ -153,9 +153,16 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskSt
                 });
         });
     };
-
+    $scope.$watch('task.status_id', function(new_id){
+        $scope.statuses.some(function(status){
+            var result = status.id == new_id;
+            if(result)
+                $scope.task.status = status;
+            return result;
+        });
+    });
     $scope.$watch('task.begin_date', function(){
-        if(!$scope.task.begin_date)
+        if(!$scope.task.begin_date || ($scope.task.status && $scope.task.status.role != 'future' && $scope.task.status.role != 'active'))
             return;
 
         var role;

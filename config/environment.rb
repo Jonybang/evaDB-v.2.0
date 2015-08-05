@@ -5,3 +5,4 @@ require 'log4r'
 Rails.application.initialize!
 
 Rails.logger = Logger.new(STDOUT)
+logger.debug "=======================set logger in environment==========================="

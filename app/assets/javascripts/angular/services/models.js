@@ -59,6 +59,7 @@ app.factory('Contact', ['railsResourceFactory', 'railsSerializer', function (rai
         url: '/api/contacts',
         name: 'contact',
         serializer: railsSerializer(function () {
+            this.nestedAttribute('contact_data');
         })
     });
 }]);

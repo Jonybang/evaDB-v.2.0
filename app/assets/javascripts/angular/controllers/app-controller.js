@@ -16,7 +16,7 @@ angular.module('app').controller('AppCtrl', ['$scope', '$location', 'ProjectTask
             { route : '#', heading : 'Личный календарь', disabled: true },
             { route : 'app.gantt', heading : 'Диаграмма Ганта'},
             { route : 'app.projects.index', heading : 'Проекты' },
-            { route : '#', heading : 'Ресурсы', disabled: true },
+            { route : 'app.resources', heading : 'Ресурсы' },
             { route : '#', heading : 'Бизнес процессы', disabled: true }
         ];
     }]);

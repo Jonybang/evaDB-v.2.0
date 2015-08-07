@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app')
+angular.module('app.tasks')
     .factory('TaskEditor', ['$modal', '$q', function($modal, $q) {
         return function (inputs, task){
             if(task)
@@ -9,8 +9,8 @@ angular.module('app')
             return $q(function(resolve, reject) {
                 var modalInstance = $modal.open({
                     animation: true,
-                    templateUrl: '<%= asset_path('angular/modules/projects/templates/modals/project-task-form.html') %>',
-                    controller: 'ProjectsTasksFormCtrl',
+                    templateUrl: '<%= asset_path('angular/modules/tasks/templates/modals/form.html') %>',
+                    controller: 'TasksFormCtrl',
                     //size: size,
                     resolve: {
                     inputs: function(){

@@ -3,8 +3,8 @@
  */
 'use strict';
 
-angular.module('app.tasks', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'ng-rails-csrf', 'angularMoment', 'noty', 'ui.router', 'ui.router.tabs'])
-        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider) {
+angular.module('app.tasks', ['ui.router'])
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
 
             <% @templates_path = 'angular/modules/tasks/templates/' %>
 

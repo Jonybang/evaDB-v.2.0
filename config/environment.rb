@@ -1,8 +1,8 @@
 # Load the Rails application.
 require File.expand_path('../application', __FILE__)
-require 'log4r'
+
 # Initialize the Rails application.
 Rails.application.initialize!
 
 Rails.logger = Logger.new(STDOUT)
-logger.debug "=======================set logger in environment==========================="
+Rails.logger.debug "=======================set logger in environment==========================="

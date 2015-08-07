@@ -1038,7 +1038,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
         shortcutPropagation: false
     })
 
-    .controller('DatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$timeout', '$log', 'dateFilter', 'datepickerConfig', function($scope, $attrs, $parse, $interpolate, $timeout, $log, dateFilter, datepickerConfig) {
+    .controller('DatepickerController', ['$scope', '$attrs', '$parse', '$interpolate', '$log', 'dateFilter', 'datepickerConfig', function($scope, $attrs, $parse, $interpolate, $log, dateFilter, datepickerConfig) {
         var self = this,
             ngModelCtrl = { $setViewValue: angular.noop }; // nullModelCtrl;
 
@@ -1135,6 +1135,9 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
             return ((this.minDate && this.compare(date, this.minDate) < 0) || (this.maxDate && this.compare(date, this.maxDate) > 0) || ($attrs.dateDisabled && $scope.dateDisabled({date: date, mode: $scope.datepickerMode})));
         };
 
+        if(datepickerConfig['customClass'])
+            $scope.customClass = datepickerConfig['customClass'];
+
         this.customClass = function( date ) {
             return $scope.customClass({date: date, mode: $scope.datepickerMode});
         };
@@ -1146,6 +1149,17 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
                 arrays.push(arr.splice(0, size));
             }
             return arrays;
+        };
+
+        // Fix a hard-reprodusible bug with timezones
+        // The bug depends on OS, browser, current timezone and current date
+        // i.e.
+        // var date = new Date(2014, 0, 1);
+        // console.log(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
+        // can result in "2013 11 31 23" because of the bug.
+        this.fixTimeZone = function(date) {
+            var hours = date.getHours();
+            date.setHours(hours === 23 ? hours + 2 : 0);
         };
 
         $scope.select = function( date ) {
@@ -1181,9 +1195,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
         $scope.keys = { 13:'enter', 32:'space', 33:'pageup', 34:'pagedown', 35:'end', 36:'home', 37:'left', 38:'up', 39:'right', 40:'down' };
 
         var focusElement = function() {
-            $timeout(function() {
-                self.element[0].focus();
-            }, 0 , false);
+            self.element[0].focus();
         };
 
         // Listen for focus requests from popup directive
@@ -1258,10 +1270,11 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
                 }
 
                 function getDates(startDate, n) {
-                    var dates = new Array(n), current = new Date(startDate), i = 0;
-                    current.setHours(12); // Prevent repeated dates because of timezone bug
+                    var dates = new Array(n), current = new Date(startDate), i = 0, date;
                     while ( i < n ) {
-                        dates[i++] = new Date(current);
+                        date = new Date(current);
+                        ctrl.fixTimeZone(date);
+                        dates[i++] = date;
                         current.setDate( current.getDate() + 1 );
                     }
                     return dates;
@@ -1363,10 +1376,13 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
                 ctrl._refreshView = function() {
                     var months = new Array(12),
-                        year = ctrl.activeDate.getFullYear();
+                        year = ctrl.activeDate.getFullYear(),
+                        date;
 
                     for ( var i = 0; i < 12; i++ ) {
-                        months[i] = angular.extend(ctrl.createDateObject(new Date(year, i, 1), ctrl.formatMonth), {
+                        date = new Date(year, i, 1);
+                        ctrl.fixTimeZone(date);
+                        months[i] = angular.extend(ctrl.createDateObject(date, ctrl.formatMonth), {
                             uid: scope.uniqueId + '-' + i
                         });
                     }
@@ -1423,10 +1439,12 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
                 }
 
                 ctrl._refreshView = function() {
-                    var years = new Array(range);
+                    var years = new Array(range), date;
 
                     for ( var i = 0, start = getStartingYear(ctrl.activeDate.getFullYear()); i < range; i++ ) {
-                        years[i] = angular.extend(ctrl.createDateObject(new Date(start + i, 0, 1), ctrl.formatYear), {
+                        date = new Date(start + i, 0, 1);
+                        ctrl.fixTimeZone(date);
+                        years[i] = angular.extend(ctrl.createDateObject(date, ctrl.formatYear), {
                             uid: scope.uniqueId + '-' + i
                         });
                     }
@@ -1480,8 +1498,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
         showButtonBar: true
     })
 
-    .directive('datepickerPopup', ['$compile', '$parse', '$document', '$position', 'dateFilter', 'dateParser', 'datepickerPopupConfig',
-        function ($compile, $parse, $document, $position, dateFilter, dateParser, datepickerPopupConfig) {
+    .directive('datepickerPopup', ['$compile', '$parse', '$document', '$position', 'dateFilter', 'dateParser', 'datepickerPopupConfig', '$timeout',
+        function ($compile, $parse, $document, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout) {
             return {
                 restrict: 'EA',
                 require: 'ngModel',
@@ -1537,7 +1555,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
                     var popupEl = angular.element('<div datepicker-popup-wrap><div datepicker></div></div>');
                     popupEl.attr({
                         'ng-model': 'date',
-                        'ng-change': 'dateSelection()'
+                        'ng-change': 'dateSelection(date)'
                     });
 
                     function cameltoDash( string ){
@@ -1578,7 +1596,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
                             if ( key === 'datepickerMode' ) {
                                 var setAttribute = getAttribute.assign;
                                 scope.$watch('watchData.' + key, function(value, oldvalue) {
-                                    if ( value !== oldvalue ) {
+                                    if ( angular.isFunction(setAttribute) && value !== oldvalue ) {
                                         setAttribute(scope.$parent, value);
                                     }
                                 });
@@ -1681,30 +1699,41 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
                         }
                     };
 
-                    var keydown = function(evt, noApply) {
-                        scope.keydown(evt);
+                    var inputKeydownBind = function(evt) {
+                        if (evt.which === 27 && scope.isOpen) {
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                            scope.$apply(function() {
+                                scope.isOpen = false;
+                            });
+                            element[0].focus();
+                        } else if (evt.which === 40 && !scope.isOpen) {
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                            scope.$apply(function() {
+                                scope.isOpen = true;
+                            });
+                        }
                     };
-                    element.bind('keydown', keydown);
+                    element.bind('keydown', inputKeydownBind);
 
                     scope.keydown = function(evt) {
                         if (evt.which === 27) {
-                            evt.preventDefault();
-                            if (scope.isOpen) {
-                                evt.stopPropagation();
-                            }
-                            scope.close();
-                        } else if (evt.which === 40 && !scope.isOpen) {
-                            scope.isOpen = true;
+                            scope.isOpen = false;
+                            element[0].focus();
                         }
                     };
 
                     scope.$watch('isOpen', function(value) {
                         if (value) {
-                            scope.$broadcast('datepicker.focus');
                             scope.position = appendToBody ? $position.offset(element) : $position.position(element);
                             scope.position.top = scope.position.top + element.prop('offsetHeight');
 
                             $document.bind('click', documentClickBind);
+
+                            $timeout(function() {
+                                scope.$broadcast('datepicker.focus');
+                            }, 0, false);
                         } else {
                             $document.unbind('click', documentClickBind);
                         }
@@ -1739,8 +1768,14 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
                     }
 
                     scope.$on('$destroy', function() {
+                        if (scope.isOpen === true) {
+                            scope.$apply(function() {
+                                scope.isOpen = false;
+                            });
+                        }
+
                         $popup.remove();
-                        element.unbind('keydown', keydown);
+                        element.unbind('keydown', inputKeydownBind);
                         $document.unbind('click', documentClickBind);
                     });
                 }
@@ -1752,13 +1787,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
             restrict:'EA',
             replace: true,
             transclude: true,
-            templateUrl: 'template/datepicker/popup.html',
-            link:function (scope, element, attrs) {
-                element.bind('click', function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                });
-            }
+            templateUrl: 'template/datepicker/popup.html'
         };
     });
 

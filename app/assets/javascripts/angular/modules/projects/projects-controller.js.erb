@@ -119,13 +119,10 @@ app.controller('ProjectsTasksCtrl', ['$scope', 'ProjectTask', 'Gantt', 'Helpers'
 }]);
 app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskStatus', 'ProjectResource', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectTaskStatus, ProjectResource, Contact, $modalInstance, inputs, Helpers) {
     $scope.task = {
-        begin_date: '',
-        end_date: '',
         project_id: inputs.project_id,
         parent_task_id: inputs.parent_task_id,
         resources: []
     };
-    $scope.dt = new Date();
     $scope.opened = {};
     $scope.responsible = $scope.contacts = [];
 
@@ -154,6 +151,9 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskSt
         });
     };
     $scope.$watch('task.status_id', function(new_id){
+        if(!$scope.statuses || !$scope.statuses.length)
+            return;
+
         $scope.statuses.some(function(status){
             var result = status.id == new_id;
             if(result)
@@ -161,7 +161,7 @@ app.controller('ProjectsTasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskSt
             return result;
         });
     });
-    $scope.$watch('task.begin_date', function(){
+    $scope.$watch('task.begin_date', function(val){
         if(!$scope.task.begin_date || ($scope.task.status && $scope.task.status.role != 'future' && $scope.task.status.role != 'active'))
             return;
 

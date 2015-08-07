@@ -154,3 +154,8 @@ table.resources{
 .statuses span:not(:last-child){
   margin-right: 10px;
 }
+.day-off button span {
+  background-color: #32CD32;
+  border-radius: 32px;
+  color: #000;
+}

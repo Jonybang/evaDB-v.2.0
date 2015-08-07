@@ -15,7 +15,7 @@ angular.module('app', [
     'ngResource',
     'ui.bootstrap',
     'ui.bootstrap.showErrors',
-    'angular-date-picker-polyfill',
+    //'angular-date-picker-polyfill',
     'ng-rails-csrf',
     'angularMoment',
     'rt.debounce',
@@ -56,6 +56,26 @@ angular.module('app', [
             railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
         }]);
 
-angular.module('app').run(['amMoment', function(amMoment) {
+angular.module('app').run(['amMoment', 'datepickerConfig', 'datepickerPopupConfig', '$rootScope', function(amMoment, datepickerConfig, datepickerPopupConfig, $rootScope) {
     amMoment.changeLocale('ru');
+
+    $rootScope.getDayClass = function(obj) {
+        if (obj.mode === 'day') {
+            var day = new Date(obj.date).getDay();
+            if (day == 0 || day == 6) {
+                return 'day-off';
+            }
+        }
+    };
+
+    angular.extend(datepickerConfig, {
+        startingDay: 1,
+        customClass: $rootScope.getDayClass
+    });
+
+    angular.extend(datepickerPopupConfig, {
+        currentText:'Сегодня',
+        clearText:'Очистить',
+        closeText:'Закрыть'
+    });
 }]);

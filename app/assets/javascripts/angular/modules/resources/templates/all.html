@@ -17,14 +17,4 @@
         </li>
     </ul>
 </div>
-
-<table class="table table-hover" ng-if="resCtrl.resources.length">
-    <tr>
-        <th>Имя</th>
-        <th>Занятость</th>
-    </tr>
-    <tr ng-repeat="resource in resCtrl.resources | orderBy:'name'" ng-class="{'warning':resource.class == 'Contact','info':resource.class == 'Equip'}">
-        <td><a href ng-click="resCtrl.newOrEditResource(resource)">{{resource.name}}</a></td>
-        <td></td>
-    </tr>
-</table>
+<resources resoursable="resCtrl.resources" list="resCtrl.list" start-date="resCtrl.begin_date" end-date="resCtrl.end_date"></resources>

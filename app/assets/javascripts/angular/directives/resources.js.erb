@@ -27,7 +27,7 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
                         resource.time = "";
 
                     scope.resoursable.some(function(obj){
-                        var result = obj.id == resource.resoursable_id;
+                        var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_class;
                         if(result)
                             resource.resoursable = obj;
                         return result;
@@ -83,13 +83,13 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
 
             scope.isEmptyDate = function(date, res) {
                 return !date.resources.some(function(obj){
-                    return obj.resoursable.id == res.id;
+                    return obj.resoursable.id == res.id && obj.resoursable.class == res.class;
                 });
             };
 
             scope.isResAvaible = function(res) {
                 return scope.list.some(function(obj){
-                    return obj.resoursable.id == res.id;
+                    return obj.resoursable.id == res.id && obj.resoursable.class == res.class;
                 });
             };
 
@@ -107,6 +107,7 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
                     $id: newId + 1,
                     resoursable: res,
                     resoursable_id: res.id,
+                    resoursable_class: res.class,
                     begin_date: date.date,
                     end_date: date.date,
                     focus: true
@@ -126,7 +127,7 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
 
                 //востановить связь
                 scope.list.some(function(obj, index){
-                    var result = obj.$id == item.$id;
+                    var result = obj.$id == item.$id && obj.class == item.class;
                     if(result)
                         scope.list[index] = item;
                     return result;

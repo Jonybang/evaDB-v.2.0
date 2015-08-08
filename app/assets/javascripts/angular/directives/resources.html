@@ -19,16 +19,13 @@
                     dnd-list="date.resources"
                     dnd-drop="resDropped(date,res,item)">
                     <li ng-repeat="resource in date.resources"
-                        ng-if="res.id == resource.resoursable.id"
+                        ng-if="res.id == resource.resoursable.id && res.class == resource.resoursable.class"
                         dnd-draggable="resource"
                         dnd-effect-allowed="move"
                         dnd-moved="date.resources.splice($index, 1)">
                 
                 <span ng-style="getResStyle(resource)" class="label label-primary">
-                  <input ng-model="resource.time"
-                         ng-change="resTimeChanged(resource, date)"
-                         ng-blur="removeResIfEmpty(date.resources, $index)"
-                         focus-me="resource.focus"/>
+                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="removeResIfEmpty(date.resources, $index)" />
                     ч.
                 </span>
                     </li>

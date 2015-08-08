@@ -8,13 +8,4 @@
     <a href ng-click="resCtrl.newOrEditResource({class:'Contact'})" class="btn btn-success">Создать контакт</a>
 </div>
 
-<table class="table table-hover" ng-if="resCtrl.contacts.length">
-    <tr>
-        <th>Имя</th>
-        <th>Занятость</th>
-    </tr>
-    <tr ng-repeat="contact in resCtrl.contacts | orderBy:'name'">
-        <td><a href ng-click="resCtrl.newOrEditResource(contact)" >{{contact.name}}</a></td>
-        <td></td>
-    </tr>
-</table>
+<resources resoursable="resCtrl.contacts" list="resCtrl.list" start-date="resCtrl.begin_date" end-date="resCtrl.end_date"></resources>

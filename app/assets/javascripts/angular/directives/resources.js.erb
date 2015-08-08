@@ -6,7 +6,8 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
             resoursable: '=',
             list: '=',
             startDate: '=',
-            endDate: '='
+            endDate: '=',
+            showAll: '='
         },
         link: function (scope, element) {
             function initResources (){
@@ -14,6 +15,10 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
                     return;
                 if(!scope.list && !scope.list.length)
                     return;
+
+                scope.resoursable.forEach(function(obj){
+                    obj.resAvaible = false;
+                });
 
                 scope.list.forEach(function(resource){
                     if(!resource.$id)
@@ -28,8 +33,10 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
 
                     scope.resoursable.some(function(obj){
                         var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_class;
-                        if(result)
+                        if(result){
                             resource.resoursable = obj;
+                            obj.resAvaible = true;
+                        }
                         return result;
                     })
                 });
@@ -87,6 +94,7 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
                 });
             };
 
+            //deprecated
             scope.isResAvaible = function(res) {
                 return scope.list.some(function(obj){
                     return obj.resoursable.id == res.id && obj.resoursable.class == res.class;

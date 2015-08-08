@@ -9,7 +9,7 @@
             <th>Ресурсы</th>
             <th ng-repeat="date in calendar">{{date.date | amDateFormat:'D MMM'}}.</th>
         </tr>
-        <tr ng-if="isResAvaible(res)" ng-repeat="res in resoursable">
+        <tr ng-if="res.resAvaible || showAll" ng-repeat="res in resoursable | orderBy: '-resAvaible'">
             <td>{{res.name}}</td>
             <td ng-repeat="date in calendar"
                 ng-mouseleave="leaveAddButton(date,res)"
@@ -39,7 +39,7 @@
                 </ul>
             </td>
         </tr>
-        <tr>
+        <tr ng-if="!showAll" class="adder">
             <td colspan="{{calendar.length+1}}">
                 <div class="btn-group" dropdown>
                     <button type="button" class="btn btn-default" dropdown-toggle>

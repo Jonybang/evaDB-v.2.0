@@ -109,14 +109,21 @@ table.resources{
   margin-bottom: 100px!important;
   td, th {
     text-align:center;
-    min-width: 85px;
+    min-width: 100px;
   }
-  tr:last-child td{
+  tr.adder td{
     text-align: left;
   }
-  tr:not(:last-child) > td:first-child, tr:not(:last-child) > th:first-child {
+  tr:not(.adder) > td:first-child, tr:not(.adder) > th:first-child {
     border: 1px solid #ccc;
     border-width: 1px 1px 0 0;
+  }
+  tr:last-child:not(.adder) > td{
+    border: 1px solid #ccc;
+    border-width: 1px 0px 1px 0px;
+  }
+  tr:last-child:not(.adder) > td:first-child{
+    border-width: 1px 1px 1px 0px;
   }
 
   ul[dnd-list] {

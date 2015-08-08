@@ -19,10 +19,8 @@ child :project do
 end
 
 child :resources, :root => "resources", :object_root => false do
-    attributes :id, :value, :resoursable_id, :resoursable_type, :begin_date, :end_date
-    node :resoursable_class do |resource|
-        resource.resoursable.class.name
-    end
+    attributes :id
+    extends "project_resources/base"
 end
 
 child :responsible, :root => "responsible", :object_root => false do

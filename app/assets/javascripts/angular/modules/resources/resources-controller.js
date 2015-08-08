@@ -6,19 +6,23 @@
 
 var app = angular.module('app.resources');
 
-app.controller('ResourcesIndexCtrl', ['$scope', '$state', 'Resoursable', 'Contact', 'ContactEditor', 'Equip', 'EquipEditor', 'Helpers', function($scope, $state, Resoursable, Contact, ContactEditor, Equip, EquipEditor, Helpers) {
+app.controller('ResourcesIndexCtrl', ['$scope', '$state', 'Resoursable', 'Contact', 'ContactEditor', 'Equip', 'EquipEditor', 'ProjectResource', 'Helpers', function($scope, $state, Resoursable, Contact, ContactEditor, Equip, EquipEditor, ProjectResource, Helpers) {
     $scope.tabsData = [
         { route : 'app.resources.all', heading : 'Все' },
         { route : 'app.resources.contacts', heading : 'Люди' },
         { route : 'app.resources.equips', heading : 'Оборудование' }
     ];
-    $scope.begin_date = new Date('01/03/2015');
-    $scope.end_date = new Date();
-    $scope.end_date.setDate($scope.begin.getDate() + 4);
+    this.begin_date = new Date('08/11/2015');
+    this.end_date = new Date();
+    this.end_date.setDate(this.begin_date.getDate() + 5);
 
     $scope.opened = {};
     var self = this;
 
+    ProjectResource.query().then(function(resources){
+        self.list = resources;
+    });
+    
     self.getResources = function () {
         Resoursable.query().then(function(resources){
             self.resources = resources;

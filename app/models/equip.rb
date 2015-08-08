@@ -1,4 +1,5 @@
 class Equip < Base
+  # fields: name, model, description, parameters
   belongs_to :responsible, class_name: 'Contact', inverse_of: :equips
   belongs_to :organization
   belongs_to :subunit

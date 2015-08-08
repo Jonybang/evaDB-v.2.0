@@ -5,5 +5,5 @@ node :name do |obj|
 end
 
 node :class do |obj|
-    resource_class
+    obj.class.name
 end

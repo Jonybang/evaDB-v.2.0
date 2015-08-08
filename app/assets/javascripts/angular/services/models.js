@@ -63,3 +63,19 @@ app.factory('Contact', ['railsResourceFactory', 'railsSerializer', function (rai
         })
     });
 }]);
+app.factory('Equip', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/equips',
+        name: 'equip',
+        serializer: railsSerializer(function () {
+        })
+    });
+}]);
+app.factory('Resoursable', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/resoursable',
+        name: 'resoursable',
+        serializer: railsSerializer(function () {
+        })
+    });
+}]);

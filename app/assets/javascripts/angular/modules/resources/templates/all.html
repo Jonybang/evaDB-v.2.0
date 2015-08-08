@@ -10,7 +10,7 @@
         <th>Имя</th>
         <th>Занятость</th>
     </tr>
-    <tr ng-repeat="resource in resources | orderBy:'name'">
+    <tr ng-repeat="resource in resources | orderBy:'name'" ng-class="{'warning':resource.class == 'Contact','info':resource.class == 'Equip'}">
         <td><a href >{{resource.name}}</a></td>
         <td></td>
     </tr>

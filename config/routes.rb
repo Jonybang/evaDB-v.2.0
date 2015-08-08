@@ -42,7 +42,11 @@ Rails.application.routes.draw do
 
     resources :project_resources, :defaults => {format: :json}
 
-    resources :equip_statuses
+    get 'resoursable' => 'resoursable#index', :defaults => {format: :json}
+
+    resources :equips, :defaults => {format: :json}
+
+    resources :equip_statuses, :defaults => {format: :json}
 
     resources :intellect_types
 
@@ -65,8 +69,6 @@ Rails.application.routes.draw do
     resources :rooms
 
     resources :subunits
-
-    resources :equips
 
     resources :specialties
 

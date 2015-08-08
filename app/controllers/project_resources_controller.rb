@@ -1,5 +1,4 @@
 class ProjectResourcesController < InheritsController
-
   private
 
     def project_resource_params

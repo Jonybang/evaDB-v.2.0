@@ -2,15 +2,15 @@
     <hr/>
     <h4>Здесь пока ничего нет...</h4>
 
-    <p>Попробуйте создать новый контакт</p>
+    <p>Попробуйте создать новое оборудование</p>
 </div>
 <div class="btn-toolbar">
-    <a href ng-click="newOrEditEquip()" class="btn btn-success">Добавить контакт</a>
+    <a href ng-click="newOrEditEquip()" class="btn btn-success">Добавить оборудование</a>
 </div>
 
 <table class="table table-hover" ng-if="equips.length">
     <tr>
-        <th>Имя</th>
+        <th>Название</th>
         <th>Занятость</th>
     </tr>
     <tr ng-repeat="equip in equips | orderBy:'name'">

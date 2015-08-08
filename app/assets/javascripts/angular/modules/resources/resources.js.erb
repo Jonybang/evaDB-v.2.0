@@ -13,6 +13,22 @@ angular.module('app.resources', ['ui.router'])
                     .state('app.resources', {
                         url: '/resources',
                         controller: 'ResourcesIndexCtrl',
+                        abstract: true,
                         templateUrl: '<%= asset_path(@templates_path + 'index.html') %>'
+                    })
+                    .state('app.resources.all', {
+                        url: '',
+                        templateUrl: '<%= asset_path(@templates_path + 'all.html') %>',
+                        controller: 'ResourcesAllCtrl'
+                    })
+                    .state('app.resources.contacts', {
+                        url: '/contacts',
+                        templateUrl: '<%= asset_path(@templates_path + 'contacts.html') %>',
+                        controller: 'ResourcesContactsCtrl'
+                    })
+                    .state('app.resources.equip', {
+                        url: '/equips',
+                        templateUrl: '<%= asset_path(@templates_path + 'equips.html') %>',
+                        controller: 'ResourcesEquipsCtrl'
                     });
         }]);

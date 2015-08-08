@@ -1,0 +1,20 @@
+<div ng-hide="equips.length">
+    <hr/>
+    <h4>Здесь пока ничего нет...</h4>
+
+    <p>Попробуйте создать новый контакт</p>
+</div>
+<div class="btn-toolbar">
+    <a href ng-click="newOrEditEquip()" class="btn btn-success">Добавить контакт</a>
+</div>
+
+<table class="table table-hover" ng-if="equips.length">
+    <tr>
+        <th>Имя</th>
+        <th>Занятость</th>
+    </tr>
+    <tr ng-repeat="equip in equips | orderBy:'name'">
+        <td><a href >{{contact.name}}</a></td>
+        <td></td>
+    </tr>
+</table>

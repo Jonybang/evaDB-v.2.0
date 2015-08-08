@@ -7,6 +7,21 @@
 var app = angular.module('app.resources');
 
 app.controller('ResourcesIndexCtrl', ['$scope', 'Contact', 'ContactEditor', 'Helpers', function($scope, Contact, ContactEditor, Helpers) {
+    $scope.tabsData = [
+        { route : 'app.resources.all', heading : 'Все' },
+        { route : 'app.resources.contacts', heading : 'Контакты' },
+        { route : 'app.resources.equip', heading : 'Оборудование', disabled: true }
+    ];
+}]);
+app.controller('ResourcesAllCtrl', ['$scope', 'Contact', 'ContactEditor', 'Helpers', function($scope, Contact, ContactEditor, Helpers) {
+    function getResources(){
+        Contact.query().then(function(contacts){
+            $scope.resources = contacts;
+        });
+    }
+    getResources();
+}]);
+app.controller('ResourcesContactsCtrl', ['$scope', 'Contact', 'ContactEditor', 'Helpers', function($scope, Contact, ContactEditor, Helpers) {
     function getContacts(){
         Contact.query().then(function(contacts){
             $scope.contacts = contacts;

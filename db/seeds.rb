@@ -18,22 +18,55 @@ project_status_list.each do |name, color|
   ProjectStatus.create( name: name, color: color )
 end
 
-ProjectTaskStatus.create( name: 'Активная', color: '#5cb85c',role: 'active' )
-ProjectTaskStatus.create( name: 'Отложенная', color: '#f0ad4e', role: 'frozen' )
-ProjectTaskStatus.create( name: 'Будущая', color: '#5bc0de', role: 'future' )
-ProjectTaskStatus.create( name: 'Завершенная', color: '#428bca', role: 'closed' )
+users_list = [
+    [ 'jonybang@mail.ru', 'Jb192837', 'Паничев Евгений' ],
+    [ 'ger2001a@mail.ru', '12345', 'Ледков Евгений' ],
+    [ 'test@mail.ru', 'test', 'Тестовый Пользователь' ]
+]
 
-jonybang = User.create(email:'jonybang@mail.ru', password: 'Jb192837')
-jonybang.contact = Contact.new(name:'Паничев Евгений')
-jonybang.contact.contact_data = ContactDatum.create({email:jonybang.email})
+users_list.each do |email, pass, name|
+  user = User.create(email: email, password: pass)
+  user.contact = Contact.new(name: name)
+  user.contact.contact_data = ContactDatum.create({email: email})
+end
 
-ledkov = User.create(email:'ger2001a@mail.ru', password: '12345')
-ledkov.contact = Contact.new(name:'Ледков Евгений')
-ledkov.contact.contact_data = ContactDatum.create({email:ledkov.email})
 
-Project.create(name:'Первый проект', description: 'Описание к первому проекту', chief: jonybang.contact)
 
-Contact.create(name: 'Контакт 1')
-Contact.create(name: 'Контакт 2')
-Contact.create(name: 'Студент 1')
-Contact.create(name: 'Студент 2')
+project_task_status_list = [
+    [ 'Активная', '#5cb85c', 'active' ],
+    [ 'Отложенная', '#f0ad4e', 'frozen' ],
+    [ 'Будущая', '#5bc0de', 'future' ],
+    [ 'Завершенная', '#428bca', 'closed' ]
+]
+
+project_task_status_list.each do |name, color, role|
+  ProjectTaskStatus.create( name: name, color: color, role: role )
+end
+
+first_project = Project.create(name:'Первый проект', description: 'Описание к первому проекту', chief: Contact.first)
+
+project_tasks_list = [
+    [ 'Первая задача', '2015-08-11', '2015-08-20' ],
+    [ 'Вторая задача', '2015-08-21', '2015-08-25' ],
+    [ 'Третья задача', '2015-08-26', '2015-08-30' ]
+]
+
+project_tasks_list.each do |name, begin_date, end_date|
+  offset = rand(ProjectTaskStatus.count)
+  first_project.project_tasks << ProjectTask.create(name: name, begin_date: begin_date, end_date: end_date, status: ProjectTaskStatus.offset(offset).first)
+end
+
+Equip.create(name: 'Оборудование 1')
+Equip.create(name: 'Оборудование 2')
+Equip.create(name: 'Оборудование 3')
+
+project_resources_list = [
+    [ '2015-08-11 [08:00:00]', '2015-08-11 [12:00:00]' ],
+    [ '2015-08-13 [12:00:00]', '2015-08-13 [18:00:00]' ],
+    [ '2015-08-14 [10:00:00]', '2015-08-14 [16:00:00]' ],
+    [ '2015-08-16 [10:00:00]', '2015-08-16 [16:00:00]' ]
+]
+project_resources_list.each do |begin_date, end_date|
+  offset = rand(Contact.count)
+  ProjectTask.first.resources << ProjectResource.create(begin_date: begin_date, end_date: end_date, resoursable: Contact.offset(offset).first)
+end

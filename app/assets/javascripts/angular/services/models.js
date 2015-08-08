@@ -28,6 +28,7 @@ app.factory('Project', ['railsResourceFactory', 'railsSerializer', function (rai
         url: '/api/projects',
         name: 'project',
         serializer: railsSerializer(function () {
+            this.exclude('class');
             //this.rename('chief_id', 'contact_id');
         })
     });
@@ -37,6 +38,7 @@ app.factory('ProjectTask', ['railsResourceFactory', 'railsSerializer', function 
         url: '/api/project_tasks',
         name: 'project_task',
         serializer: railsSerializer(function () {
+            this.exclude('class');
             this.exclude('performers');
             this.exclude('project_status');
             this.exclude('project');
@@ -51,6 +53,7 @@ app.factory('ProjectResource', ['railsResourceFactory', 'railsSerializer', funct
         url: '/api/project_resources',
         name: 'project_resource',
         serializer: railsSerializer(function () {
+            this.exclude('class');
         })
     });
 }]);
@@ -59,6 +62,7 @@ app.factory('Contact', ['railsResourceFactory', 'railsSerializer', function (rai
         url: '/api/contacts',
         name: 'contact',
         serializer: railsSerializer(function () {
+            this.exclude('class');
             this.nestedAttribute('contact_data');
         })
     });
@@ -68,6 +72,7 @@ app.factory('Equip', ['railsResourceFactory', 'railsSerializer', function (rails
         url: '/api/equips',
         name: 'equip',
         serializer: railsSerializer(function () {
+            this.exclude('class');
         })
     });
 }]);
@@ -76,6 +81,7 @@ app.factory('Resoursable', ['railsResourceFactory', 'railsSerializer', function 
         url: '/api/resoursable',
         name: 'resoursable',
         serializer: railsSerializer(function () {
+            this.exclude('class');
         })
     });
 }]);

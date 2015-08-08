@@ -12,7 +12,7 @@ angular.module('app.resources', ['ui.router'])
             $stateProvider
                     .state('app.resources', {
                         url: '/resources',
-                        controller: 'ResourcesIndexCtrl',
+                        controller: 'ResourcesIndexCtrl as resCtrl',
                         abstract: true,
                         templateUrl: '<%= asset_path(@templates_path + 'index.html') %>'
                     })

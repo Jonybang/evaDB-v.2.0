@@ -1,20 +1,20 @@
-<div ng-hide="equips.length">
+<div ng-hide="resCtrl.equips.length">
     <hr/>
     <h4>Здесь пока ничего нет...</h4>
 
     <p>Попробуйте создать новое оборудование</p>
 </div>
 <div class="btn-toolbar">
-    <a href ng-click="newOrEditEquip()" class="btn btn-success">Добавить оборудование</a>
+    <a href ng-click="resCtrl.newOrEditResource({class:'Equip'})" class="btn btn-success">Создать оборудование</a>
 </div>
 
-<table class="table table-hover" ng-if="equips.length">
+<table class="table table-hover" ng-if="resCtrl.equips.length">
     <tr>
         <th>Название</th>
         <th>Занятость</th>
     </tr>
-    <tr ng-repeat="equip in equips | orderBy:'name'">
-        <td><a href >{{equip.name}}</a></td>
+    <tr ng-repeat="equip in resCtrl.equips | orderBy:'name'">
+        <td><a href ng-click="resCtrl.newOrEditResource(equip)" >{{equip.name}}</a></td>
         <td></td>
     </tr>
 </table>

@@ -6,63 +6,69 @@
 
 var app = angular.module('app.resources');
 
-app.controller('ResourcesIndexCtrl', ['$scope', 'Contact', 'ContactEditor', 'Helpers', function($scope, Contact, ContactEditor, Helpers) {
+app.controller('ResourcesIndexCtrl', ['$scope', '$state', 'Resoursable', 'Contact', 'ContactEditor', 'Equip', 'EquipEditor', 'Helpers', function($scope, $state, Resoursable, Contact, ContactEditor, Equip, EquipEditor, Helpers) {
     $scope.tabsData = [
         { route : 'app.resources.all', heading : 'Все' },
-        { route : 'app.resources.contacts', heading : 'Контакты' },
+        { route : 'app.resources.contacts', heading : 'Люди' },
         { route : 'app.resources.equips', heading : 'Оборудование' }
     ];
-}]);
-app.controller('ResourcesAllCtrl', ['$scope', 'Resoursable', 'ContactEditor', 'Helpers', function($scope, Resoursable, ContactEditor, Helpers) {
-    function getResources(){
+    var self = this;
+
+    self.getResources = function () {
         Resoursable.query().then(function(resources){
-            $scope.resources = resources;
+            self.resources = resources;
         });
-    }
-    getResources();
-}]);
-app.controller('ResourcesContactsCtrl', ['$scope', 'Contact', 'ContactEditor', 'Helpers', function($scope, Contact, ContactEditor, Helpers) {
-    function getContacts(){
+    };
+    self.getContacts = function () {
         Contact.query().then(function(contacts){
-            $scope.contacts = contacts;
+            self.contacts = contacts;
         });
-    }
-    getContacts();
+    };
+    self.getEquips = function () {
+        Equip.query().then(function(equips){
+            self.equips = equips;
+        });
+    };
 
-    $scope.newOrEditContact = function (contact){
-        //Добавляет или редактирует контакт
-        //Если контакт передан как аргумент - то редактируем его
+    self.newOrEditResource = function (resource){
+        //Добавляет или редактирует ресурс
+        //Если ресурс передан как аргумент - то редактируем его
 
-        ContactEditor({}, contact).then(function(result){
+        var Editor, getFunction, array;
+        if(resource.class == 'Contact'){
+            Editor = ContactEditor;
+            getFunction = self.getContacts;
+            array = self.contacts;
+        }
+        else if(resource.class == 'Equip'){
+            Editor = EquipEditor;
+            getFunction = self.getEquips;
+            array = self.equips;
+        }
+
+        if($state.current.name == 'app.resources.all'){
+            getFunction = self.getResources;
+            array = self.resources;
+        }
+
+        Editor({}, resource).then(function(result){
             if(result.is_new){
-                getContacts();
+                getFunction();
             } else {
-                Helpers.addOrReplace($scope.contacts, result, result.id, true);
+                Helpers.addOrReplace(array, result, result.id, true);
             }
         });
     };
 }]);
+app.controller('ResourcesAllCtrl', ['$scope', function($scope) {
+    $scope.resCtrl.getResources();
+}]);
+app.controller('ResourcesContactsCtrl', ['$scope', function($scope) {
+    $scope.resCtrl.getContacts();
+}]);
 
-app.controller('ResourcesEquipsCtrl', ['$scope', 'Equip', 'EquipEditor', 'Helpers', function($scope, Equip, EquipEditor, Helpers) {
-    function getEquips(){
-        Equip.query().then(function(equips){
-            $scope.equips = equips;
-        });
-    }
-    getEquips();
-
-    $scope.newOrEditEquip = function (equip){
-        //Добавляет или редактирует контакт
-        //Если контакт передан как аргумент - то редактируем его
-
-        EquipEditor({}, equip).then(function(result){
-            if(result.is_new){
-                getEquips();
-            } else {
-                Helpers.addOrReplace($scope.equips, result, result.id, true);
-            }
-        });
-    };
+app.controller('ResourcesEquipsCtrl', ['$scope', function($scope) {
+    $scope.resCtrl.getEquips();
 }]);
 
 app.controller('ContactsFormCtrl', ['$scope', 'Contact', '$modalInstance', 'inputs', function($scope, Contact, $modalInstance, inputs) {
@@ -110,11 +116,11 @@ app.controller('ContactsFormCtrl', ['$scope', 'Contact', '$modalInstance', 'inpu
     }
 }]);
 app.controller('EquipsFormCtrl', ['$scope', 'Equip', '$modalInstance', 'inputs', function($scope, Equip, $modalInstance, inputs) {
-    $scope.eqip = {
+    $scope.equip = {
     };
 
-    if(inputs.eqip_id){
-        Equip.get(inputs.eqip_id).then(function(equip){
+    if(inputs.equip_id){
+        Equip.get(inputs.equip_id).then(function(equip){
             angular.extend($scope.equip, equip);
         })
     }

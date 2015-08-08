@@ -1,17 +1,30 @@
-<div ng-hide="resources.length">
+<div ng-hide="resCtrl.resources.length">
     <hr/>
     <h4>Здесь пока ничего нет...</h4>
 
     <p>Попробуйте создать новый ресурс</p>
 </div>
+<div class="btn-group" dropdown>
+    <button type="button" class="btn btn-default" dropdown-toggle>
+        Создать Ресурс<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li role="menuitem">
+            <a href ng-click="resCtrl.newOrEditResource({class:'Contact'})">Человек</a>
+        </li>
+        <li role="menuitem">
+            <a href ng-click="resCtrl.newOrEditResource({class:'Equip'})">Оборудование</a>
+        </li>
+    </ul>
+</div>
 
-<table class="table table-hover" ng-if="resources.length">
+<table class="table table-hover" ng-if="resCtrl.resources.length">
     <tr>
         <th>Имя</th>
         <th>Занятость</th>
     </tr>
-    <tr ng-repeat="resource in resources | orderBy:'name'" ng-class="{'warning':resource.class == 'Contact','info':resource.class == 'Equip'}">
-        <td><a href >{{resource.name}}</a></td>
+    <tr ng-repeat="resource in resCtrl.resources | orderBy:'name'" ng-class="{'warning':resource.class == 'Contact','info':resource.class == 'Equip'}">
+        <td><a href ng-click="resCtrl.newOrEditResource(resource)">{{resource.name}}</a></td>
         <td></td>
     </tr>
 </table>

@@ -19,10 +19,11 @@ angular.module('app')
 
                 else {
                     array.some(function(obj, index){
-                        if(obj.id == id){
+                        var result = obj.id == id && obj.class == object.class;
+                        if(result){
                             angular.extend(array[index], object);
                         }
-                        return obj.id == id;
+                        return result;
                     })
                 }
             },

@@ -1,20 +1,20 @@
-<div ng-hide="contacts.length">
+<div ng-hide="resCtrl.contacts.length">
     <hr/>
     <h4>Здесь пока ничего нет...</h4>
 
     <p>Попробуйте создать новый контакт</p>
 </div>
 <div class="btn-toolbar">
-    <a href ng-click="newOrEditContact()" class="btn btn-success">Добавить контакт</a>
+    <a href ng-click="resCtrl.newOrEditResource({class:'Contact'})" class="btn btn-success">Создать контакт</a>
 </div>
 
-<table class="table table-hover" ng-if="contacts.length">
+<table class="table table-hover" ng-if="resCtrl.contacts.length">
     <tr>
         <th>Имя</th>
         <th>Занятость</th>
     </tr>
-    <tr ng-repeat="contact in contacts | orderBy:'name'">
-        <td><a href >{{contact.name}}</a></td>
+    <tr ng-repeat="contact in resCtrl.contacts | orderBy:'name'">
+        <td><a href ng-click="resCtrl.newOrEditResource(contact)" >{{contact.name}}</a></td>
         <td></td>
     </tr>
 </table>

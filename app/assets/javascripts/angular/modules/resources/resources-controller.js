@@ -20,7 +20,7 @@ app.controller('ResourcesIndexCtrl', ['$scope', '$state', 'Resoursable', 'Contac
     var self = this;
 
     ProjectResource.query().then(function(resources){
-        self.list = resources;
+        $scope.list = self.list = resources;
     });
     
     self.getResources = function () {

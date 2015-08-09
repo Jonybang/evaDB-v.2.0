@@ -4,6 +4,7 @@ class UsersController < InheritsController
   end
 
   def create
+    user_params[:email].downcase!
     @user = User.new(user_params)
     if @user.save!
       @user.contact = Contact.new({name:@user.email})

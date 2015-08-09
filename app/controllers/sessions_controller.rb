@@ -4,13 +4,11 @@ class SessionsController < InheritsController
 
   def create
     user = User.authenticate(params[:email], params[:password])
-    #logger = Logger.new(STDOUT)
     if user
       session[:user_id] = user.id
       redirect_to root_url, :notice => 'Logged in!'
     else
-      #logger.debug 'User in session controller not found'
-      flash.now.alert = 'Invalid email or password'
+      flash.alert = 'Неправильный логин или пароль'
       render 'new'
     end
   end

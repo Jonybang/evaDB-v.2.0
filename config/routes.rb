@@ -3,14 +3,17 @@ Rails.application.routes.draw do
   root :to => 'application#index'
 
   get 'logout' => 'sessions#destroy', :as => 'log_out'
+  # match 'login' => 'sessions#new', :as => :log_in, :via => 'get'
+  # match 'login' => 'sessions#create', :via => 'post'
   get 'login' => 'sessions#new', :as => 'log_in'
+  post 'login' => 'sessions#create'
   get 'register' => 'users#new', :as => 'sign_up'
 
   get 'user_id' => 'application#user_id'
   get 'current_contact' => 'application#current_contact', :defaults => {format: :json}
 
   resources :users
-  resources :sessions
+  resources :sessions, :except => :new
 
   # get '/manager/' => 'manager#index'
   # get 'manager/projects'

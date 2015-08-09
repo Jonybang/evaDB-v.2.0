@@ -5,7 +5,16 @@
 -else
   h1
     | Авторизация
-  = form_tag sessions_path do
+  - if flash[:alert]
+    .alert.alert-warning.alert-dismissible.fade.in role="alert"
+      button.close.pull-right type="button" data-dismiss="alert" aria-label="Close"
+        span aria-hidden="true"
+          | ×
+      h4
+        | Ошибка авторизации
+      p
+        = flash[:alert]
+  = form_tag login_path do
     .form-group.col-md-12
       .col-md-4.col-lg-3.text-right
         = label_tag :email

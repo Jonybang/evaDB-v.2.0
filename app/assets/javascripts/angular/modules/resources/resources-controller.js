@@ -6,7 +6,10 @@
 
 var app = angular.module('app.resources');
 
-app.controller('ResourcesIndexCtrl', ['$scope', '$state', 'Resoursable', 'Contact', 'ContactEditor', 'Equip', 'EquipEditor', 'ProjectResource', 'Helpers', function($scope, $state, Resoursable, Contact, ContactEditor, Equip, EquipEditor, ProjectResource, Helpers) {
+app.controller('ResourcesIndexCtrl', ['$scope', '$state', '$animate', '$element', '$timeout', 'debounce',
+    'Resoursable', 'Contact', 'ContactEditor', 'Equip', 'EquipEditor', 'ProjectResource', 'Helpers',
+    function($scope, $state, $animate, $element, $timeout, debounce,
+             Resoursable, Contact, ContactEditor, Equip, EquipEditor, ProjectResource, Helpers) {
     $scope.tabsData = [
         { route : 'app.resources.all', heading : 'Все' },
         { route : 'app.resources.contacts', heading : 'Люди' },
@@ -19,6 +22,11 @@ app.controller('ResourcesIndexCtrl', ['$scope', '$state', 'Resoursable', 'Contac
     self.end_date = new Date();
     self.end_date.setDate(self.begin_date.getDate() + 5);
 
+    console.log(self);
+    self.resourcesChanged = function(){
+        self.toggleChanged = !self.toggleChanged;
+        console.log('changed');
+    };
     ProjectResource.query().then(function(resources){
         $scope.list = self.list = resources;
     });

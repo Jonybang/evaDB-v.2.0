@@ -20,7 +20,7 @@ app.controller('ResourcesIndexCtrl', ['$scope', '$state', '$animate', '$element'
     var self = this;
     self.begin_date = new Date('08/11/2015');
     self.end_date = new Date();
-    self.end_date.setDate(self.begin_date.getDate() + 5);
+    self.end_date.setDate(self.begin_date.getDate() + 9);
 
     self.resourcesChanged = function(){
         self.toggleChanged = !self.toggleChanged;

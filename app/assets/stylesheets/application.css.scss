@@ -107,9 +107,11 @@ a[disabled],a.disabled{
 table.resources{
   border-collapse: collapse;
   margin-bottom: 100px!important;
+  width: auto;
   td, th {
     text-align:center;
     min-width: 85px;
+    width: 85px;
   }
   tr.adder td{
     text-align: left;

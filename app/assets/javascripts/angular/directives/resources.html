@@ -31,6 +31,7 @@
                     </li>
                     <button ng-click="addResToList(res, date)"
                             ng-if="date.hover && res.hover && isEmptyDate(date, res)"
+                            ng-disabled="adderDisabled"
                             class="btn btn-default btn-xs adder" type="button">
 
                         <span aria-hidden="true" class="glyphicon glyphicon-plus"></span>
@@ -47,7 +48,7 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li role="menuitem" ng-repeat="res in resoursable" ng-if="!isResAvaible(res)">
-                            <a href ng-click="addResToList(res)">{{res.name}}</a>
+                            <a href="#" ng-click="addResToList(res)">{{res.name}}</a>
                         </li>
                     </ul>
                 </div>

@@ -109,7 +109,7 @@ table.resources{
   margin-bottom: 100px!important;
   td, th {
     text-align:center;
-    min-width: 100px;
+    min-width: 85px;
   }
   tr.adder td{
     text-align: left;
@@ -125,7 +125,6 @@ table.resources{
   tr:last-child:not(.adder) > td:first-child{
     border-width: 1px 1px 1px 0px;
   }
-
   ul[dnd-list] {
     min-height: 25px;
     min-width: 60px;

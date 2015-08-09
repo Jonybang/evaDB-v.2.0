@@ -8,4 +8,6 @@
     <a href ng-click="resCtrl.newOrEditResource({class:'Equip'})" class="btn btn-success">Создать оборудование</a>
 </div>
 
-<resources resoursable="resCtrl.equips" list="resCtrl.list" start-date="resCtrl.begin_date" end-date="resCtrl.end_date" show-all="true"></resources>
+<resources resoursable="resCtrl.equips" ng-model="resCtrl.list"
+           start-date="resCtrl.begin_date" end-date="resCtrl.end_date"
+           show-all="true" adder-disabled="true"></resources>

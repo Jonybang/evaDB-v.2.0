@@ -8,4 +8,6 @@
     <a href ng-click="resCtrl.newOrEditResource({class:'Contact'})" class="btn btn-success">Создать контакт</a>
 </div>
 
-<resources resoursable="resCtrl.contacts" list="resCtrl.list" start-date="resCtrl.begin_date" end-date="resCtrl.end_date" show-all="true"></resources>
+<resources resoursable="resCtrl.contacts" ng-model="resCtrl.list"
+           start-date="resCtrl.begin_date" end-date="resCtrl.end_date"
+           show-all="true" adder-disabled="true"></resources>

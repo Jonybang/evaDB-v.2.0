@@ -64,3 +64,11 @@ module BSON
     end
   end
 end
+
+ActiveSupport::Logger.class_eval do
+  #monkey patching here so there aren't duplicate lines in console/server
+  def self.broadcast(logger)
+    Module.new do
+    end
+  end
+end

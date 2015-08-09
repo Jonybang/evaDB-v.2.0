@@ -12,12 +12,12 @@ app.controller('ResourcesIndexCtrl', ['$scope', '$state', 'Resoursable', 'Contac
         { route : 'app.resources.contacts', heading : 'Люди' },
         { route : 'app.resources.equips', heading : 'Оборудование' }
     ];
-    this.begin_date = new Date('08/11/2015');
-    this.end_date = new Date();
-    this.end_date.setDate(this.begin_date.getDate() + 5);
-
     $scope.opened = {};
+
     var self = this;
+    self.begin_date = new Date('08/11/2015');
+    self.end_date = new Date();
+    self.end_date.setDate(self.begin_date.getDate() + 5);
 
     ProjectResource.query().then(function(resources){
         $scope.list = self.list = resources;

@@ -22,12 +22,18 @@ app.controller('ResourcesIndexCtrl', ['$scope', '$state', '$animate', '$element'
     self.end_date = new Date();
     self.end_date.setDate(self.begin_date.getDate() + 9);
 
-    self.resourcesChanged = function(){
-        self.toggleChanged = !self.toggleChanged;
-    };
     ProjectResource.query().then(function(resources){
         $scope.list = self.list = resources;
     });
+
+    self.resourcesChanged = function(){
+        self.toggleChanged = !self.toggleChanged;
+    };
+    self.saveChanges = function(){
+        self.list.forEach(function(res){
+            var resource = new ProjectResource(res).update();
+        });
+    };
 
     self.getResources = function () {
         Resoursable.query().then(function(resources){

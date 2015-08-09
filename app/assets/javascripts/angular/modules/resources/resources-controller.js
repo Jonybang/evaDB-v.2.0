@@ -22,10 +22,8 @@ app.controller('ResourcesIndexCtrl', ['$scope', '$state', '$animate', '$element'
     self.end_date = new Date();
     self.end_date.setDate(self.begin_date.getDate() + 5);
 
-    console.log(self);
     self.resourcesChanged = function(){
         self.toggleChanged = !self.toggleChanged;
-        console.log('changed');
     };
     ProjectResource.query().then(function(resources){
         $scope.list = self.list = resources;

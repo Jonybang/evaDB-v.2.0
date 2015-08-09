@@ -155,6 +155,11 @@ table.resources{
     font-weight: normal;
   }
 
+  .btn.adder{
+    left: 0;
+    position: absolute;
+  }
+
   .dropdown-menu{
     max-height: 100px;
     overflow-y: scroll;

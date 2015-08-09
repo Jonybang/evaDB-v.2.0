@@ -5,12 +5,22 @@ class UsersController < InheritsController
 
   def create
     user_params[:email].downcase!
+
+    existing_user = User.find_by_email user_params[:email]
+    if existing_user
+      flash.alert = 'Пользователь с таким email уже существует'
+      render 'new'
+      return
+    end
+
     @user = User.new(user_params)
     if @user.save!
       @user.contact = Contact.new({name:@user.email})
       @user.contact.contact_data = ContactDatum.create({email:@user.email})
-      redirect_to log_in_url, :notice => 'Signed up!'
+      session[:user_id] = @user.id
+      redirect_to root_url, :notice => 'Добро пожаловать!'
     else
+      flash.alert = 'Произошла ошибка сервера, вы не зарегистрированы :('
       render 'new'
     end
   end

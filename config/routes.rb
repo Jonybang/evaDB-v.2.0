@@ -8,11 +8,12 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new', :as => 'log_in'
   post 'login' => 'sessions#create'
   get 'register' => 'users#new', :as => 'sign_up'
+  post 'register' => 'users#create'
 
   get 'user_id' => 'application#user_id'
   get 'current_contact' => 'application#current_contact', :defaults => {format: :json}
 
-  resources :users
+  resources :users, :except => :new
   resources :sessions, :except => :new
 
   # get '/manager/' => 'manager#index'

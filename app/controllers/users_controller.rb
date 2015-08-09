@@ -13,6 +13,12 @@ class UsersController < InheritsController
       return
     end
 
+    if user_params[:password] != user_params[:password_confirmation]
+      flash.alert = 'Пароли не совпадают'
+      render 'new'
+      return
+    end
+
     @user = User.new(user_params)
     if @user.save!
       @user.contact = Contact.new({name:@user.email})
@@ -27,7 +33,7 @@ class UsersController < InheritsController
   private
 
     def user_params
-      params.require(:user).permit(:email, :password, :salt, :encrypted_password)
+      params.require(:user).permit(:email, :password, :password_confirmation, :salt, :encrypted_password)
       #params.require(:user).permit(:email, :password_hash, :password_salt)
     end
 

@@ -1,5 +1,5 @@
 h1 Зарегистрироваться
-= form_for :user, url: users_path do |f|
+= form_for :user, url: register_path do |f|
   - if @user && @user.errors.any?
     .error_messages
       h2
@@ -21,19 +21,19 @@ h1 Зарегистрироваться
     .col-md-4.col-lg-3.text-right
       = f.label :email
     .col-md-6.col-lg-7
-      = f.text_field :email, :class => 'form-control'
+      = f.email_field :email, :class => 'form-control', :required => true
 
   .form-group.col-md-12
     .col-md-4.col-lg-3.text-right
       = f.label :password
     .col-md-6.col-lg-7
-      = f.password_field :password, :class => 'form-control'
+      = f.password_field :password, :class => 'form-control', :required => true
 
   .form-group.col-md-12
     .col-md-4.col-lg-3.text-right
       = f.label :password_confirmation
     .col-md-6.col-lg-7
-      = f.password_field :password_confirmation, :class => 'form-control'
+      = f.password_field :password_confirmation, :class => 'form-control', :required => true
 
 
   .form-group.col-md-12

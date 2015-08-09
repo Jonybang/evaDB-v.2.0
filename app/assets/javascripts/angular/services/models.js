@@ -54,6 +54,7 @@ app.factory('ProjectResource', ['railsResourceFactory', 'railsSerializer', funct
         name: 'project_resource',
         serializer: railsSerializer(function () {
             this.exclude('class');
+            this.exclude('resoursable_class');
         })
     });
 }]);

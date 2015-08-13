@@ -144,15 +144,16 @@ table.resources{
   }
 
   span.label{
-    display:block;
+    display: block;
     position: absolute;
+    z-index: 20;
     height: 30px;
     font-size: 110%;
     min-width: 60px;
     margin-bottom: 5px;
   }
   span.label input {
-    width:60%;
+    width: 60%;
     color: black;
     font-weight: normal;
   }
@@ -160,6 +161,7 @@ table.resources{
   .btn.adder{
     left: 0;
     position: absolute;
+    z-index: 10;
   }
 
   .dropdown-menu{

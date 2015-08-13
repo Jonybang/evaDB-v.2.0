@@ -48,7 +48,7 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li role="menuitem" ng-repeat="res in resoursable" ng-if="!isResAvaible(res)">
-                            <a href="#" ng-click="addResToList(res)">{{res.name}}</a>
+                            <a href ng-click="addResToList(res)">{{res.name}}</a>
                         </li>
                     </ul>
                 </div>

@@ -22,10 +22,14 @@
                         ng-if="res.id == resource.resoursable.id && res.class == resource.resoursable.class"
                         dnd-draggable="resource"
                         dnd-effect-allowed="move"
-                        dnd-moved="date.resources.splice($index, 1)">
+                        dnd-moved="date.resources.splice($index, 1)"
+                        dnd-disable-if="isResDisable(resource)">
                 
-                <span ng-style="getResStyle(resource)" class="label label-primary">
-                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="removeResIfEmpty(date.resources, $index)" />
+                <span ng-style="getResStyle(resource)" ng-class="['label', {'label-primary': !isResDisable(resource)}, {'label-default': isResDisable(resource)}]"
+                      popover-html-unsafe="{{getTooltip(resource)}}"
+                      popover-trigger="mouseenter"
+                      popover-placement="top">
+                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="removeResIfEmpty(date.resources, $index)" ng-disabled="isResDisable(resource)" />
                     ч.
                 </span>
                     </li>
@@ -47,7 +51,7 @@
                         Добавить <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li role="menuitem" ng-repeat="res in resoursable" ng-if="!isResAvaible(res)">
+                        <li role="menuitem" ng-repeat="res in resoursable" ng-if="!res.resAvaible">
                             <a href ng-click="addResToList(res)">{{res.name}}</a>
                         </li>
                     </ul>

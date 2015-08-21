@@ -9,11 +9,15 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
             //require dates
             startDate: '=',
             endDate: '=',
+            //sub data
+            curTask: '=',
             //callbacks
             ngChange: '&',
+            resoursableAdded: '&',
             //flags
             showAll: '=',
-            adderDisabled: '='
+            adderDisabled: '=',
+            notCurTaskDisabled: '='
 
         },
         link: function (scope, element) {
@@ -103,16 +107,19 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
                 });
             };
 
-            //deprecated
-            scope.isResAvaible = function(res) {
-                return scope.list.some(function(obj){
-                    return obj.resoursable.id == res.id && obj.resoursable.class == res.class;
-                });
+            scope.isResDisable = function(res) {
+                var res_task_id = res.task ? res.task.id : res.project_task_id;
+                if(res_task_id)
+                    return res_task_id != scope.curTask.id && scope.notCurTaskDisabled;
             };
 
             scope.addResToList = function(res, date){
-                if(!date)
+                var addedFromDropDownList = !date;
+
+                if(addedFromDropDownList){
                     date = scope.calendar[0];
+                    $timeout(scope.resoursableAdded, 0);
+                }
 
                 var newId = 0;
                 scope.list.forEach(function(obj){
@@ -173,6 +180,12 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
             Date.prototype.addHours= function(h){
                 this.setHours(this.getHours() + parseInt(h));
                 return this;
+            }
+
+            scope.getTooltip = function(resource){
+                var task = resource.project_task_id == scope.curTask.id ? scope.curTask : resource.task;
+                if(task && task.name)
+                    return $sce.trustAsHtml('<nobr><b>' + task.project_name + '</b></nobr><br/><nobr>' + task.name + '</nobr>');
             }
         }
     };

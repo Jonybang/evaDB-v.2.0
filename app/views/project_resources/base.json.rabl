@@ -4,6 +4,17 @@ node :resoursable_class do |resource|
     resource.resoursable.class.name
 end
 
+glue :project_task do
+  attributes :id => :project_task_id
+end
+
+child :project_task => :task do
+    attributes :id, :name
+    glue :project do
+      attributes :name => :project_name
+    end
+end
+
 node :time do |resource|
     resource.time
 end

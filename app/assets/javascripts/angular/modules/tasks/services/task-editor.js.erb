@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.tasks')
-    .factory('TaskEditor', ['$modal', '$q', function($modal, $q) {
+    .factory('TaskEditor', ['$modal', '$q', 'ProjectTask', function($modal, $q, ProjectTask) {
         return function (inputs, task){
             if(task)
                 inputs.task_id = task.id;
@@ -21,7 +21,12 @@ angular.module('app.tasks')
 
             modalInstance.result.then(function (result) {
                 result.is_new = inputs.task_id ? false : true;
-                resolve(result);
+                if(result.is_new)
+                    resolve(result);
+                else
+                    ProjectTask.find(result.id).then(function(task){
+                       resolve(task);
+                    });
             }, function () {
                 reject('Cancel');
             });

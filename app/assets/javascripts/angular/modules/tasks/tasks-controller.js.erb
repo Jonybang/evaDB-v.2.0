@@ -59,18 +59,19 @@ app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'User', 'Helpers', '$state
     }
 }]);
 
-app.controller('TasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskStatus', 'ProjectResource', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectTaskStatus, ProjectResource, Contact, $modalInstance, inputs, Helpers) {
+app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTaskStatus', 'ProjectResource', 'Contact', 'Resoursable', '$modalInstance', 'inputs', 'Helpers', function($scope, $timeout, ProjectTask, ProjectTaskStatus, ProjectResource, Contact, Resoursable, $modalInstance, inputs, Helpers) {
     $scope.task = {
         project_id: inputs.project_id,
         parent_task_id: inputs.parent_task_id,
         resources: []
     };
     $scope.opened = {};
-    $scope.responsible = $scope.contacts = [];
+    $scope.responsible = $scope.contacts = $scope.resoursable = [];
 
     if(inputs.task_id){
         ProjectTask.get(inputs.task_id).then(function(task){
             angular.extend($scope.task, task);
+            $timeout($scope.getResourcesFromResoursables, 500);
         })
     }
 
@@ -80,6 +81,10 @@ app.controller('TasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskStatus', '
 
     Contact.query({limit:50}).then(function(contacts){
         $scope.responsible = $scope.contacts = contacts;
+    });
+    Resoursable.query({limit:50}).then(function(resoursable){
+        $scope.resoursable = resoursable;
+        $timeout($scope.getResourcesFromResoursables, 500);
     });
 
     $scope.refreshResponsible = function(q, selected) {
@@ -92,6 +97,30 @@ app.controller('TasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskStatus', '
                 });
         });
     };
+    $scope.getResourcesFromResoursables = function(){
+        var inWork = [];
+
+        function existInWork(res){
+            return inWork.some(function(obj){
+                return obj == res;
+            });
+        }
+
+        $scope.resoursable.forEach(function(resoursable){
+            if(resoursable.resAvaible){
+                if(!resoursable.resources_length && !existInWork(resoursable)){
+                    inWork.push(resoursable);
+                    ProjectResource.query({resoursable_type: resoursable.class, resoursable_id: resoursable.id}).then(function(resources){
+                        if(resources && resources.length){
+                            resoursable.resources_length = resources.length;
+                            $scope.task.resources = $scope.task.resources.concat(resources).uniqueObj();
+                        }
+                    });
+                }
+            }
+        });
+    };
+
     $scope.$watch('task.status_id', function(new_id){
         if(!$scope.statuses || !$scope.statuses.length)
             return;
@@ -134,22 +163,24 @@ app.controller('TasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskStatus', '
         else
             obj = new ProjectTask($scope.task).update();
 
-        obj.then(function success (result){
-                    var task = result.resource ? result.resource : result;
-                    $scope.task.resources.forEach(function(res){
+        obj.then(function success (result, result2, result3){
+                var task = result.resource ? result.resource : result;
+                $scope.task.resources.forEach(function(res){
+                    if(!res.project_task_id){
                         res.project_task_id = task.id;
                         res.project_id = task.project_id;
                         res.resoursable_type = res.resoursable.class;
+                    }
 
-                        if(!res.id)
-                            obj = new ProjectResource(res).create();
-                        else
-                            obj = new ProjectResource(res).update();
-                    });
-                    $modalInstance.close(task);
-                },
-                function error (info){
-                    $scope.errors = info.data.errors;
+                    if(!res.id)
+                        obj = new ProjectResource(res).create();
+                    else
+                        obj = new ProjectResource(res).update();
                 });
+                $modalInstance.close(task);
+            },
+            function error (info){
+                $scope.errors = info.data.errors;
+            });
     }
 }]);

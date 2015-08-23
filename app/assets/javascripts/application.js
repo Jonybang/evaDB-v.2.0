@@ -104,3 +104,15 @@ var d3RU = {
     "months": ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
     "shortMonths": ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
 };
+
+Array.prototype.uniqueObj = function() {
+    var a = this.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i].id === a[j].id)
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
+};

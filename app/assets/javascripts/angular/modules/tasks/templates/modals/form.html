@@ -82,7 +82,15 @@
                         <label>Ресурсы</label>
                     </div>
                     <div class="col-md-12">
-                        <resources resoursable="contacts" ng-model="task.resources" start-date="task.begin_date" end-date="task.end_date"></resources>
+                        <resources resoursable="resoursable"
+                                   ng-model="task.resources"
+                                   start-date="task.begin_date"
+                                   end-date="task.end_date"
+
+                                   resoursable-added="getResourcesFromResoursables()"
+
+                                   cur-task="task"
+                                   not-cur-task-disabled="true"></resources>
                     </div>
                 </div>
             </tab>

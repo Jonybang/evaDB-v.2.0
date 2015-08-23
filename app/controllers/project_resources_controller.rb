@@ -6,4 +6,11 @@ class ProjectResourcesController < InheritsController
       #params.require(:project_resource).permit(:name, :default_value)
     end
 
+    def get_collection
+      if params[:resoursable_id] && params[:resoursable_type]
+        @collection = ProjectResource.where(resoursable_id: params[:resoursable_id], resoursable_type: params[:resoursable_type])
+      else
+        @collection = ProjectResource.all
+      end
+    end
 end

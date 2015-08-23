@@ -47,7 +47,7 @@ first_project = Project.create(name:'Первый проект', description: '�
 
 project_tasks_list = [
     [ 'Первая задача', '2015-08-11', '2015-08-20' ],
-    [ 'Вторая задача', '2015-08-21', '2015-08-25' ],
+    [ 'Вторая задача', '2015-08-16', '2015-08-25' ],
     [ 'Третья задача', '2015-08-26', '2015-08-30' ]
 ]
 
@@ -64,9 +64,19 @@ project_resources_list = [
     [ '2015-08-11 [08:00:00]', '2015-08-11 [12:00:00]' ],
     [ '2015-08-13 [12:00:00]', '2015-08-13 [18:00:00]' ],
     [ '2015-08-14 [10:00:00]', '2015-08-14 [16:00:00]' ],
-    [ '2015-08-16 [10:00:00]', '2015-08-16 [16:00:00]' ]
+    [ '2015-08-15 [10:00:00]', '2015-08-15 [16:00:00]' ]
 ]
 project_resources_list.each do |begin_date, end_date|
   offset = rand(Contact.count)
   ProjectTask.first.resources << ProjectResource.create(begin_date: begin_date, end_date: end_date, resoursable: Contact.offset(offset).first)
+end
+
+project_resources_list = [
+    [ '2015-08-16 [08:00:00]', '2015-08-16 [11:00:00]' ],
+    [ '2015-08-17 [10:00:00]', '2015-08-17 [18:00:00]' ],
+    [ '2015-08-19 [12:00:00]', '2015-08-19 [16:00:00]' ]
+]
+project_resources_list.each do |begin_date, end_date|
+  offset = rand(Contact.count)
+  ProjectTask.find(2).resources << ProjectResource.create(begin_date: begin_date, end_date: end_date, resoursable: Contact.offset(offset).first)
 end

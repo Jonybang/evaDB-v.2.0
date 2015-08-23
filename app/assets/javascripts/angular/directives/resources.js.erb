@@ -1,4 +1,4 @@
-angular.module('app').directive('resources', ['$timeout', function($timeout) {
+angular.module('app').directive('resources', ['$timeout', '$sce', function($timeout, $sce) {
     return {
         restrict: 'E',
         templateUrl: "<%= asset_path('angular/directives/resources.html') %>",
@@ -74,6 +74,7 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
             }
             scope.$watchCollection('list', initResources);
             scope.$watchCollection('resoursable', initResources);
+            scope.$watchCollection('ngModel', initResources);
 
             scope.$watch('startDate', initCalendar);
             scope.$watch('endDate', initCalendar);
@@ -108,6 +109,9 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
             };
 
             scope.isResDisable = function(res) {
+                if(!scope.curTask)
+                    return;
+
                 var res_task_id = res.task ? res.task.id : res.project_task_id;
                 if(res_task_id)
                     return res_task_id != scope.curTask.id && scope.notCurTaskDisabled;
@@ -180,13 +184,13 @@ angular.module('app').directive('resources', ['$timeout', function($timeout) {
             Date.prototype.addHours= function(h){
                 this.setHours(this.getHours() + parseInt(h));
                 return this;
-            }
+            };
 
             scope.getTooltip = function(resource){
-                var task = resource.project_task_id == scope.curTask.id ? scope.curTask : resource.task;
+                var task = (scope.curTask && resource.project_task_id == scope.curTask.id) ? scope.curTask : resource.task;
                 if(task && task.name)
-                    return $sce.trustAsHtml('<nobr><b>' + task.project_name + '</b></nobr><br/><nobr>' + task.name + '</nobr>');
-            }
+                    return $sce.trustAsHtml('<nobr><b>' + (task.project ? task.project.name : task.project_name) + '</b></nobr><br/><nobr>' + task.name + '</nobr>');
+            };
         }
     };
 }]);

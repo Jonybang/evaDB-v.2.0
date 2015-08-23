@@ -24,7 +24,7 @@ angular.module('app.tasks')
                 if(result.is_new)
                     resolve(result);
                 else
-                    ProjectTask.find(result.id).then(function(task){
+                    ProjectTask.get(result.id).then(function(task){
                        resolve(task);
                     });
             }, function () {

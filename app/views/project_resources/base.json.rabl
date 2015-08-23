@@ -15,6 +15,10 @@ child :project_task => :task do
     end
 end
 
+child :resoursable => :resoursable do
+    attributes :id, :name
+end
+
 node :time do |resource|
     resource.time
 end

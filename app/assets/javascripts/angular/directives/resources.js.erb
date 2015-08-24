@@ -1,4 +1,4 @@
-angular.module('app').directive('resources', ['$timeout', '$sce', function($timeout, $sce) {
+angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', function($timeout, $sce, debounce) {
     return {
         restrict: 'E',
         templateUrl: "<%= asset_path('angular/directives/resources.html') %>",
@@ -21,7 +21,7 @@ angular.module('app').directive('resources', ['$timeout', '$sce', function($time
 
         },
         link: function (scope, element) {
-            function initResources (){
+            var initResources = debounce(600, function (){
                 if(!scope.resoursable || !scope.resoursable.length)
                     return;
                 if(!scope.ngModel && !scope.ngModel.length)
@@ -54,7 +54,8 @@ angular.module('app').directive('resources', ['$timeout', '$sce', function($time
                     })
                 });
                 initCalendar();
-            }
+            });
+
             function initCalendar(val){
                 if(!scope.startDate || !(scope.startDate instanceof Date) ||
                         !scope.endDate || !(scope.endDate instanceof Date) ||
@@ -122,7 +123,6 @@ angular.module('app').directive('resources', ['$timeout', '$sce', function($time
 
                 if(addedFromDropDownList){
                     date = scope.calendar[0];
-                    $timeout(scope.resoursableAdded, 0);
                 }
 
                 var newId = 0;
@@ -144,6 +144,10 @@ angular.module('app').directive('resources', ['$timeout', '$sce', function($time
                 date.resources.push(scope.list[scope.list.length - 1]);
 
                 $timeout(scope.ngChange, 0);
+
+                if(addedFromDropDownList){
+                    $timeout(scope.resoursableAdded, 0);
+                }
             };
 
             scope.resTimeChanged = function(resource, date){

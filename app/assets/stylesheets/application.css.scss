@@ -106,25 +106,22 @@ a[disabled],a.disabled{
 
 table.resources{
   border-collapse: collapse;
-  margin-bottom: 100px!important;
   width: auto;
+
   td, th {
     text-align:center;
     min-width: 85px;
     width: 85px;
   }
-  tr.adder td{
-    text-align: left;
-  }
-  tr:not(.adder) > td:first-child, tr:not(.adder) > th:first-child {
+  tr > td:first-child, tr > th:first-child {
     border: 1px solid #ccc;
     border-width: 1px 1px 0 0;
   }
-  tr:last-child:not(.adder) > td{
+  tr:last-child > td{
     border: 1px solid #ccc;
     border-width: 1px 0px 1px 0px;
   }
-  tr:last-child:not(.adder) > td:first-child{
+  tr:last-child > td:first-child{
     border-width: 1px 1px 1px 0px;
   }
   ul[dnd-list] {
@@ -162,11 +159,6 @@ table.resources{
     left: 0;
     position: absolute;
     z-index: 10;
-  }
-
-  .dropdown-menu{
-    max-height: 100px;
-    overflow-y: scroll;
   }
 }
 .statuses span:not(:last-child){

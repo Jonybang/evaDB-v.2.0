@@ -1,7 +1,7 @@
-angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', function($timeout, $sce, debounce) {
+angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', function($timeout, $sce, $debounce) {
     return {
         restrict: 'E',
-        templateUrl: "<%= asset_path('angular/directives/resources.html') %>",
+        templateUrl: resourcesHtml,
         scope: {
             //require lists
             resoursable: '=',
@@ -20,20 +20,34 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
             notCurTaskDisabled: '='
 
         },
-        link: function (scope, element) {
-            var initResources = debounce(600, function (){
+        link: function (scope, element){
+            var workHours = 8;
+            var beginHour = 8;
+
+
+            scope.select = {};
+
+            var lastTimeStamp = Date.now();
+            function getDiffLastTS () {
+                var diff = Date.now() - lastTimeStamp;
+                lastTimeStamp = Date.now();
+                return diff;
+            }
+
+            var initResources = $debounce(500, function (){
                 if(!scope.resoursable || !scope.resoursable.length)
                     return;
-                if(!scope.ngModel && !scope.ngModel.length)
+                if(!scope.ngModel || !scope.ngModel.length)
                     return;
 
-                scope.list = scope.ngModel;
+                console.log('initResources [start], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
 
                 scope.resoursable.forEach(function(obj){
                     obj.resAvaible = false;
                 });
 
-                scope.list.forEach(function(resource){
+                var splited = false;
+                scope.ngModel.forEach(function(resource){
                     if(!resource.$id)
                         resource.$id = resource.id;
 
@@ -44,47 +58,96 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                     if(!resource.time)
                         resource.time = "";
 
-                    scope.resoursable.some(function(obj){
-                        var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_class;
-                        if(result){
-                            resource.resoursable = obj;
-                            obj.resAvaible = true;
-                        }
-                        return result;
-                    })
+                    if(!resource.$resoursable){
+                        scope.resoursable.some(function(obj){
+                            var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_class;
+                            if(result){
+                                resource.$resoursable = obj;
+                                obj.resAvaible = true;
+                            }
+                            return result;
+                        })
+                    } else {
+                        resource.$resoursable.resAvaible = true;
+                    }
+                    splited = splitResource(resource) || splited;
                 });
+                console.log('initResources [end], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
+                if(splited){
+                    initResources();
+                    return;
+                }
                 initCalendar();
+                initCalendar.flush();
             });
 
-            function initCalendar(val){
+            var initCalendar = $debounce(500, function (){
                 if(!scope.startDate || !(scope.startDate instanceof Date) ||
                         !scope.endDate || !(scope.endDate instanceof Date) ||
-                        !scope.list || !Array.isArray(scope.list))
-                    return val;
+                        !scope.ngModel || !Array.isArray(scope.ngModel))
+                    return;
 
                 scope.calendar = [];
 
+                console.log('initCalendar [start], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
                 var interimDate = angular.copy(scope.startDate);
                 while(interimDate <= scope.endDate){
-                    var resources = scope.list.filter(function(obj){
+                    var resources = scope.ngModel.filter(function(obj){
                         return obj.begin_date.getDate() == interimDate.getDate();
                     });
                     scope.calendar.push({'date': angular.copy(interimDate), resources: resources});
                     interimDate.setDate(interimDate.getDate() + 1);
                 }
-            }
-            scope.$watchCollection('list', initResources);
-            scope.$watchCollection('resoursable', initResources);
+                console.log('initCalendar [end], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
+            });
+
             scope.$watchCollection('ngModel', initResources);
+            scope.$watchCollection('resoursable', initResources);
 
             scope.$watch('startDate', initCalendar);
             scope.$watch('endDate', initCalendar);
             initResources();
 
+            function splitResource(res){
+                var splited = false;
+                while(res.time > workHours){
+                    splited = true;
+
+                    var newRes = angular.copy(res);
+
+                    newRes.id = null;
+                    newRes.$id = getResTempId();
+
+                    res.time = workHours;
+                    scope.resTimeChanged(res, {date: res.begin_date});
+
+                    newRes.time = parseInt(newRes.time) - workHours;
+                    newRes.begin_date.setDate(newRes.begin_date.getDate() + 1);
+                    newRes.begin_date.setHours(beginHour);
+                    scope.resTimeChanged(newRes, {date: newRes.begin_date});
+
+                    scope.ngModel.push(newRes);
+                    res = newRes;
+                }
+                return splited;
+            }
+
+            scope.isEmptyDate = function(date, res){
+                return !date.resources.some(function(obj){
+                    return obj.$resoursable.id == res.id && obj.$resoursable.class == res.class;
+                });
+            };
+
+            //Width resource from hours
             scope.getResStyle = function(resource){
                 var width = resource.time*10;
                 resource.style = {'width': (width ? width : 0) +'px'};
                 return resource.style;
+            };
+            scope.getTooltip = function(resource){
+                var task = (scope.curTask && resource.project_task_id == scope.curTask.id) ? scope.curTask : resource.task;
+                if(task && task.name)
+                    return $sce.trustAsHtml('<nobr><b>' + (task.project ? task.project.name : task.project_name) + '</b></nobr><br/><nobr>' + task.name + '</nobr>');
             };
 
             scope.removeResIfEmpty = function(resources, index){
@@ -94,62 +157,14 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
 
                 resources.splice(index, 1);
 
-                scope.list.some(function(obj, index){
+                scope.ngModel.some(function(obj, index){
                     var result = obj == res;
                     if(result)
-                        scope.list.splice(index, 1);
+                        scope.ngModel.splice(index, 1);
 
                     return result;
                 });
             };
-
-            scope.isEmptyDate = function(date, res) {
-                return !date.resources.some(function(obj){
-                    return obj.resoursable.id == res.id && obj.resoursable.class == res.class;
-                });
-            };
-
-            scope.isResDisable = function(res) {
-                if(!scope.curTask)
-                    return;
-
-                var res_task_id = res.task ? res.task.id : res.project_task_id;
-                if(res_task_id)
-                    return res_task_id != scope.curTask.id && scope.notCurTaskDisabled;
-            };
-
-            scope.addResToList = function(res, date){
-                var addedFromDropDownList = !date;
-
-                if(addedFromDropDownList){
-                    date = scope.calendar[0];
-                }
-
-                var newId = 0;
-                scope.list.forEach(function(obj){
-                    if(obj.id > newId || obj.$id > newId)
-                        newId = obj.id || obj.$id;
-                });
-
-                var newRes = {
-                    $id: newId + 1,
-                    resoursable: res,
-                    resoursable_id: res.id,
-                    resoursable_class: res.class,
-                    begin_date: date.date,
-                    end_date: date.date,
-                    focus: true
-                };
-                scope.list.push(newRes);
-                date.resources.push(scope.list[scope.list.length - 1]);
-
-                $timeout(scope.ngChange, 0);
-
-                if(addedFromDropDownList){
-                    $timeout(scope.resoursableAdded, 0);
-                }
-            };
-
             scope.resTimeChanged = function(resource, date){
                 resource.begin_date = date.date;
                 resource.end_date = angular.copy(date.date).addHours(resource.time);
@@ -162,16 +177,67 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                 item.end_date = angular.copy(date.date).addHours(item.time);
 
                 //востановить связь
-                scope.list.some(function(obj, index){
+                scope.ngModel.some(function(obj, index){
                     var result = obj.$id == item.$id && obj.class == item.class;
                     if(result)
-                        scope.list[index] = item;
+                        scope.ngModel[index] = item;
                     return result;
                 });
 
                 $timeout(scope.ngChange, 0);
                 return item;
             };
+            scope.isResDisable = function(res) {
+                if(!scope.curTask)
+                    return;
+
+                var res_task_id = res.task ? res.task.id : res.project_task_id;
+                if(res_task_id)
+                    return res_task_id != scope.curTask.id && scope.notCurTaskDisabled;
+            };
+
+            function getResTempId(){
+                var newId = 0;
+                scope.ngModel.forEach(function(obj){
+                    if(obj.id > newId || obj.$id > newId)
+                        newId = obj.id || obj.$id;
+                });
+                return newId + 1;
+            }
+
+            scope.addResToList = function(resoursable, date){
+                console.log('addResToList [start] | ' + getDiffLastTS());
+                var addedFromDropDownList = !date;
+
+                if(addedFromDropDownList){
+                    date = scope.calendar[0];
+                }
+
+                var newRes = {
+                    $id: getResTempId(),
+                    resoursable: resoursable,
+                    resoursable_id: resoursable.id,
+                    resoursable_class: resoursable.class,
+                    begin_date: date.date,
+                    end_date: date.date,
+                    focus: true
+                };
+                scope.ngModel.push(newRes);
+                date.resources.push(scope.ngModel[scope.ngModel.length - 1]);
+
+                scope.select = {};
+
+                $timeout(scope.ngChange, 0);
+
+                if(addedFromDropDownList){
+                    $timeout(scope.resoursableAdded, 0);
+                }
+                console.log('addResToList [end] | ' + getDiffLastTS());
+                initResources();
+                initResources.flush();
+            };
+
+
             var timer;
             scope.enterAddButton = function(date, res) {
                 scope.calendar.forEach(function(_date){
@@ -185,15 +251,11 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                 $timeout.cancel(date.timer);
                 date.hover = res.hover = false;
             };
+
+
             Date.prototype.addHours= function(h){
                 this.setHours(this.getHours() + parseInt(h));
                 return this;
-            };
-
-            scope.getTooltip = function(resource){
-                var task = (scope.curTask && resource.project_task_id == scope.curTask.id) ? scope.curTask : resource.task;
-                if(task && task.name)
-                    return $sce.trustAsHtml('<nobr><b>' + (task.project ? task.project.name : task.project_name) + '</b></nobr><br/><nobr>' + task.name + '</nobr>');
             };
         }
     };

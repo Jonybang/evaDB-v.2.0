@@ -16,14 +16,14 @@ angular.module('app', [
     'ngResource',
     'ui.bootstrap',
     'ui.bootstrap.showErrors',
+    'ui.router',
+    'ui.router.tabs',
+    'ui.select',
     //'angular-date-picker-polyfill',
     'ng-rails-csrf',
     'angularMoment',
     'rt.debounce',
     'noty',
-    'ui.router',
-    'ui.router.tabs',
-    'ui.select',
     'ngSanitize'
         ])
         .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider',
@@ -85,3 +85,5 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'datepickerPopupConfi
         closeText:'Закрыть'
     });
 }]);
+
+var resourcesHtml = "<%= asset_path('angular/directives/resources.html') %>";

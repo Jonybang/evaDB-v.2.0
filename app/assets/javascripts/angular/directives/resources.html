@@ -19,7 +19,7 @@
                     dnd-list="date.resources"
                     dnd-drop="resDropped(date,res,item)">
                     <li ng-repeat="resource in date.resources"
-                        ng-if="res.id == resource.resoursable.id && res.class == resource.resoursable.class"
+                        ng-if="res.id == resource.$resoursable.id && res.class == resource.$resoursable.class"
                         dnd-draggable="resource"
                         dnd-effect-allowed="move"
                         dnd-moved="date.resources.splice($index, 1)"
@@ -44,20 +44,19 @@
                 </ul>
             </td>
         </tr>
-        <tr ng-if="!showAll" class="adder">
-            <td colspan="{{calendar.length+1}}">
-                <div class="btn-group" dropdown>
-                    <button type="button" class="btn btn-default" dropdown-toggle>
-                        Добавить <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li role="menuitem" ng-repeat="res in resoursable" ng-if="!res.resAvaible">
-                            <a href ng-click="addResToList(res)">{{res.name}}</a>
-                        </li>
-                    </ul>
+        <tr ng-if="!ngModel.length">
+            <td colspan="{{calendar.length + 1}}">
+                <div class="alert alert-warning" role="alert">
+                    Пока что не добавлено ни одного ресурса
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+<ui-select ng-model="select.res" style="width:200px" on-select="addResToList($item)">
+    <ui-select-match placeholder="Добавить" allow-clear="true">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="res in resoursable | filter: $select.search | filter: {resAvaible: false || undefined} track by res.name">
+        <div ng-bind-html="res.name | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

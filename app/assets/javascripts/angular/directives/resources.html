@@ -30,7 +30,7 @@
                       popover-html-unsafe="{{getTooltip(resource)}}"
                       popover-trigger="mouseenter"
                       popover-placement="top">
-                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="removeResIfEmpty(date.resources, $index)" ng-disabled="isResDisable(resource)" />
+                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="resBlur(date.resources, $index)" ng-disabled="isResDisable(resource)" />
                     ч.
                 </span>
                     </li>

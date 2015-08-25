@@ -1,4 +1,4 @@
-angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', function($timeout, $sce, $debounce) {
+angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounce', function($timeout, $sce, $q, $debounce) {
     return {
         restrict: 'E',
         templateUrl: resourcesHtml,
@@ -60,10 +60,10 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
 
                     if(!resource.$resoursable){
                         scope.resoursable.some(function(obj){
-                            var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_class;
+                            var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_type;
                             if(result){
-                                resource.$resoursable = obj;
                                 obj.resAvaible = true;
+                                resource.$resoursable = obj;
                             }
                             return result;
                         })
@@ -73,12 +73,19 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                     splited = splitResource(resource) || splited;
                 });
                 console.log('initResources [end], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
+                console.log(scope.ngModel);
                 if(splited){
+                    console.log('splited');
                     initResources();
                     return;
                 }
                 initCalendar();
                 initCalendar.flush();
+
+                $q(function(resolve, reject) {
+                    //clearResources();
+                    resetIds();
+                });
             });
 
             var initCalendar = $debounce(500, function (){
@@ -119,12 +126,12 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                     newRes.$id = getResTempId();
 
                     res.time = workHours;
-                    scope.resTimeChanged(res, {date: res.begin_date});
+                    scope.resTimeChanged(res, {date: res.begin_date}, true);
 
                     newRes.time = parseInt(newRes.time) - workHours;
                     newRes.begin_date.setDate(newRes.begin_date.getDate() + 1);
                     newRes.begin_date.setHours(beginHour);
-                    scope.resTimeChanged(newRes, {date: newRes.begin_date});
+                    scope.resTimeChanged(newRes, {date: newRes.begin_date}, true);
 
                     scope.ngModel.push(newRes);
                     res = newRes;
@@ -132,9 +139,43 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                 return splited;
             }
 
+            function clearResources(){
+                var emptyResources = scope.ngModel.map(function(obj){
+                    if(!obj.time)
+                        return obj;
+                });
+
+                if(!emptyResources.length)
+                    return;
+
+                scope.ngModel.forEach(function(obj){
+                    if(obj.time){
+                        emptyResources.forEach(function(emptyResource, index){
+                            if(emptyResource.begin_date.getDate() == obj.begin_date.getDate()){
+                                emptyResources.splice(index, 1);
+                                emptyResource._destroy = 1;
+                            }
+                        });
+                    }
+                });
+            }
+            function resetIds (){
+                console.log('list before resetIds');
+                console.log(scope.ngModel.map(function(obj){
+                    return angular.copy(obj);
+                }));
+                scope.ngModel.forEach(function(resource, res_index){
+                    scope.ngModel.forEach(function(obj, obj_index){
+                        if(resource.id && resource.id == obj.$id && resource.id != obj.id)
+                            obj.$id = getResTempId();
+                    });
+                });
+                console.log('list after resetIds');
+                console.log(scope.ngModel);
+            }
             scope.isEmptyDate = function(date, res){
                 return !date.resources.some(function(obj){
-                    return obj.$resoursable.id == res.id && obj.$resoursable.class == res.class;
+                    return obj.$resoursable.id == res.id && obj.$resoursable.class == res.class && !obj._destroy;
                 });
             };
 
@@ -150,6 +191,11 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                     return $sce.trustAsHtml('<nobr><b>' + (task.project ? task.project.name : task.project_name) + '</b></nobr><br/><nobr>' + task.name + '</nobr>');
             };
 
+            scope.resBlur = function(resources, index){
+                scope.removeResIfEmpty(resources, index);
+                splitResource(resources[index]);
+            }
+
             scope.removeResIfEmpty = function(resources, index){
                 var res = resources[index];
                 if(res.time)
@@ -160,16 +206,17 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                 scope.ngModel.some(function(obj, index){
                     var result = obj == res;
                     if(result)
-                        scope.ngModel.splice(index, 1);
+                        obj._destroy = 1;
 
                     return result;
                 });
             };
-            scope.resTimeChanged = function(resource, date){
+            scope.resTimeChanged = function(resource, date, notCallBack){
                 resource.begin_date = date.date;
                 resource.end_date = angular.copy(date.date).addHours(resource.time);
 
-                $timeout(scope.ngChange, 0);
+                if(!notCallBack)
+                    $timeout(scope.ngChange, 0);
             };
             scope.resDropped = function(date, res, item){
                 scope.leaveAddButton(date, res);
@@ -179,8 +226,11 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                 //востановить связь
                 scope.ngModel.some(function(obj, index){
                     var result = obj.$id == item.$id && obj.class == item.class;
-                    if(result)
+                    if(result){
+                        item.$resoursable = obj.$resoursable;
                         scope.ngModel[index] = item;
+                    }
+
                     return result;
                 });
 
@@ -206,7 +256,7 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
             }
 
             scope.addResToList = function(resoursable, date){
-                console.log('addResToList [start] | ' + getDiffLastTS());
+                console.log('addResToList [start], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
                 var addedFromDropDownList = !date;
 
                 if(addedFromDropDownList){
@@ -215,9 +265,9 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
 
                 var newRes = {
                     $id: getResTempId(),
-                    resoursable: resoursable,
+                    //$resoursable: resoursable,
                     resoursable_id: resoursable.id,
-                    resoursable_class: resoursable.class,
+                    resoursable_type: resoursable.class,
                     begin_date: date.date,
                     end_date: date.date,
                     focus: true
@@ -232,9 +282,9 @@ angular.module('app').directive('resources', ['$timeout', '$sce', 'debounce', fu
                 if(addedFromDropDownList){
                     $timeout(scope.resoursableAdded, 0);
                 }
-                console.log('addResToList [end] | ' + getDiffLastTS());
-                initResources();
-                initResources.flush();
+                console.log('addResToList [end], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
+                //initResources();
+                //initResources.flush();
             };
 
 

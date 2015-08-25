@@ -1,4 +1,4 @@
-class ProjectResource < ActiveRecord::Base
+class ProjectResource < Base
   def name
     self.value
   end
@@ -13,7 +13,9 @@ class ProjectResource < ActiveRecord::Base
     end
   end
   belongs_to :resource_type
-  belongs_to :project
   belongs_to :project_task
+  def project
+    self.project_task.project
+  end
   belongs_to :resoursable, polymorphic: true, :dependent => :destroy
 end

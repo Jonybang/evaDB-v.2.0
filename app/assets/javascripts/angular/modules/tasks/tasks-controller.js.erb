@@ -113,7 +113,16 @@ app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTa
                     ProjectResource.query({resoursable_type: resoursable.class, resoursable_id: resoursable.id}).then(function(resources){
                         if(resources && resources.length){
                             resoursable.resources_length = resources.length;
+                            console.log('resources before added by resoursable:');
+                            console.log($scope.task.resources);
+
+                            console.log('resources by resoursable:');
+                            console.log(resources);
+
                             $scope.task.resources = $scope.task.resources.concat(resources).uniqueObj();
+
+                            console.log('resources after added by resoursable:');
+                            console.log($scope.task.resources);
                         }
                     });
                 }
@@ -156,6 +165,11 @@ app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTa
             return;
         }
 
+        $scope.task.resources = $scope.task.resources.map(function(obj){
+            if(!obj.project_task_id || obj.project_task_id == $scope.task.id)
+                return obj;
+        });
+
         var obj;
         //если id нет - значит это новая задача
         if(!$scope.task.id)
@@ -163,24 +177,11 @@ app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTa
         else
             obj = new ProjectTask($scope.task).update();
 
-        obj.then(function success (result, result2, result3){
-                var task = result.resource ? result.resource : result;
-                $scope.task.resources.forEach(function(res){
-                    if(!res.project_task_id){
-                        res.project_task_id = task.id;
-                        res.project_id = task.project_id;
-                        res.resoursable_type = res.resoursable.class;
-                    }
-
-                    if(!res.id)
-                        obj = new ProjectResource(res).create();
-                    else
-                        obj = new ProjectResource(res).update();
-                });
-                $modalInstance.close(task);
-            },
-            function error (info){
-                $scope.errors = info.data.errors;
-            });
+        obj.then(function success (result){
+                $modalInstance.close(result);
+        },
+        function error (info){
+            $scope.errors = info.data.errors;
+        });
     }
 }]);

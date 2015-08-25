@@ -38,7 +38,8 @@ app.factory('ProjectTask', ['railsResourceFactory', 'railsSerializer', function 
         url: '/api/project_tasks',
         name: 'project_task',
         serializer: railsSerializer(function () {
-            this.exclude('class', 'performers', 'project_status', 'resources', 'responsible', 'project', 'contact', 'status');
+            this.exclude('class', 'performers', 'project_status', 'responsible', 'project', 'contact', 'status');
+            this.nestedAttribute('resources');
         })
     });
 }]);

@@ -6,4 +6,8 @@ class Base < ActiveRecord::Base
   def to_s
     name
   end
+
+  def _destroy=(val)
+    self.destroy
+  end
 end

@@ -107,25 +107,23 @@ app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTa
         }
 
         $scope.resoursable.forEach(function(resoursable){
-            if(resoursable.resAvaible){
-                if(!resoursable.resources_length && !existInWork(resoursable)){
-                    inWork.push(resoursable);
-                    ProjectResource.query({resoursable_type: resoursable.class, resoursable_id: resoursable.id}).then(function(resources){
-                        if(resources && resources.length){
-                            resoursable.resources_length = resources.length;
-                            console.log('resources before added by resoursable:');
-                            console.log($scope.task.resources);
+            if(resoursable.resAvaible && !resoursable.resources_length && !existInWork(resoursable)){
+                inWork.push(resoursable);
+                ProjectResource.query({resoursable_type: resoursable.class, resoursable_id: resoursable.id}).then(function(resources){
+                    if(resources && resources.length){
+                        resoursable.resources_length = resources.length;
+                        console.log('resources before added by resoursable:');
+                        console.log($scope.task.resources);
 
-                            console.log('resources by resoursable:');
-                            console.log(resources);
+                        console.log('resources by resoursable:');
+                        console.log(resources);
 
-                            $scope.task.resources = $scope.task.resources.concat(resources).uniqueObj();
+                        $scope.task.resources = $scope.task.resources.concat(resources).uniqueObj();
 
-                            console.log('resources after added by resoursable:');
-                            console.log($scope.task.resources);
-                        }
-                    });
-                }
+                        console.log('resources after added by resoursable:');
+                        console.log($scope.task.resources);
+                    }
+                });
             }
         });
     };

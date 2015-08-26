@@ -194,7 +194,7 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
             scope.resBlur = function(resources, index){
                 scope.removeResIfEmpty(resources, index);
                 splitResource(resources[index]);
-            }
+            };
 
             scope.removeResIfEmpty = function(resources, index){
                 var res = resources[index];
@@ -262,6 +262,8 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
                 if(addedFromDropDownList){
                     date = scope.calendar[0];
                 }
+
+                resoursable.resAvaible = true;
 
                 var newRes = {
                     $id: getResTempId(),

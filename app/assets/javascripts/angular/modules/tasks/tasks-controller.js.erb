@@ -59,7 +59,7 @@ app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'User', 'Helpers', '$state
     }
 }]);
 
-app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTaskStatus', 'ProjectResource', 'Contact', 'Resoursable', '$modalInstance', 'inputs', 'Helpers', function($scope, $timeout, ProjectTask, ProjectTaskStatus, ProjectResource, Contact, Resoursable, $modalInstance, inputs, Helpers) {
+app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTaskStatus', 'ProjectResource', 'Contact', 'Resoursable', '$modalInstance', 'inputs', 'Helpers', 'debounce', function($scope, $timeout, ProjectTask, ProjectTaskStatus, ProjectResource, Contact, Resoursable, $modalInstance, inputs, Helpers, debounce) {
     $scope.task = {
         project_id: inputs.project_id,
         parent_task_id: inputs.parent_task_id,
@@ -97,7 +97,7 @@ app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTa
                 });
         });
     };
-    $scope.getResourcesFromResoursables = function(){
+    $scope.getResourcesFromResoursables = debounce(100, function(){
         var inWork = [];
 
         function existInWork(res){
@@ -126,7 +126,7 @@ app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTa
                 });
             }
         });
-    };
+    });
 
     $scope.$watch('task.status_id', function(new_id){
         if(!$scope.statuses || !$scope.statuses.length)
@@ -164,6 +164,9 @@ app.controller('TasksFormCtrl', ['$scope', '$timeout', 'ProjectTask', 'ProjectTa
         }
 
         $scope.task.resources = $scope.task.resources.map(function(obj){
+            if(!obj.time)
+                obj._destroy = 1;
+
             if(!obj.project_task_id || obj.project_task_id == $scope.task.id)
                 return obj;
         });

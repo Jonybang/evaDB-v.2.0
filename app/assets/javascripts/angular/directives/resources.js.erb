@@ -58,6 +58,7 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
                     if(!resource.time)
                         resource.time = "";
 
+
                     if(!resource.$resoursable){
                         scope.resoursable.some(function(obj){
                             var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_type;
@@ -70,7 +71,13 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
                     } else {
                         resource.$resoursable.resAvaible = true;
                     }
+                    if(resource.$resoursable.resAvaible && !resource.$resoursable.inited){
+                        $timeout(scope.resoursableAdded, 0);
+                        resource.$resoursable.inited = true;
+                    }
                     splited = splitResource(resource) || splited;
+
+                    setResStyle(resource);
                 });
                 console.log('initResources [end], length: ' + scope.ngModel.length + ' | ' + getDiffLastTS());
                 console.log(scope.ngModel);
@@ -126,12 +133,12 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
                     newRes.$id = getResTempId();
 
                     res.time = workHours;
-                    scope.resTimeChanged(res, {date: res.begin_date}, true);
+                    setResDatesByTime(res, res.begin_date);
 
                     newRes.time = parseInt(newRes.time) - workHours;
                     newRes.begin_date.setDate(newRes.begin_date.getDate() + 1);
                     newRes.begin_date.setHours(beginHour);
-                    scope.resTimeChanged(newRes, {date: newRes.begin_date}, true);
+                    setResDatesByTime(newRes, newRes.begin_date);
 
                     scope.ngModel.push(newRes);
                     res = newRes;
@@ -173,18 +180,15 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
                 console.log('list after resetIds');
                 console.log(scope.ngModel);
             }
-            scope.isEmptyDate = function(date, res){
+            scope.isEmptyDate = function(date, resoursable){
                 return !date.resources.some(function(obj){
-                    return obj.$resoursable.id == res.id && obj.$resoursable.class == res.class && !obj._destroy;
+                    return obj.$resoursable
+                            && obj.$resoursable.id == resoursable.id
+                            && obj.$resoursable.class == resoursable.class
+                            && !obj._destroy;
                 });
             };
 
-            //Width resource from hours
-            scope.getResStyle = function(resource){
-                var width = resource.time*10;
-                resource.style = {'width': (width ? width : 0) +'px'};
-                return resource.style;
-            };
             scope.getTooltip = function(resource){
                 var task = (scope.curTask && resource.project_task_id == scope.curTask.id) ? scope.curTask : resource.task;
                 if(task && task.name)
@@ -192,6 +196,7 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
             };
 
             scope.resBlur = function(resources, index){
+                setResStyle(resources[index]);
                 scope.removeResIfEmpty(resources, index);
                 splitResource(resources[index]);
             };
@@ -211,12 +216,35 @@ angular.module('app').directive('resources', ['$timeout', '$sce', '$q', 'debounc
                     return result;
                 });
             };
-            scope.resTimeChanged = function(resource, date, notCallBack){
-                resource.begin_date = date.date;
-                resource.end_date = angular.copy(date.date).addHours(resource.time);
 
-                if(!notCallBack)
-                    $timeout(scope.ngChange, 0);
+            function setResStyle(resource){
+                if(!resource.style)
+                    resource.style = {};
+
+                if(!resource.inputStyle)
+                    resource.inputStyle = {};
+
+                var width = resource.time * 10;
+                resource.style['width'] = (width ? width : 0) + 'px';
+
+                resource.inputStyle['background-color'] = resource.hoursCuted ? '#FAEBCC' : '';
+            };
+            function setResDatesByTime(resource, begin_date){
+                resource.begin_date = begin_date;
+                resource.end_date = angular.copy(begin_date).addHours(resource.time);
+            }
+
+            scope.resTimeChanged = function(resource, day){
+                var nextDay = scope.calendar[scope.calendar.indexOf(day) + 1];
+                if(resource.time > workHours && nextDay.resources.length && !scope.isEmptyDate(nextDay, resource.$resoursable)){
+                    resource.time = workHours;
+                    resource.hoursCuted = true;
+                }
+
+                setResStyle(resource);
+                setResDatesByTime(resource, day.date);
+
+                $timeout(scope.ngChange, 0);
             };
             scope.resDropped = function(date, res, item){
                 scope.leaveAddButton(date, res);

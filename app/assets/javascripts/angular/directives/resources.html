@@ -25,12 +25,12 @@
                         dnd-moved="date.resources.splice($index, 1)"
                         dnd-disable-if="isResDisable(resource)">
                 
-                <span ng-style="getResStyle(resource)" ng-class="['label', {'label-primary': !isResDisable(resource)}, {'label-default': isResDisable(resource)}]"
+                <span ng-style="resource.style" ng-class="['label', {'label-primary': !isResDisable(resource)}, {'label-default': isResDisable(resource)}]"
                       ng-if="!resource._destroy"
                       popover-html-unsafe="{{getTooltip(resource)}}"
                       popover-trigger="mouseenter"
                       popover-placement="top">
-                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="resBlur(date.resources, $index)" ng-disabled="isResDisable(resource)" />
+                  <input class="form-control" ng-style="resource.inputStyle" ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="resBlur(date.resources, $index)" ng-disabled="isResDisable(resource)" />
                     ч.
                 </span>
                     </li>

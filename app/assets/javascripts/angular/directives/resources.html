@@ -57,7 +57,7 @@
 </div>
 <ui-select ng-model="select.res" style="width:200px" on-select="addResToList($item)">
     <ui-select-match placeholder="Добавить" allow-clear="true">{{$select.selected.name}}</ui-select-match>
-    <ui-select-choices repeat="res in resoursable | filter: $select.search | filter: {resAvaible: false || undefined} track by res.name">
+    <ui-select-choices repeat="res in resoursable | filter: $select.search | filter: {resAvaible: false} track by res.name">
         <div ng-bind-html="res.name | highlight: $select.search"></div>
     </ui-select-choices>
 </ui-select>

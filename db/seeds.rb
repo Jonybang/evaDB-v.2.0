@@ -19,9 +19,9 @@ project_status_list.each do |name, color|
 end
 
 users_list = [
+    [ 'test@mail.ru', 'test', 'Тестовый Пользователь' ],
     [ 'jonybang@mail.ru', 'Jb192837', 'Паничев Евгений' ],
-    [ 'ger2001a@mail.ru', '12345', 'Ледков Евгений' ],
-    [ 'test@mail.ru', 'test', 'Тестовый Пользователь' ]
+    [ 'ger2001a@mail.ru', '12345', 'Ледков Евгений' ]
 ]
 
 users_list.each do |email, pass, name|

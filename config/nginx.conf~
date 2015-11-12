@@ -3,7 +3,7 @@ upstream puma_eva_db {
 }
 
 server {
-  listen 80;
+  listen 80  ipv6only=on;
   server_name startup.jonybang.ru;
 
   root /home/deploy/apps/eva_db/current/public;

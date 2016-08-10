@@ -5,23 +5,17 @@
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3</jdbc-url>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails evaDB-v.2.0: production" uuid="9ab32078-5279-43fb-82b6-ebe10a663da9">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:myapp_development</jdbc-url>
-      <user-name>myapp</user-name>
-      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfcedf9b</user-password>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="SQLite - dev" uuid="f88b6c97-7be2-4d44-b392-271b876635f3">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3</jdbc-url>
-      <libraries />
     </data-source>
   </component>
 </project>
-
